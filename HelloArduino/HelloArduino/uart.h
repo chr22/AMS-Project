@@ -9,4 +9,10 @@ char ReadChar();
 void SendChar(char Ch);
 void SendString(char* String);
 void SendInteger(int Number);
+
+//Our defined functions
+int ReadCharWTimeout(char * retVal, int timeOutMs);
+
+
+
 /**************************************/

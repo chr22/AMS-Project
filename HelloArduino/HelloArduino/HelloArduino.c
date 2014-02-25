@@ -19,18 +19,34 @@
 #define F_CPU 16000000
 #include <util/delay.h>
 #include "uart.h"
+#include "RadioSource.h"
 
 int main()
 {
+	//Test values
+	char * testTmp;
+	char * testAlt;
+	char * testPres;
+	char testId = 0xAA;
+	
+	*testTmp = 'A';
+	*testAlt = 'B';
+	*testPres = 'C';
+	
 	// Initialize the display
 	InitUART(9600,8);
+	
+	
 	while (1)
 	{
+		PerformFullTransmission(testId, testTmp, testAlt, testPres);
+		
+		/*
 		SendString("T1 = ");
 
 		SendInteger(123);
 		SendChar('A');
-		
+		*/
 		_delay_ms(500);
 	}
 }
