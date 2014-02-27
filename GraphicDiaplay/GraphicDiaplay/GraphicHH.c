@@ -167,17 +167,19 @@ const char clear[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
+const char one[] = {
+	0b01000001, 0b01000001,	0b01000001, 0b01111111, 0b01000000, 0b01000000, 0b01000000, 0b00000000	
+};
+
 const char two[] = {
 	0b01111001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001111, 0b00000000
 };
 
-const char one[] = {
-	0b01000001, 0b01000001,	0b01000001, 0b01111111, 0b01000000, 0b01000000, 0b01000000, 0b00000000
+const char three[] = {
+	0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01111111, 0b00000000
 };
 
 const char onetwo[] = {
-	0b01000001, 0b01000001,	0b01000001, 0b01111111, 0b01000000, 0b01000000, 0b01000000, 0b00000000,
-	0b01111001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001111, 0b00000000,
 	0b01000001, 0b01000001,	0b01000001, 0b01111111, 0b01000000, 0b01000000, 0b01000000, 0b00000000,
 	0b01111001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001001, 0b01001111, 0b00000000
 };
@@ -187,18 +189,25 @@ int main()
   DisplayInit();
   DisplayOn();
   ClearScreen();
-
-  char dest[16];
-  //memcpy(dest, )
-  //strncat(one, two, 1);
   
-  strcpy(dest, one);
+  int size = sizeof(one) + sizeof(two) + sizeof(three);
+  
+  char dest[size];
+  //strcpy(dest, one);
   //strcat(dest, two);
+  //strcat(dest, three);
   
-  //clears screen
-  DisplayPic(clear);
+  memcpy(dest, one, 8);
+  memcpy(dest, two, 8);
+  memcpy(dest, three, 8);
   
-  DisplayCharArray(onetwo);
+  //DisplayCharArray(one, sizeof(one));
+  SetNextChar(one, 61, 0);
+  SetNextChar(two, 63, 1);
+  SetNextChar(three, 64, 2);
+  SetNextChar(one, 88, 3);
+  SetNextChar(two, 100, 4);
+  SetNextChar(three, 119, 5);
     
   while(1)
   {}

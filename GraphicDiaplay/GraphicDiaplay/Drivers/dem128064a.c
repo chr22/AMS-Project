@@ -279,30 +279,94 @@ unsigned char i, j;
 }
 
 //displays whats in the array
-void DisplayCharArray(const char *disArray) 
+void DisplayCharArray(const char *disArray, int length) 
 {
-	unsigned int len = 4*8; //sizeof(disArray);
-	int i = 0;
+	int i = 0, j = 0;	
+	int lines = 0;
+	int lastLine = length % 128;
 	
-	for (i = 0; i < len; i++)
+	if (lastLine == 0)
 	{
-		if (i == 0)
+		lines = (length / 128);
+		lastLine = 128;
+	}
+	else 
+	{
+		lines = (length / 128) + 1;
+	}	
+	
+	if (length > 128)
+	{
+		length = 128;
+	}
+		
+	for (j = 0; j < lines; j++)
+	{
+		if (j == (lines - 1))
 		{
-			SetPage(LEFT,i);
-			SetY(LEFT,0);
+			length = lastLine;
 		}
-		else if (i == 64)
+		
+		for (i = 0; i < length; i++)
 		{
-			//SetPage(RIGHT,i);
-			SetY(RIGHT,0);
+			if (i == 0)
+			{
+				SetPage(LEFT,j);
+				SetY(LEFT,0);
+			}
+			else if (i == 64)
+			{
+				SetPage(RIGHT,j);
+				SetY(RIGHT,0);
+			}
+			if (i < 64) {
+				DisplayWrite(LEFT, *disArray++, DATA);
+			}
+			else {
+				DisplayWrite(RIGHT,*disArray++, DATA);
+			}
+		}			
+	}			
+}
+
+void SetNextChar(const char *nextChar, int position, int line) 
+{
+	if (position >= 128)
+	{
+		position = 127;
+	}
+	else if (position < 0)
+	{
+		position = 0;
+	}	
+	if (line > 7)
+	{
+		line = 7;
+	}
+	else if (line < 0)
+	{
+		line = 0;
+	}	
+	
+	int i = 0;
+	int half = LEFT;
+		
+	SetPage(half, line);
+	SetY(half, position);
+	
+	for (i = 0; i < 8; i++)
+	{		
+		if (position >= 64)
+		{
+			half = RIGHT;
+			position -= 64;
+			SetPage(half, line);
+			SetY(half, position);			
 		}
-		if (i < 64) {
-			DisplayWrite(LEFT, *disArray++, DATA);	
-		}		
-		else {
-			DisplayWrite(RIGHT,*disArray++, DATA);	
-		}		
-	}		
+		position++;	
+		
+		DisplayWrite(half, *nextChar++, DATA);		
+	}
 }
 
 // Sets one pixel at x,y
