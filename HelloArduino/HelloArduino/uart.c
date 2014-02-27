@@ -134,5 +134,5 @@ char array[7];
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
 	
-		
+		return 1;
 }
