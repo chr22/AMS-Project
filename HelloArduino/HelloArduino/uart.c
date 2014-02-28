@@ -10,11 +10,14 @@
 ***************************************************/
 #include <avr/io.h>
 #include <stdlib.h>
+#include <avr/interrupt.h>
 #include "uart.h"
 
 // Constants
 //#define XTAL 3686400  
-#define XTAL 16000000  
+#define XTAL 16000000
+
+volatile int readyReg;  
 
 /*************************************************************************
 USART initialization.
@@ -55,6 +58,19 @@ unsigned int TempUBRR;
     // Write lower part of UBRR
     UBRR1L = TempUBRR;
   }  
+  
+  TIMSK1 = 0b00000001;
+  TCCR1B = 0b00000101;
+  TCNT1H = 0x00;
+  TCNT1L = 0x00;
+  
+  readyReg = 0;
+  //Setup of timer0 for interrupts
+  TIMSK0 = (1<<TOIE0);
+  TCNT0	= 0x00;
+  TCCR0A = (1<<CS01) | (1<<CS00);
+  TCCR0B = (1<<CS01) | (1<<CS00);
+  sei();
 }
 
 
@@ -131,8 +147,25 @@ char array[7];
 /**************************************************/
 
 
+
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
+	// Wait for new character received
+	//while ( ((UCSR1A & (1<<7)) == 0) || readyReg == 0xFF )
+	//while ((TIFR1 & (1<<TOV1)) == 0)
+	//while((readyReg != 5) || ((UCSR1A & (1<<7)) == 0))
+	while(((UCSR1A & (1<<7)) == 0) || (readyReg != 5))
+	{ }	
 	
-		return 1;
+	SendChar(UDR1);
+	readyReg = 0;
+	
+	return 1;
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+	SendChar(0x20);
+	++readyReg;
 }
