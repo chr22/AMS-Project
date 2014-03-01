@@ -27,10 +27,10 @@ int main()
 {
 	//readyReg = 0x00;
 	//Test values
-	char * testTmp;
-	char * testAlt;
-	char * testPres;
-	char testId = 0xAA;
+	char * testTmp = 0x00;
+	char * testAlt = 0x00;
+	char * testPres = 0x00;
+	//char testId = 0xAA;
 	
 	*testTmp = 'A';
 	*testAlt = 'B';

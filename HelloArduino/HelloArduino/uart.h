@@ -4,7 +4,7 @@
 * Henning Hargaard, 1/11 2011         *
 ***************************************/
 #define XTAL 16000000
-#define F_CPU XTAL
+//#define F_CPU XTAL
 
 void InitUART(unsigned long BaudRate, unsigned char DataBit);
 unsigned char CharReady();
@@ -15,6 +15,7 @@ void SendInteger(int Number);
 
 //Our defined functions
 int ReadCharWTimeout(char * retVal, int timeOutMs);
+int ServerResponse(char moduleId, int timeoutMS);
 
 //char readyReg;
 

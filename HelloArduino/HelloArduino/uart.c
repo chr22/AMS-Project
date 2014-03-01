@@ -11,6 +11,7 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
+#include "GlobalDefines.h"
 #include "uart.h"
 
 // Constants
@@ -146,19 +147,47 @@ char array[7];
 
 /**************************************************/
 
-
+//Refactor!
+//Make ReadCharWTimeout -ONLY- read a Char. 
+//Handle everything else in "protocol layer"
 
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
-	// Wait for new character received
-	//while ( ((UCSR1A & (1<<7)) == 0) || readyReg == 0xFF )
-	//while ((TIFR1 & (1<<TOV1)) == 0)
-	//while((readyReg != 5) || ((UCSR1A & (1<<7)) == 0))
-	while(((UCSR1A & (1<<7)) == 0) || (readyReg != 5))
+	char readVal = 0x00;
+	readyReg = 0;
+	// Wait for new character received or Timeout overflow
+	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 5))
 	{ }	
 	
-	SendChar(UDR1);
+	//While loop was broken by overflow timer, so we got no response from server.
+	if(readyReg >= 5)
+	{
+		SendString("ReadCharWTimeout(): Broken by overflow. \n");
+		return TIMEOUT_ERR;
+	}
+	
+	retVal = UDR1;
+	return 1;
+	/*
+	
+	serverErr = ServerResponse(SOURCE_ID, 1000);
+	if(serverErr < 0)
+	{
+		//Error handling
+		//Use specific error codes (TIMEOUT_ERR, WRONG_ID_ERR)
+	}
+	readVal = UDR1;
+	*retVal = readVal;
+	SendChar(readVal);
 	readyReg = 0;
+	
+	return 1;
+	*/
+}
+
+//Reads
+int ServerResponse(char moduleId, int timeoutMS)
+{
 	
 	return 1;
 }

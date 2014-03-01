@@ -10,15 +10,6 @@
 #define RADIOSOURCE_H_
 
 /*
-*	Command Specifications
-*/
-#define TEMP_CMD 	0x01
-#define ALT_CMD		0x02
-#define PRES_CMD	0x03
-#define	ID_CMD		0x04
-#define	STAT_CMD	0x05
-
-/*
 *	Constant Defines
 */
 #define	FULL_TRANSMIT_NUM	0x03
@@ -26,7 +17,7 @@
 
 int PerformFullTransmission(char id, char * temp, char * alt, char * pres);
 int TemperatureSend(char *);
-int DataReady(char id, int numToTransmit);
+int DataReady(char id, char numToTransmit);
 int WaitForServerReady(int timeOutMs);
 int WaitForAck(int timeOutMs);
 

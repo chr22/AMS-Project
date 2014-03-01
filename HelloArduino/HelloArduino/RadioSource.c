@@ -7,18 +7,18 @@
 		Implementation of layer between UART and Business logic
  */ 
 
-
+#include "ProtocolLayer.h"
 #include "RadioSource.h"
 #include "GlobalDefines.h"
 #include "uart.h"
 
 int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 {
+	int err = 0;
 	DataReady(id, FULL_TRANSMIT_NUM);
-	if(!WaitForServerReady(RADIO_TIMEOUT_MS))
+	err = WaitForServerReady(RADIO_TIMEOUT_MS);
+	if(err < 0)
 	{
-		//Server did NOT send ready
-		//Return with error value
 		return SERVER_N_READY_ERR;
 	}
 	
@@ -34,13 +34,13 @@ int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 	return 1; 
 }
 
-int DataReady(char id, int numToTransmit)
+int DataReady(char id, char numToTransmit)
 {
 	//Transmit id
 	SendChar(id);
 	
 	//Transmit number to transmit
-	SendChar(FULL_TRANSMIT_NUM);
+	SendChar(numToTransmit);
 	//SendInteger(numToTransmit);
 	return 1;
 }
@@ -65,16 +65,4 @@ int AltitudeSend(char * pres)
 	return 1; 
 }
 
-int WaitForServerReady(int timeOutMs)
-{
-	//Setup timer interrupt
-	//
-	
-	return 1;
-}
 
-int WaitForAck(int timeOutMs)
-{
-	
-	return 1;
-}

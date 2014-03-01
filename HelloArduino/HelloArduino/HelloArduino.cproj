@@ -99,6 +99,12 @@
     <Compile Include="HelloArduino.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ProtocolLayer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ProtocolLayer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="RadioSource.c">
       <SubType>compile</SubType>
     </Compile>
