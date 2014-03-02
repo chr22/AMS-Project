@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ServerSideRadioProject", "ServerSideRadioProject\ServerSideRadioProject.cproj", "{B73D5DBF-CB3F-4A3E-8CB4-F4F2C700CF47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B73D5DBF-CB3F-4A3E-8CB4-F4F2C700CF47}.Debug|AVR.ActiveCfg = Debug|AVR
+		{B73D5DBF-CB3F-4A3E-8CB4-F4F2C700CF47}.Debug|AVR.Build.0 = Debug|AVR
+		{B73D5DBF-CB3F-4A3E-8CB4-F4F2C700CF47}.Release|AVR.ActiveCfg = Release|AVR
+		{B73D5DBF-CB3F-4A3E-8CB4-F4F2C700CF47}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
