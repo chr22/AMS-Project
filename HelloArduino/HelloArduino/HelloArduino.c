@@ -17,7 +17,7 @@
 *************************************************/
 #include <avr/io.h>
 #include <avr/interrupt.h>
-//#define F_CPU 16000000
+#define F_CPU 16000000
 #include <util/delay.h>
 #include "uart.h"
 #include "RadioSource.h"
@@ -27,34 +27,46 @@ int main()
 {
 	//readyReg = 0x00;
 	//Test values
-	char * testTmp = 0x00;
-	char * testAlt = 0x00;
-	char * testPres = 0x00;
-	//char testId = 0xAA;
-	
-	*testTmp = 'A';
-	*testAlt = 'B';
-	*testPres = 'C';
-	
+	char testTmp[2];
+	char testAlt[4];
+	char testPres[4];
+	char testId = 0x40;
+	int err = 1;
 	// Initialize the display
 	InitUART(9600,8);
 	
+	testTmp[0] = 'H';
+	testTmp[1] = 'O';
 	
-	while (1)
+	testPres[0] = 'p';
+	testPres[1] = 'r';
+	testPres[2] = 'e';
+	testPres[3] = 's';
+	
+	testAlt[0] = 'a';
+	testAlt[1] = 'l';
+	testAlt[2] = 't';
+	testAlt[3] = 'i';
+	
+	
+	while(1)
 	{
-		//PerformFullTransmission(testId, testTmp, testAlt, testPres);
-		ReadCharWTimeout(0, 1000);
-		//SendChar(0x15);
-		//_delay_ms(500);
+		err = PerformFullTransmission(testId, testTmp, testAlt, testPres);
+		if(err < 0)
+		{
+			SendString("Failed full transmission. \n");
+		}
+		else
+		{
+			SendString("Success!");
+		}
+		_delay_ms(5000);
 	}
 }
 
 ISR(TIMER0_OVF_vect)
 {
-	//SendChar(0x10);
-	//cli();
-	//SendChar(0x05);
-	//sei();
+
 }
 
 

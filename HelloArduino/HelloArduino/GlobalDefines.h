@@ -10,10 +10,10 @@
 #define GLOBALDEFINES_H_
 
 //Error codes
-#define SERVER_N_READY_ERR -1
-#define WRONG_ID_ERR -2
-#define TIMEOUT_ERR -3
-#define UNEXPECTED_CMD_ERR -4
+#define SERVER_N_READY_ERR	-1
+#define WRONG_ID_ERR		-2
+#define TIMEOUT_ERR			-3
+#define UNEXPECTED_CMD_ERR	-4
 
 //Commands
 #define TEMP_CMD 	0x01

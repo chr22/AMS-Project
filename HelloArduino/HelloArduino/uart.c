@@ -156,33 +156,22 @@ int ReadCharWTimeout(char * retVal, int timeOutMs)
 	char readVal = 0x00;
 	readyReg = 0;
 	// Wait for new character received or Timeout overflow
-	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 5))
+	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 3))
 	{ }	
 	
 	//While loop was broken by overflow timer, so we got no response from server.
-	if(readyReg >= 5)
+	if(readyReg >= 3)
 	{
-		SendString("ReadCharWTimeout(): Broken by overflow. \n");
+		//SendString("ReadCharWTimeout(): Broken by overflow. \n");
 		return TIMEOUT_ERR;
 	}
-	
-	retVal = UDR1;
-	return 1;
-	/*
-	
-	serverErr = ServerResponse(SOURCE_ID, 1000);
-	if(serverErr < 0)
+	else
 	{
-		//Error handling
-		//Use specific error codes (TIMEOUT_ERR, WRONG_ID_ERR)
+		//SendString("ReadCharWTimeout(): Broken by sent char. \n");
 	}
-	readVal = UDR1;
-	*retVal = readVal;
-	SendChar(readVal);
-	readyReg = 0;
 	
+	*retVal = UDR1;
 	return 1;
-	*/
 }
 
 //Reads
@@ -195,6 +184,6 @@ int ServerResponse(char moduleId, int timeoutMS)
 
 ISR(TIMER1_OVF_vect)
 {
-	SendChar(0x20);
+	//SendChar(0x20);
 	++readyReg;
 }

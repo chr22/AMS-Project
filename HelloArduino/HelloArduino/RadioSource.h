@@ -16,16 +16,16 @@
 #define RADIO_TIMEOUT_MS	5000
 
 int PerformFullTransmission(char id, char * temp, char * alt, char * pres);
-int TemperatureSend(char *);
+int TemperatureSend(char temp[]);
 int DataReady(char id, char numToTransmit);
 int WaitForServerReady(int timeOutMs);
 int WaitForAck(int timeOutMs);
 
 
-int AltitudeSend (char * alt);
-int PressureSend(char * pres);
+int AltitudeSend (char alt[]);
+int PressureSend(char pres[]);
 int StationIDSend(char id);
-int StatusSend(char * status);
+int StatusSend(char status[]);
 
 
 #endif /* RADIOSOURCE_H_ */

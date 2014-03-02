@@ -14,8 +14,13 @@ int WaitForServerReady(int timeOutMs)
 	char * retVal = 0x00;
 	int retryCount = 0;
 	
+	SendString("Waiting for server ready signal. \n");
 	while((err < 0) && (retryCount < 3))
 	{
+		SendString("Waiting for ready: ");
+		SendInteger(retryCount);
+		SendString("\n");
+		
 		err = ReadCharWTimeout(retVal, timeOutMs);
 		++retryCount;	
 	}
@@ -26,7 +31,7 @@ int WaitForServerReady(int timeOutMs)
 	
 	if(*retVal != SOURCE_ID)
 	{
-		SendString("Wrong ID error! \n");
+		SendString("Wrong ID error. \n");
 		return WRONG_ID_ERR;
 	}
 
@@ -58,6 +63,7 @@ int WaitForAck(int timeOutMs)
 	char * retVal = 0x00;
 	int err = 0;
 	
+	SendString("Send ACK (0x06): \n");
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if (err < 0)
 	{
@@ -65,9 +71,11 @@ int WaitForAck(int timeOutMs)
 	}
 	if(*retVal != ACK_CMD)
 	{
+		SendString("Wrong CMD string (WaitForAck). \n");
 		return UNEXPECTED_CMD_ERR;
 	}
 	
+	SendString("Send ID (0x20): \n");
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if(err < 0)
 	{
@@ -75,8 +83,10 @@ int WaitForAck(int timeOutMs)
 	}
 	if(*retVal != SOURCE_ID)
 	{
+		SendString("Wrong ID string (WaitForAck). \n");
 		return WRONG_ID_ERR;
 	}
 	
 	return 1;
 }
+
