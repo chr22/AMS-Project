@@ -9,5 +9,5 @@
 
 void MPL3115_init();
 unsigned char MPL3115_GetDeviceId();
-void MPL3115_RegWrite(unsigned char address, unsigned char reg, unsigned char val);
-unsigned char MPL3115RegRead(unsigned char reg);
+unsigned long int MPL3115RegRead(unsigned char reg);
+void MPL3115_RegWrite(unsigned char reg, unsigned char val);

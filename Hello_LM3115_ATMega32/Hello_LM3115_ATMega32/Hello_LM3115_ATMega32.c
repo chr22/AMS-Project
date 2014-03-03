@@ -17,21 +17,19 @@ int main(void)
 	//DDRC = 0b1
 	
 	InitUART(9600, 8);
-	SendString("Hej UART");
+	SendString("Hej UART \r");
 	
 	MPL3115_init();
 	
-	unsigned char Address = 0;
+	unsigned long int val;
 	while(1)
-	{	
-		
-	Address = MPL3115_GetDeviceId();
+	{
+		val = MPL3115RegRead(0xF6);
 	    
-    //TODO:: Please write your application code 
-	SendString("Address: ");
-	SendChar(Address);
+		SendString("Return: ");
+		SendChar((int)val);
 		
-	_delay_ms(1500);
+		_delay_ms(300);
     }
 	
 	return 1;

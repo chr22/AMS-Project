@@ -9,9 +9,11 @@
 #include <avr/io.h>
 #define F_CPU 3686400
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 void i2c_init()
 {
+	sei();
 	// TWI prescaler = 1 (same as default)
 	TWSR = 0;
 	// LM75 clock has be to be lower than 400 kHz (according to LM75 data sheet)
@@ -26,9 +28,9 @@ void i2c_start()
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
 	while ((TWCR & (1<<TWINT)) == 0)
 	{
-		SendString(" while \r\n");
+		//Todo: fanget her
 	}
-	SendString("Done i2c start");
+	//SendString("Done i2c start");
 }
 
 void i2c_write(unsigned char data)
@@ -38,7 +40,7 @@ void i2c_write(unsigned char data)
 	TWCR = (1<<TWINT) | (1<<TWEN);
 	while ((TWCR & (1<<TWINT)) == 0)
 	{}
-	SendString("Done writing");
+	//SendString("Done writing");
 }
 
 unsigned char i2c_read (unsigned char isLast)
@@ -49,7 +51,7 @@ unsigned char i2c_read (unsigned char isLast)
 	TWCR = (1<<TWINT) | (1<<TWEN);
 	while ((TWCR & (1<<TWINT)) == 0)
 	{}
-	SendString("Done reading");
+	//SendString("Done reading");
 	return TWDR;
 }
 
