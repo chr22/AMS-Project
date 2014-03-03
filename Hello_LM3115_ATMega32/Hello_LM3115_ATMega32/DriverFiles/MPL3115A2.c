@@ -7,9 +7,12 @@
 
 #define F_CPU 3686400
 
+
+#include <util/delay.h>
+
 #include "../HeaderFiles/MPL3115A2.h"
 #include "../HeaderFiles/uart.h"
-#include <util/delay.h>
+
 
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
@@ -27,7 +30,7 @@ void MPL3115_init()
 	//
 	//SendString("Done writing init registers");
 	
-	_delay_ms(5);
+	//_delay_ms(10);
 	
 	SendString("Hello MPL3115A2 \r\n");
 	
@@ -44,29 +47,30 @@ void MPL3115_RegWrite(unsigned char reg, unsigned char val)
 	i2c_stop();
 }
 
-unsigned long int MPL3115RegRead(unsigned char reg)
+unsigned long int MPL3115RegReadTemperature(unsigned char reg)
 {
 	SendString("Starting read at: \r\n");
-	SendChar(reg);
+	SendInteger((int)reg);
 	unsigned char b[2] = {' ', ' '};
 	
 	i2c_start();						//S
 	i2c_write(SensorWriteAddress);		//module address write
 	i2c_write(reg);						//Register address
-	i2c_stop();							//Restart
+	i2c_stop();
+	_delay_ms(5);							//Restart
 	i2c_start();
 	i2c_write(SensorReadAddress);		//Module address read
 	SendString("Second write\r\n");
 										//Receive:
-	b[0] = i2c_read(0);					//Read MSB
+	b[0] = i2c_read(1);					//Read MSB
 	b[1] = i2c_read(1);					//Read LSB
 	
 	i2c_stop();
 	
 	SendString("Received: ");
-	SendChar((int)b[0]);
+	SendInteger((int)b[0]);
 	SendString("Received: ");
-	SendChar((int)b[1]);
+	SendInteger((int)b[1]);
 	
 	
 	unsigned long int ret = b[0] | (b[1]<<8);
@@ -74,10 +78,26 @@ unsigned long int MPL3115RegRead(unsigned char reg)
 	return ret;
 }
 
-unsigned char MPL3115_GetDeviceId()
+unsigned char MPL3115RegRead(unsigned char reg)
 {
-	SendString("Getting device id");
-	//char ret = MPL3115RegRead(0x0C);
+	unsigned char b;
 	
-	return "";
+	i2c_start();						//S
+	i2c_write(SensorWriteAddress);		//module address write
+	i2c_write(reg);						//Register address
+	i2c_stop();
+	_delay_ms(5);							//Restart
+	i2c_start();
+	i2c_write(SensorReadAddress);		//Module address read
+	SendString("Reading\r\n");
+	
+	//Receive:
+	b = i2c_read(1);					//Read MSB
+	
+	return b;
+}
+
+unsigned char MPL3115_GetDeviceId()
+{		
+	return MPL3115RegRead(0xD0);
 }

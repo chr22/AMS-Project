@@ -22,12 +22,18 @@ int main(void)
 	MPL3115_init();
 	
 	unsigned long int val;
+	
 	while(1)
 	{
-		val = MPL3115RegRead(0xF6);
-	    
-		SendString("Return: ");
-		SendChar((int)val);
+		//val = MPL3115RegRead(0xF6);
+			    //
+		//SendString("Return: ");
+		//SendChar((int)val);
+		//
+		
+		SendString("Device id: ");
+		SendInteger((int)MPL3115_GetDeviceId());
+		SendString("\r\n");
 		
 		_delay_ms(300);
     }

@@ -49,9 +49,12 @@ unsigned char i2c_read (unsigned char isLast)
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
 	else             //If we want to read only one byte
 	TWCR = (1<<TWINT) | (1<<TWEN);
+	SendString("Before read loop\r\n");
 	while ((TWCR & (1<<TWINT)) == 0)
-	{}
-	//SendString("Done reading");
+	{
+		SendString("read loop \r\n");
+	}
+	SendString("Done reading\r\n");
 	return TWDR;
 }
 
