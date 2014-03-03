@@ -16,20 +16,21 @@ int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 {
 	int retryCount = 0;
 	int err = 0;
-	DataReady(id, FULL_TRANSMIT_NUM);
+	//DataReady(id, FULL_TRANSMIT_NUM);
+	DataReady(id, 1);
 	err = WaitForServerReady(RADIO_TIMEOUT_MS);
 	if(err < 0)
 	{
 		return SERVER_N_READY_ERR;
 	}
 	
-	SendString("Ready to transmit temperatures.\n");
+	//SendString("Ready to transmit temperatures.\n");
 	TemperatureSend(temp);
 	//AltitudeSend(alt);
 	//1PressureSend(pres);
 	
 	err = -1;
-	SendString("Wait for Ack. \n");
+	//SendString("Wait for Ack. \n");
 	while(err < 0 && retryCount < 3)
 	{
 		++retryCount;
@@ -45,6 +46,9 @@ int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 
 int DataReady(char id, char numToTransmit)
 {
+	//Transmit ReadyCommand
+	SendChar(RDY_CMD);
+	
 	//Transmit id
 	SendChar(id);
 	

@@ -93,9 +93,34 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Drivers\lcd162.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\lcd162.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Drivers\uart.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="GlobalDefines.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Protocol\ServerProtocol.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Protocol\ServerProtocol.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ServerSideRadioProject.c">
       <SubType>compile</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drivers" />
+    <Folder Include="Protocol" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

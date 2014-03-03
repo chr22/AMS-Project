@@ -54,11 +54,11 @@ int main()
 		err = PerformFullTransmission(testId, testTmp, testAlt, testPres);
 		if(err < 0)
 		{
-			SendString("Failed full transmission. \n");
+			//SendString("Failed full transmission. \n");
 		}
 		else
 		{
-			SendString("Success!");
+			//SendString("Success!");
 		}
 		_delay_ms(5000);
 	}

@@ -14,12 +14,12 @@ int WaitForServerReady(int timeOutMs)
 	char * retVal = 0x00;
 	int retryCount = 0;
 	
-	SendString("Waiting for server ready signal. \n");
+	//SendString("Waiting for server ready signal. \n");
 	while((err < 0) && (retryCount < 3))
 	{
-		SendString("Waiting for ready: ");
-		SendInteger(retryCount);
-		SendString("\n");
+		//SendString("Waiting for ready: ");
+		//SendInteger(retryCount);
+		//SendString("\n");
 		
 		err = ReadCharWTimeout(retVal, timeOutMs);
 		++retryCount;	
@@ -43,7 +43,8 @@ int TransmitMeasurement(char measureType, int measureVal)
 	int err = -1;
 	int retryCount = 0;
 	SendChar(measureType);
-	SendInteger(measureVal);
+	SendChar((char)measureVal);
+	//SendInteger(measureVal);
 	
 	while(err < 0 && retryCount < 3)
 	{
@@ -63,7 +64,7 @@ int WaitForAck(int timeOutMs)
 	char * retVal = 0x00;
 	int err = 0;
 	
-	SendString("Send ACK (0x06): \n");
+	//SendString("Send ACK (0x06): \n");
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if (err < 0)
 	{
@@ -71,11 +72,11 @@ int WaitForAck(int timeOutMs)
 	}
 	if(*retVal != ACK_CMD)
 	{
-		SendString("Wrong CMD string (WaitForAck). \n");
+		//SendString("Wrong CMD string (WaitForAck). \n");
 		return UNEXPECTED_CMD_ERR;
 	}
 	
-	SendString("Send ID (0x20): \n");
+	//SendString("Send ID (0x20): \n");
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if(err < 0)
 	{
