@@ -32,7 +32,16 @@ void SetPixel(unsigned char x, unsigned char y);
 // "picArray" is a pointer to the bit pattern array prestored in flash memory
 void DisplayPic(const char *picArray);
 void DisplayCharArray(const char *disArray, int length);
+// Manuel position and line
 void SetNextChar(const char *nextChar, int position, int line);
+// Auto increments the line and position
+void SetNextCharAuto(const char *nextChar);
+// Valid values: 0-7
+void SetLine(int line);
+// Valid values: 0-127
+void SetPosition(int pos);
+// Valid values: 0-15
+void SetCharPosition(int pos);
 // Draws a horizontal line at the display
 // "StartX" and "StartY" is the leftmost start point for the line
 // "Length" is the line length measured in pixels

@@ -29,6 +29,11 @@
 #define CONTROL 0
 #define DATA    1
 
+// Global variables
+int _line = 0;
+int _position = 0;
+int _half = LEFT;
+
 // LOCAL FUNCTIONS /////////////////////////////////////////////////////////////
 
 // Writes a byte to the display
@@ -366,6 +371,111 @@ void SetNextChar(const char *nextChar, int position, int line)
 		position++;	
 		
 		DisplayWrite(half, *nextChar++, DATA);		
+	}
+}
+
+void SetNextCharAuto(const char *nextChar) 
+{
+	//reset cursor at line end
+	if (_position > 120)
+	{
+		_position = 0;
+		_line++;
+		_half = LEFT;
+	}
+	else if (_position < 0)
+	{
+		_position = 0;
+	}
+	
+	//circle line number
+	if (_line > 7)
+	{
+		_line = 0;		
+	}
+	else if (_line < 0)
+	{
+		_line = 0;
+	}		
+	
+	SetPage(_half, _line);
+	SetY(_half, _position);
+	
+	int i = 0;
+	int position = _position;
+	
+	for (i = 0; i < 8; i++)
+	{
+		if (position >= 64)
+		{
+			_half = RIGHT;
+			position -= 64;
+			SetPage(_half, _line);
+			SetY(_half, position);
+		}
+		
+		position++;
+		
+		DisplayWrite(_half, *nextChar++, DATA);
+	}
+	
+	_position += 8;
+}
+
+void SetLine(int line)
+{
+	if (_line > 7)
+	{
+		_line = 7;
+	}
+	else if (_line < 0)
+	{
+		_line = 0;
+	}
+	else 
+	{
+		_line = line;	
+	}
+	
+}
+
+void SetPosition(int pos)
+{
+	if (_position > 120)
+	{
+		_position = 120;		
+	}
+	else if (_position < 0)
+	{
+		_position = 0;
+	}
+	else
+	{
+		_position = pos;
+	}
+}
+
+void SetCharPosition(int pos)
+{
+	if (pos > 15)
+	{
+		_position = 120;
+		_half = RIGHT;
+	}
+	else if (pos < 0)
+	{
+		_position = 0;
+		_half = LEFT;
+	}
+	else if (pos >= 0 && pos < 7)
+	{
+		_position = pos * 8;
+		_half = LEFT;
+	}
+	else if (pos > 7 && pos <= 15)
+	{
+		_position = pos * 8;
+		_half = RIGHT;
 	}
 }
 
