@@ -9,7 +9,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include "./HeaderFiles/uart.h"
-#include "./HeaderFiles/MPL3115A2.h"
+#include "./HeaderFiles/BMP180.h"
 
 int main(void)
 {
@@ -17,25 +17,23 @@ int main(void)
 	//DDRC = 0b1
 	
 	InitUART(9600, 8);
-	SendString("Hej UART \r");
 	
-	MPL3115_init();
+	SendString("Hej UART \r\n");
 	
-	unsigned long int val;
+	BMP180_Init();
 	
 	while(1)
-	{
-		//val = MPL3115RegRead(0xF6);
-			    //
-		//SendString("Return: ");
-		//SendChar((int)val);
-		//
-		
+	{	
 		SendString("Device id: ");
-		SendInteger((int)MPL3115_GetDeviceId());
-		SendString("\r\n");
+		SendInteger((int)BMP180_GetDeviceId());
+		SendString("\r\n \r\n");
 		
-		_delay_ms(300);
+		SendString("Temperature: ");
+		SendInteger(BMP180_GetTemperature());
+		
+		SendString("\r\n-----------------\r\n");
+		
+		_delay_ms(1000);
     }
 	
 	return 1;
