@@ -79,6 +79,10 @@ void MatchCharacters(char character)
 		0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 	};	
 	
+	const char point[] = {
+		0b00000000, 0b00000000, 0b00000000, 0b01100000, 0b01100000, 0b00000000, 0b00000000, 0b00000000
+	};
+	
 	const char T[] = {
 		0b00000001, 0b00000001, 0b00000001, 0b01111111, 0b00000001, 0b00000001, 0b00000001, 0b00000000
 	};
@@ -225,6 +229,9 @@ void MatchCharacters(char character)
 		break;
 	case '*':
 		SetNextCharAuto(degree);
+		break;
+	case '.':
+		SetNextCharAuto(point);
 		break;
 	case '\n':
 		NextLine();
