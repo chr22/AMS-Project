@@ -11,6 +11,9 @@
 #define DISPLAYWRAPPER_H_
 
 void WriteToDisplay(char* dispStr);
+void NewLine();
+void SetLine(int line);
+void SetPosition(int pos);
 
 
 #endif /* DISPLAYWRAPPER_H_ */

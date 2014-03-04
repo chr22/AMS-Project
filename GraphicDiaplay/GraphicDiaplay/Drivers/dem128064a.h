@@ -37,11 +37,13 @@ void SetNextChar(const char *nextChar, int position, int line);
 // Auto increments the line and position
 void SetNextCharAuto(const char *nextChar);
 // Valid values: 0-7
-void SetLine(int line);
+void SetLineNum(int line);
 // Valid values: 0-127
-void SetPosition(int pos);
+void SetPositionNum(int pos);
 // Valid values: 0-15
 void SetCharPosition(int pos);
+// Sets cursor to next line and resets cursor to start of display
+void NextLine();
 // Draws a horizontal line at the display
 // "StartX" and "StartY" is the leftmost start point for the line
 // "Length" is the line length measured in pixels

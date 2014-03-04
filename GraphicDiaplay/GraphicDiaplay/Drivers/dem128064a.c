@@ -422,7 +422,7 @@ void SetNextCharAuto(const char *nextChar)
 	_position += 8;
 }
 
-void SetLine(int line)
+void SetLineNum(int line)
 {
 	if (_line > 7)
 	{
@@ -439,7 +439,7 @@ void SetLine(int line)
 	
 }
 
-void SetPosition(int pos)
+void SetPositionNum(int pos)
 {
 	if (_position > 120)
 	{
@@ -477,6 +477,13 @@ void SetCharPosition(int pos)
 		_position = pos * 8;
 		_half = RIGHT;
 	}
+}
+
+void NextLine()
+{
+	SetLineNum(++_line);
+	_half = LEFT;
+	_position = 0;
 }
 
 // Sets one pixel at x,y
