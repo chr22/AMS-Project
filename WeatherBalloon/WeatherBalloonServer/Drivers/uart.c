@@ -54,6 +54,9 @@ unsigned int TempUBRR;
     // Write lower part of UBRR
     UBRRL = TempUBRR;
   }  
+  
+  //Enable receive-byte interrupt
+  UCSRB |= (1 << RXCIE); 
 }
 
 

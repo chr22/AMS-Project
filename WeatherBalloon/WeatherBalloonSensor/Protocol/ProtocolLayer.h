@@ -14,7 +14,7 @@
 int WaitForServerReady(int timeOutMs);
 
 //Transmits measurement type and value (And length?)
-int TransmitMeasurement(char measureType, int measureVal);
+int TransmitMeasurement(char measureType, long measureVal);
 
 int WaitForAck(int timeOutMs);
 

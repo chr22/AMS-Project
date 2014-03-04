@@ -11,8 +11,9 @@
 #include "RadioSource.h"
 #include "../Util/GlobalDefines.h"
 #include "../Drivers/uart.h"
+#include <math.h>
 
-int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
+int PerformFullTransmission(char id, int temp, int alt, int pres)
 {
 	int retryCount = 0;
 	int err = 0;
@@ -24,10 +25,12 @@ int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 		return SERVER_N_READY_ERR;
 	}
 	
+	
 	//SendString("Ready to transmit temperatures.\n");
-	TemperatureSend(temp);
+	TransmitMeasurement(TEMP_CMD, temp);
+	//TemperatureSend(temp);
 	//AltitudeSend(alt);
-	//1PressureSend(pres);
+	//PressureSend(pres);
 	
 	err = -1;
 	//SendString("Wait for Ack. \n");

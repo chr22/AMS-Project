@@ -4,6 +4,8 @@
  * Created: 28-02-2014 10:36:40
  *  Author: Nikolaj
  */ 
+
+#include <math.h>
 #include "ProtocolLayer.h"
 #include "../Util/GlobalDefines.h"
 #include "../Drivers/uart.h"
@@ -17,13 +19,10 @@ int WaitForServerReady(int timeOutMs)
 	//SendString("Waiting for server ready signal. \n");
 	while((err < 0) && (retryCount < 3))
 	{
-		//SendString("Waiting for ready: ");
-		//SendInteger(retryCount);
-		//SendString("\n");
-		
 		err = ReadCharWTimeout(retVal, timeOutMs);
 		++retryCount;	
 	}
+	
 	if(err < 0)
 	{
 		return err;
@@ -38,14 +37,52 @@ int WaitForServerReady(int timeOutMs)
 	return 1;
 }
 
-int TransmitMeasurement(char measureType, int measureVal)
+int CalculateTransmissionLength(long measureVal ) 
+{
+	int bitVal = log(measureVal)/log(2) + 1;
+	int byteNum = bitVal/8 + 1;
+	return byteNum;
+}
+
+
+int ConvertIntToCharArray(long measureVal, int transmissionLength, char * buf)
+{
+	int i = 0;
+	for (i = 0; i < transmissionLength; ++i)
+	{
+		*(buf + i) = (measureVal >> (transmissionLength-1-i * 8)) & 0xFF; 
+	}
+	
+	return 1;
+}
+
+int TransmitMeasurement(char measureType, long measureVal)
 {
 	int err = -1;
-	int retryCount = 0;
-	SendChar(measureType);
-	SendChar((char)measureVal);
-	//SendInteger(measureVal);
+	int i = 0;
+	//int retryCount = 0;
+	int transmissionLength = CalculateTransmissionLength(measureVal);
+	char measureInBytes[transmissionLength];
+	err = ConvertIntToCharArray(measureVal, transmissionLength, measureInBytes);	
 	
+	SendChar(measureType);
+	SendChar((char)transmissionLength);
+	for(i = 0; i < transmissionLength; ++i)
+	{
+		SendChar(measureInBytes[i]);	
+	}
+	
+	if(err < 0)
+	{
+		return err;
+	}
+	
+	//SendChar(measureType);
+	//SendChar(transmissionLength);
+	
+	//free(measure);
+	return 1;
+	/*
 	while(err < 0 && retryCount < 3)
 	{
 		err = WaitForAck(5000);
@@ -57,6 +94,7 @@ int TransmitMeasurement(char measureType, int measureVal)
 	}
 		
 	return 1;	
+	*/
 }
 
 int WaitForAck(int timeOutMs)
