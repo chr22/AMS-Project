@@ -8,10 +8,12 @@
 #define F_CPU 3686400
 #include <util/delay.h>
 
-#include "../HeaderFiles/BMP180.h"
+#include "BMP180.h"
+#include <stdlib.h>
 
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
+
 
 /* Private function prototypes */
 void BMP180_RegRead(unsigned char* RetVal, unsigned char reg, unsigned int NumOfBytes);
@@ -82,7 +84,6 @@ void BMP180_Init()
 	i2c_init();
 	
 	BMP180_GetCalibrationParams();
-	
 }
 
 double BMP180_GetTemperature()
@@ -94,7 +95,7 @@ double BMP180_GetTemperature()
 	BMP180_RegRead(b, 0xF6, 2);
 	unsigned long int ret = (b[0]<<8) + b[1];
 	
-	return BMP180_CalculateTrueTemperature(ret);
+	return BMP180_CalculateTrueTemperature(ret) * 0.1;
 }
 
 unsigned char BMP180_GetDeviceId()
