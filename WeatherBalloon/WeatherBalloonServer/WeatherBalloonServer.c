@@ -33,5 +33,5 @@ int main(void)
 
 ISR(USART_RXC_vect)
 {
-	HandleIncoming(UDR);
+	//HandleIncoming(UDR);
 }

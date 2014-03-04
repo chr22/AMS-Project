@@ -67,11 +67,11 @@ unsigned int TempUBRR;
   
   readyReg = 0;
   //Setup of timer0 for interrupts
-  TIMSK0 = (1<<TOIE0);
-  TCNT0	= 0x00;
-  TCCR0A = (1<<CS01) | (1<<CS00);
-  TCCR0B = (1<<CS01) | (1<<CS00);
-  sei();
+ // TIMSK0 = (1<<TOIE0);
+  //TCNT0	= 0x00;
+  //TCCR0A = (1<<CS01) | (1<<CS00);
+  //TCCR0B = (1<<CS01) | (1<<CS00);
+  //sei();
 }
 
 
@@ -138,7 +138,7 @@ Parameter:
 *************************************************************************/
 void SendInteger(int Number)
 {
-char array[7];
+	char array[7];
   // Convert the integer to an ASCII string (array), radix = 10 
   itoa(Number, array, 10);
   // - then send the string
@@ -184,6 +184,6 @@ int ServerResponse(char moduleId, int timeoutMS)
 
 ISR(TIMER1_OVF_vect)
 {
-	SendChar(0x20);
-	//++readyReg;
+	//SendChar(0x20);
+	++readyReg;
 }

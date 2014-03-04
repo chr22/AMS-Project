@@ -5,8 +5,8 @@
  *  Author: Casper
  */ 
 
-#define F_CPU 3686400
-
+//#define F_CPU 3686400
+#define F_CPU 16000000
 
 #include <util/delay.h>
 
