@@ -24,7 +24,7 @@ int main(void)
 	
 	LCDDispString("Hello world!");
 	LCDClear();
-	SendString("Program begun.");
+	//SendString("Program begun.");
 	sei();
 	
     while(1)

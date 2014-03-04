@@ -9,8 +9,8 @@
 
 #include "ProtocolLayer.h"
 #include "RadioSource.h"
-#include "GlobalDefines.h"
-#include "uart.h"
+#include "../Util/GlobalDefines.h"
+#include "../Drivers/uart.h"
 
 int PerformFullTransmission(char id, char * temp, char * alt, char * pres)
 {

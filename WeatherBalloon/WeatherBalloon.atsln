@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WeatherBalloonServer", "WeatherBalloonServer\WeatherBalloonServer.cproj", "{12E513BA-3AEB-4A76-9344-663D39E4B7C3}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WeatherBalloonSensor", "WeatherBalloonSensor\WeatherBalloonSensor.cproj", "{845474D2-3FD1-4333-AC28-E53D55988922}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12E513BA-3AEB-4A76-9344-663D39E4B7C3}.Debug|AVR.ActiveCfg = Debug|AVR
+		{12E513BA-3AEB-4A76-9344-663D39E4B7C3}.Debug|AVR.Build.0 = Debug|AVR
+		{12E513BA-3AEB-4A76-9344-663D39E4B7C3}.Release|AVR.ActiveCfg = Release|AVR
+		{12E513BA-3AEB-4A76-9344-663D39E4B7C3}.Release|AVR.Build.0 = Release|AVR
+		{845474D2-3FD1-4333-AC28-E53D55988922}.Debug|AVR.ActiveCfg = Debug|AVR
+		{845474D2-3FD1-4333-AC28-E53D55988922}.Debug|AVR.Build.0 = Debug|AVR
+		{845474D2-3FD1-4333-AC28-E53D55988922}.Release|AVR.ActiveCfg = Release|AVR
+		{845474D2-3FD1-4333-AC28-E53D55988922}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

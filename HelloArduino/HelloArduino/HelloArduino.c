@@ -30,13 +30,13 @@ int main()
 	char testTmp[2];
 	char testAlt[4];
 	char testPres[4];
-	char testId = 0x40;
+	char testId = 0x20;
 	int err = 1;
 	// Initialize the display
 	InitUART(9600,8);
 	
-	testTmp[0] = 'H';
-	testTmp[1] = 'O';
+	testTmp[0] = 0x10;
+	testTmp[1] = 0x10;
 	
 	testPres[0] = 'p';
 	testPres[1] = 'r';
@@ -60,7 +60,7 @@ int main()
 		{
 			//SendString("Success!");
 		}
-		_delay_ms(5000);
+		//_delay_ms(5000);
 	}
 }
 

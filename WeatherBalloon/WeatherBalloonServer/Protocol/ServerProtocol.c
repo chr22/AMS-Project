@@ -7,7 +7,7 @@
 #include <avr/interrupt.h>
 #include "../Protocol/ServerProtocol.h"
 #include "../Drivers/uart.h"
-#include "../GlobalDefines.h"
+#include "../Util/GlobalDefines.h"
 #include "../Drivers/lcd162.h"
 
 

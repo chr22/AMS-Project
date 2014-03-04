@@ -5,8 +5,8 @@
  *  Author: Nikolaj
  */ 
 #include "ProtocolLayer.h"
-#include "GlobalDefines.h"
-#include "uart.h"
+#include "../Util/GlobalDefines.h"
+#include "../Drivers/uart.h"
 
 int WaitForServerReady(int timeOutMs)
 {
