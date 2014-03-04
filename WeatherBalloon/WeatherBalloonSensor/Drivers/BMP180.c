@@ -6,45 +6,25 @@
  */ 
 
 #define F_CPU 3686400
-
-
 #include <util/delay.h>
 
-#include "../Drivers/BMP180.h"
-#include "../Drivers/uart.h"
-
+#include "../HeaderFiles/BMP180.h"
 
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
-#define READ_MASK 0b00000001
-
 
 /* Private function prototypes */
 void BMP180_RegRead(unsigned char* RetVal, unsigned char reg, unsigned int NumOfBytes);
 void BMP180_RegWrite(unsigned char reg, unsigned char val);
-
+short BMP180_CalculateTrueTemperature(unsigned long ut);
+long BMP180_CalculateTruePressure(unsigned long up);
+void BMP180_GetCalibrationParams();
 
 /* Global variables */
 struct bmp180_calibration_params cal_param;
 
-
-
-void BMP180_Init()
+void BMP180_GetCalibrationParams() 
 {
-	i2c_init();
-	//SendString("i2c init done");
-	//// Example from datasheet flowchart:
-	//
-	//
-	//MPL3115_RegWrite(SensorAddress, 0x26, 0xB8);
-	//MPL3115_RegWrite(SensorAddress, 0x13, 0x07);	
-	//
-	//SendString("Done writing init registers");
-	
-	//_delay_ms(10);
-	
-	SendString("Hello BMP180 \r\n");
-	
 	unsigned char temp[2];
 	
 	//AC1
@@ -96,32 +76,25 @@ void BMP180_Init()
 	cal_param.param_b5 = 0;
 }
 
-unsigned long int BMP180_GetTemperature()
+
+void BMP180_Init()
 {
-	BMP180_RegWrite(0xF4, 0x2E);		//Staret temperature measurement (p. 21 datasheet)
-	_delay_ms(4.5);
+	i2c_init();
+	
+	BMP180_GetCalibrationParams();
+	
+}
+
+double BMP180_GetTemperature()
+{
+	BMP180_RegWrite(0xF4, 0x2E);		//Starts temperature meassurement (p. 21 datasheet)
+	_delay_ms(4.5);						//Wait for device to sample temp
 	
 	unsigned char b[2];
-	
-	
-	i2c_start();						//S
-	i2c_write(SensorWriteAddress);		//module address write
-	i2c_write(0xF6);						//Register address
-	i2c_stop();
-	_delay_ms(5);							//Restart
-	i2c_start();
-	i2c_write(SensorReadAddress);		//Module address read
-										//Receive:
-	b[0] = i2c_read(0);					//Read MSB
-	b[1] = i2c_read(1);					//Read LSB
-	
-	i2c_stop();
-	
-	//BMP180_RegRead(b, 0xF6, 2);
-		
+	BMP180_RegRead(b, 0xF6, 2);
 	unsigned long int ret = (b[0]<<8) + b[1];
 	
-	return ret;
+	return BMP180_CalculateTrueTemperature(ret);
 }
 
 unsigned char BMP180_GetDeviceId()
@@ -145,8 +118,6 @@ void BMP180_RegWrite(unsigned char reg, unsigned char val)
 //Private
 void BMP180_RegRead(unsigned char* RetVal, unsigned char reg, unsigned int NumOfBytes )
 {
-	//unsigned char b[NumOfBytes];	
-	
 	i2c_start();						//S
 	i2c_write(SensorWriteAddress);		//module address write
 	i2c_write(reg);						//Register address
@@ -166,7 +137,7 @@ void BMP180_RegRead(unsigned char* RetVal, unsigned char reg, unsigned int NumOf
 }
 
 
-short bmp180_get_temperature(unsigned long ut)
+short BMP180_CalculateTrueTemperature(unsigned long ut)
 {
 	short temperature;
 	long x1, x2;
@@ -179,7 +150,7 @@ short bmp180_get_temperature(unsigned long ut)
 	return temperature;
 }
 
-long bmp180_get_pressure(unsigned long up)
+long BMP180_CalculateTruePressure(unsigned long up)
 {
 	long pressure, x1, x2, x3, b3, b6;
 	unsigned long b4, b7;
