@@ -4,17 +4,17 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{a73ff7c7-3d8e-48d2-a856-c90aa5801e99}</ProjectGuid>
-    <avrdevice>ATmega32U4</avrdevice>
+    <ProjectGuid>{f407c707-7ee4-4f83-a8ee-e76583ecbcd5}</ProjectGuid>
+    <avrdevice>ATmega32</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
     <Language>C</Language>
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>RadioTest</AssemblyName>
-    <Name>RadioTest</Name>
-    <RootNamespace>RadioTest</RootNamespace>
+    <AssemblyName>RadioServerTest</AssemblyName>
+    <Name>RadioServerTest</Name>
+    <RootNamespace>RadioServerTest</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
@@ -37,6 +37,21 @@
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.stk500</avrtool>
+    <com_atmel_avrdbg_tool_stk500>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <IspClock>773610</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.stk500</ToolType>
+      <ToolNumber>
+      </ToolNumber>
+      <ToolName>STK500</ToolName>
+    </com_atmel_avrdbg_tool_stk500>
+    <avrtoolinterface>ISP</avrtoolinterface>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -96,19 +111,19 @@
     <Compile Include="GlobalDefines.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ProtocolLayer.c">
+    <Compile Include="lcd162.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ProtocolLayer.h">
+    <Compile Include="lcd162.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RadioSource.c">
+    <Compile Include="RadioServerTest.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RadioSource.h">
+    <Compile Include="ServerProtocol.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="RadioTest.c">
+    <Compile Include="ServerProtocol.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="uart.c">
