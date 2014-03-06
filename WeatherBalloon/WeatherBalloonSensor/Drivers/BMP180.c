@@ -5,11 +5,28 @@
  *  Author: Casper
  */ 
 
-#define F_CPU 3686400
+#define SealevelPressure 101325
+
+#undef MEGA32_DEV
+#define MEGA32_DEV True
+
+#undef DEBUG_OUT
+#define DEBUG_OUT True
+
+#ifdef MEGA32_DEV
+  #include "uart.h"
+  #define F_CPU 3686400
+#else
+  //#include "uart.h"
+  //#define F_CPU 1600000
+#endif
+
 #include <util/delay.h>
+#include <math.h>
+#include <stdlib.h>
 
 #include "BMP180.h"
-#include <stdlib.h>
+
 
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
@@ -25,6 +42,18 @@ void BMP180_GetCalibrationParams();
 /* Global variables */
 struct bmp180_calibration_params cal_param;
 
+
+void BMP180_Init()
+{
+	i2c_init();
+	
+	_delay_ms(10);
+	
+	BMP180_GetCalibrationParams();
+	
+	_delay_ms(10);
+}
+
 void BMP180_GetCalibrationParams() 
 {
 	unsigned char temp[2];
@@ -32,10 +61,11 @@ void BMP180_GetCalibrationParams()
 	//AC1
 	BMP180_RegRead(temp, 0xAA, 2);
 	cal_param.ac1 = (temp[0]<<8) + temp[1];
-	
+		
 	//AC2
 	BMP180_RegRead(temp, 0xAC, 2);
 	cal_param.ac2 = (temp[0]<<8) + temp[1];
+	
 	
 	//AC3
 	BMP180_RegRead(temp, 0xAE, 2);
@@ -76,14 +106,33 @@ void BMP180_GetCalibrationParams()
 	//Other values
 	cal_param.oversampling_setting = 0;
 	cal_param.param_b5 = 0;
-}
-
-
-void BMP180_Init()
-{
-	i2c_init();
 	
-	BMP180_GetCalibrationParams();
+	#ifdef DEBUG_OUT
+	SendString("Calibration data: ");
+	SendString("\r\nAC1: ");
+	SendInteger(cal_param.ac1);
+	SendString("\r\nAC2: ");
+	SendInteger(cal_param.ac2);
+	SendString("\r\nAC3: ");
+	SendInteger(cal_param.ac3);
+	SendString("\r\nAC4: ");
+	SendInteger((int)cal_param.ac4);
+	SendString("\r\nAC5: ");
+	SendInteger(cal_param.ac5);
+	SendString("\r\nAC6: ");
+	SendInteger(cal_param.ac6);
+	SendString("\r\nB1: ");
+	SendInteger(cal_param.b1);
+	SendString("\r\nB2: ");
+	SendInteger(cal_param.b2);
+	SendString("\r\nMB: ");
+	SendInteger(cal_param.mb);
+	SendString("\r\nMC: ");
+	SendInteger(cal_param.mc);
+	SendString("\r\nMD: ");
+	SendInteger(cal_param.md);
+	SendString("\r\n");
+	#endif
 }
 
 double BMP180_GetTemperature()
@@ -95,7 +144,34 @@ double BMP180_GetTemperature()
 	BMP180_RegRead(b, 0xF6, 2);
 	unsigned long int ret = (b[0]<<8) + b[1];
 	
-	return BMP180_CalculateTrueTemperature(ret) * 0.1;
+	return BMP180_CalculateTrueTemperature(ret);
+}
+
+
+long BMP180_GetPressure()
+{
+	BMP180_RegWrite(0xF4, (0x34));
+	_delay_ms(4.5);
+	
+	unsigned char b[2] = {' ', ' '};
+	BMP180_RegRead(b, 0xF6, 2);
+	long ret = (b[0]<<8) + b[1];
+	
+	return BMP180_CalculateTruePressure(ret);
+}
+
+double BMP180_GetAltitude()
+{
+	//SendString("\r\nReady altitude\r\n");
+	
+	long Pressure = BMP180_GetPressure();
+	
+	double PressureDouble = (double)Pressure;
+		
+	//long Altitude = 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
+	double Altitude = 44330 * (1- pow((double)(PressureDouble/101325), ((double)1/5.255)));
+	
+	return Altitude;
 }
 
 unsigned char BMP180_GetDeviceId()
@@ -153,39 +229,75 @@ short BMP180_CalculateTrueTemperature(unsigned long ut)
 
 long BMP180_CalculateTruePressure(unsigned long up)
 {
-	long pressure, x1, x2, x3, b3, b6;
+	//long pressure, x1, x2, x3, b3, b6;
+	//unsigned long b4, b7;
+//
+	//b6 = cal_param.param_b5 - 4000;
+	///*****calculate B3************/
+	//x1 = (b6*b6) >> 12;
+	//x1 *= cal_param.b2;
+	//x1 >>= 11;
+//
+	//x2 = (cal_param.ac2*b6);
+	//x2 >>= 11;
+//
+	//x3 = x1 + x2;
+//
+	//b3 = (((((long)cal_param.ac1)*4 + x3) << \
+	//cal_param.oversampling_setting)+2) >> 2;
+//
+	///*****calculate B4************/
+	//x1 = (cal_param.ac3 * b6) >> 13;
+	//x2 = (cal_param.b1 * ((b6*b6) >> 12)) >> 16;
+	//x3 = ((x1 + x2) + 2) >> 2;
+	//b4 = (cal_param.ac4 * (unsigned long) (x3 + 32768)) >> 15;
+//
+	//b7 = ((unsigned long)(up - b3) * (50000>>cal_param.oversampling_setting));
+	//if (b7 < 0x80000000)
+	//pressure = (b7 << 1) / b4;
+	//else
+	//pressure = (b7 / b4) << 1;
+//
+	//x1 = pressure >> 8;
+	//x1 *= x1;
+	//x1 = (x1 * PARAM_MG) >> 16;
+	//x2 = (pressure * PARAM_MH) >> 16;
+	//pressure += (x1 + x2 + PARAM_MI) >> 4;/* pressure in Pa*/
+	//return pressure;
+	//
+	
+	//Own calc
+	long p, x1, x2, x3, b3, b6;
 	unsigned long b4, b7;
-
-	b6 = cal_param.param_b5 - 4000;
-	/*****calculate B3************/
-	x1 = (b6*b6) >> 12;
-	x1 *= cal_param.b2;
-	x1 >>= 11;
-
-	x2 = (cal_param.ac2*b6);
-	x2 >>= 11;
-
+	
+	b6 = cal_param.param_b5-4000;
+	
+	x1 = ((cal_param.b2 * (b6 * (b6/pow(2, 12))))/pow(2, 11));
+	x2 = cal_param.ac2 * (b6/pow(2,11));
 	x3 = x1 + x2;
-
-	b3 = (((((long)cal_param.ac1)*4 + x3) << \
-	cal_param.oversampling_setting)+2) >> 2;
-
-	/*****calculate B4************/
-	x1 = (cal_param.ac3 * b6) >> 13;
-	x2 = (cal_param.b1 * ((b6*b6) >> 12)) >> 16;
-	x3 = ((x1 + x2) + 2) >> 2;
-	b4 = (cal_param.ac4 * (unsigned long) (x3 + 32768)) >> 15;
-
-	b7 = ((unsigned long)(up - b3) * (50000>>cal_param.oversampling_setting));
-	if (b7 < 0x80000000)
-	pressure = (b7 << 1) / b4;
+	
+	b3 = (((cal_param.ac1*4+x3)<<cal_param.oversampling_setting)+2)/4 ;
+	
+	x1 = cal_param.ac3 * b6 / pow(2, 13);
+	x2 = (cal_param.b1 * (b6 * b6 / pow(2, 12)))/pow(2, 16);
+	x3 = ((x1 + x2) + 2) / pow(2,2);
+	
+	b4 = cal_param.ac4 * (unsigned long)(x3 + 32768) / pow(2, 15);
+	b7 = ((unsigned long)up-b3)*(50000 >> cal_param.oversampling_setting);
+	if(b7 < 0x80000000)
+	{
+		p = (b7*2)/b4;
+	}
 	else
-	pressure = (b7 / b4) << 1;
-
-	x1 = pressure >> 8;
-	x1 *= x1;
-	x1 = (x1 * PARAM_MG) >> 16;
-	x2 = (pressure * PARAM_MH) >> 16;
-	pressure += (x1 + x2 + PARAM_MI) >> 4;/* pressure in Pa*/
-	return pressure;
-}
+	{
+		p = (b7/b4)*2;
+	}
+	
+	x1 = (p/pow(2,8))*(p/pow(2,8));
+	x1 = (x1 * 3038)/pow(2,16);
+	x2 = (-7357 * p)/pow(2,16);
+	p = p + (x1+x2+3791)/pow(2,4);
+	
+	return p;
+	
+	}
