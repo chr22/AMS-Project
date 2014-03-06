@@ -17,14 +17,14 @@ int main(void)
 	int err = 0;
 	InitUART(9600, 8);
 	//SendString("New Hello.");
-	SendChar(0x10);
-	SendChar(0x10);
-	SendChar(0x10);
-	err = PerformFullTransmission(0x20, 80000, 3003, 3276);
+	//SendChar(0x10);
+	//SendChar(0x10);
+	//SendChar(0x10);
+	err = PerformFullTransmission(0x20, 2012, 2014, 3276);
 	
 	if(!(err <0))
 	{
-		SendString("DONE");
+		//SendString("DONE");
 	}
 	//return 1;
     while(1)

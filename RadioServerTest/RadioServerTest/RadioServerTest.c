@@ -30,15 +30,12 @@ int main(void)
 	
     while(1)
     {
-		//k = ReadChar();
-		//LCDClear();
-		//LCDDispChar(k);
-        //TODO:: Please write your application code 
+
     }
 }
 
 ISR(USART_RXC_vect)
 {
-	//LCDDispChar('a');
+	//LCDDispChar(UDR);
 	HandleIncoming(UDR);
 }

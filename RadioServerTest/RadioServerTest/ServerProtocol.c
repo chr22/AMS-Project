@@ -43,50 +43,67 @@ void HandleReadyCommand()
 	sensorID = ReadChar();
 	numToRead = ReadChar();
 	
+	/*
 	LCDDispInteger((int)sensorID);
 	LCDDispString(" ");
 	LCDDispInteger((int)numToRead);
+	*/
 	
+	//Send server ready
+	SendChar(sensorID);
 	
-	SendChar(0x20);
-	
-	firstCommand = ReadChar();
-	LCDDispInteger((int)firstCommand);
-	
-	//err = HandleTransmission(sensorID, (int)numToRead);
-		
-	
+	err = HandleTransmission(sensorID, (int)numToRead);
 	sei();
 }
 
 int HandleTransmission(char sensorID, int numToRead)
 {
 	int i = 0;
+	int err = 0;
 	char cmd = 0x00;
 	
 	MeasurementStruct tmpMeasureStruct;
 	//MeasurementStruct sensorArray[numToRead];
-	//LCDClear();
-	//LCDDispInteger(numToRead);
+	LCDClear();
+	
 	while(i < numToRead)
 	{
 		cmd = ReadChar();
 		++i;
-		LCDClear();
-		LCDDispInteger(i);
 		HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);
-		
+		err = SendToDisplay(&tmpMeasureStruct);
 	}
 	
 	SendAck(sensorID);
-	
-	LCDDispString("Cmd: ");
-	LCDDispInteger((int)cmd);
-	LCDDispString(" Len: ");
-	LCDDispInteger(tmpMeasureStruct.arrayLength);
+	//LCDClear();
+	//LCDDispString("Cmd: ");
+	//LCDDispInteger((int)cmd);
+
 			
+	return err;
+}
+
+int SendToDisplay(MeasurementStruct * sensorStruct)
+{
+	/*
+	switch(sensorStruct->cmd)
+	{
+		case TEMP_CMD:
+			//Call Temp
+		case ALT_CMD:
+			//Call Alt
+		case PRES_CMD:
+			//Call Pres
+		default:
+	}
+	*/
+	//Call Display functions here..	
+	LCDDispString("Len: ");
+	LCDDispInteger(sensorStruct->arrayLength);
+	LCDDispString(" Val: ");
+	LCDDispInteger(sensorStruct->sensorValue);
+	LCDGotoXY(0,1);
 	return 1;
-	
 }
 
 void SendAck(char sensorID)
@@ -111,7 +128,22 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 		(*returnStruct).valueArray[i] = ReadChar();
 	}	
 	
+	(*returnStruct).sensorValue = CalculateIntFromBytes((*returnStruct).valueArray, bytesInTransmission);
+	
 	return 1;
+}
+
+int CalculateIntFromBytes(char * byteArray, int length)
+{
+	int i = 0;
+	int result = 0;
+	
+	for (i = 0; i < length; ++i)
+	{
+		result += ((int)(*(byteArray + i))) << (length-1-i)*8;
+	}
+	
+	return result;
 }
 
 int GetBytesFromCMD(char cmd)

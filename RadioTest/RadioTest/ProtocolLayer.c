@@ -52,35 +52,28 @@ int ConvertIntToCharArray(long measureVal, int transmissionLength, char * buf)
 	{
 		*(buf + i) = (measureVal >> ((transmissionLength-1-i) * 8)) & 0xFF; 
 	}
-/*	
+	
+	/*	
 	*(buf + 0) = (measureVal >> (transmissionLength-1-0 * 8)) & 0xFF; 
 	*(buf + 1) = (measureVal >> (transmissionLength-1-1 * 8)) & 0xFF; 
 	*(buf + 2) = (measureVal >> (transmissionLength-1-2 * 8)) & 0xFF; 
-	
-	buf[0] = (measureVal >> 24) & 0xFF;
-	buf[1] = (measureVal >> 16) & 0xFF;
-	buf[2] = (measureVal >> 8) & 0xFF;
-	buf[3] = (measureVal) & 0xFF;
-	
-	buf[0] = 0x50;
-	buf[1] = 0x60;
-	buf[2] = 0x70;
-	buf[3] = 0x80;
 	*/
+	
 	return 1;
 }
 
-int TransmitMeasurement(char measureType, long measureVal)
+int TransmitMeasurement(char measureType, long measureVal, char id)
 {
 	int err = -1;
 	int i = 0;
 	//int retryCount = 0;
 	int transmissionLength = CalculateTransmissionLength(measureVal);
-	//char measureInBytes[transmissionLength];
-	char measureInBytes[4];
+	char measureInBytes[transmissionLength];
+	//char measureInBytes[4];
 	err = ConvertIntToCharArray(measureVal, transmissionLength, measureInBytes);	
 	
 	SendChar(measureType);
+	//SendChar(id);
 	SendChar((char)transmissionLength);
 	for(i = 0; i < transmissionLength; ++i)
 	{
