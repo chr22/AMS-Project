@@ -5,7 +5,6 @@
  *  Author: Casper
  */ 
 
-
 #define SealevelPressure 101325
 
 #undef MEGA32_DEV
@@ -58,7 +57,6 @@ void BMP180_Init()
 	
 	BasePressure = BMP180_GetPressure();
 	BaseAltitude = BMP180_GetTemperature();
-	
 }
 
 void BMP180_GetCalibrationParams() 
