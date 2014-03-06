@@ -11,7 +11,7 @@
 
 int main(void)
 {	
-	WriteSensorDataFloat(0.32, 432.2, 123.2112);
+	WriteSensorDataFloat(10.30, 432.2, 1123.2112);
 	
     while(1)
     {

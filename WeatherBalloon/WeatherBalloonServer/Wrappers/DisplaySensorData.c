@@ -42,21 +42,21 @@ void WriteSensorData(char* tempStr, char* presStr, char* altStr)
 
 void WriteTempFloat(float temp)
 {
-	char arr[6];	
+	char arr[7];		
 	ConvertFloatToString(temp, arr);
 	WriteTemp(arr);	
 }
 
 void WritePressureFloat(float pres)
 {
-	char arr[6];
+	char arr[7];
 	ConvertFloatToString(pres, arr);
 	WritePressure(arr);
 }
 
 void WriteAltitudeFloat(float alt)
 {
-	char arr[6];
+	char arr[7];
 	ConvertFloatToString(alt, arr);
 	WriteAltitude(arr);
 }
@@ -64,7 +64,9 @@ void WriteAltitudeFloat(float alt)
 void WriteSensorDataFloat(float temp, float pres, float alt)
 {
 	WriteTempFloat(temp);
+	NewLine();
 	WritePressureFloat(pres);
+	NewLine();
 	WriteAltitudeFloat(alt);
 }
 
@@ -75,24 +77,40 @@ void ConvertFloatToString(float temp, char* retArray)
 		int intTemp = (int) temp;
 		int floatTemp = (temp - (int) temp) * 100;
 		
-		int a = intTemp / 100;
-		int b = (intTemp % 100) / 10;
-		int c = (intTemp % 100) % 10;	
-				
-		if (a != 0)
+		int thousands = intTemp / 1000;
+		intTemp %= 1000;
+		int hundreds = intTemp / 100;
+		int tens = (intTemp % 100) / 10;
+		int ones = (intTemp % 100) % 10;	
+						
+		if (thousands != 0)
 		{
-			itoa(a, retArray++, 10);	
-			itoa(b, retArray++, 10);
-			itoa(c, retArray++, 10);	
+			itoa(thousands, retArray++, 10);
+		}	
+		else {
+			*retArray = ' ';
+			retArray++;
+		}	
+		if (hundreds != 0)
+		{
+			itoa(hundreds, retArray++, 10);	
+			itoa(tens, retArray++, 10);
+			itoa(ones, retArray++, 10);	
 		}
-		else if (b != 0) 
+		else if (tens != 0) 
 		{
-			itoa(b, retArray++, 10);
-			itoa(c, retArray++, 10);	
+			*retArray = ' ';
+			retArray++;
+			itoa(tens, retArray++, 10);
+			itoa(ones, retArray++, 10);	
 		}	
 		else
 		{
-			itoa(c, retArray++, 10);		
+			*retArray = ' ';
+			retArray++;
+			*retArray = ' ';
+			retArray++;
+			itoa(ones, retArray++, 10);		
 		}		
 		
 		if (floatTemp > 0)
@@ -104,10 +122,8 @@ void ConvertFloatToString(float temp, char* retArray)
 			itoa(d, retArray++, 10);							
 						
 			int e = (floatTemp % 100) % 10;						
-			if (e != 0)
-			{
-				itoa(e, retArray++, 10);				
-			}			
+			
+			itoa(e, retArray++, 10);										
 		}
 		
 		//WriteTemp(arr);		
