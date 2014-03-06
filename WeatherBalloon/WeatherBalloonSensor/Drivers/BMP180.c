@@ -42,6 +42,8 @@ void BMP180_GetCalibrationParams();
 /* Global variables */
 struct bmp180_calibration_params cal_param;
 
+long BasePressure;
+long BaseAltitude;
 
 void BMP180_Init()
 {
@@ -52,6 +54,10 @@ void BMP180_Init()
 	BMP180_GetCalibrationParams();
 	
 	_delay_ms(10);
+	
+	BasePressure = BMP180_GetPressure();
+	BaseAltitude = BMP180_GetTemperature();
+	
 }
 
 void BMP180_GetCalibrationParams() 
@@ -116,7 +122,7 @@ void BMP180_GetCalibrationParams()
 	SendString("\r\nAC3: ");
 	SendInteger(cal_param.ac3);
 	SendString("\r\nAC4: ");
-	SendInteger((int)cal_param.ac4);
+	SendInteger(cal_param.ac4);
 	SendString("\r\nAC5: ");
 	SendInteger(cal_param.ac5);
 	SendString("\r\nAC6: ");
@@ -142,8 +148,11 @@ double BMP180_GetTemperature()
 	
 	unsigned char b[2];
 	BMP180_RegRead(b, 0xF6, 2);
-	unsigned long int ret = (b[0]<<8) + b[1];
+	unsigned long MSB = (unsigned long)b[0];
+	unsigned long LSB = (unsigned long)b[1];
 	
+	unsigned long ret = (MSB<<8) + LSB;
+		
 	return BMP180_CalculateTrueTemperature(ret);
 }
 
@@ -155,7 +164,10 @@ long BMP180_GetPressure()
 	
 	unsigned char b[2] = {' ', ' '};
 	BMP180_RegRead(b, 0xF6, 2);
-	long ret = (b[0]<<8) + b[1];
+	long MSB = (long)b[0];
+	long LSB = (long)b[1];
+	
+	long ret = (MSB<<8) + LSB;
 	
 	return BMP180_CalculateTruePressure(ret);
 }
@@ -167,9 +179,14 @@ double BMP180_GetAltitude()
 	long Pressure = BMP180_GetPressure();
 	
 	double PressureDouble = (double)Pressure;
+		//101325
+	double PressureDiff = (PressureDouble/102600);
+	double exp = 1/5.255;
+	double power = pow(PressureDiff, exp);
+	double x = (1-power);
 		
 	//long Altitude = 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
-	double Altitude = 44330 * (1- pow((double)(PressureDouble/101325), ((double)1/5.255)));
+	double Altitude = 44330 * x;
 	
 	return Altitude;
 }
