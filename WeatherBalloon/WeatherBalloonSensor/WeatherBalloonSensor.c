@@ -21,29 +21,24 @@
 
 int main(void)
 {
+	int err = 0;
 	InitUART(9600, 8);
+	//SendString("New Hello.");
+	//SendChar(0x10);
+	//SendChar(0x10);
+	//SendChar(0x10);
+	err = PerformFullTransmission(0x20, 2012, 2014, 3276);
 	
-	BMP180_Init();
+	if(!(err < 0))
+	{
+		//SendString("DONE");
+	}
+	//return 1;
+	while(1)
+	{
+		//SendString("Hello!");
+		//TODO:: Please write your application code
+	}
 	
-		
-    while(1)
-    {
-		SendString("\r\n--------------------------\r\n");
-		SendString("Temperature in C: ");
-		SendInteger((int)BMP180_GetTemperature()/10);
-		SendString("\r\n");
-		
-		SendString("Pressure in hPa: ");
-		SendInteger((int)(BMP180_GetPressure()/100));
-		SendString("\r\n");
-		
-		SendString("Altitude in km: ");
-		SendInteger((int)(BMP180_GetAltitude()));
-		SendString("\r\n");
-		
-		SendString("\r\n");
-	
-		_delay_ms(1500);
-    }
 	return 1;
 }

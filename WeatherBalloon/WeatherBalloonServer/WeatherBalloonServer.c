@@ -15,23 +15,30 @@
 
 int main(void)
 {
-	int a = log(842)/log(2) + 1;
+	//WriteTemp("123");
 	
-	
+	char k = 'b';
 	InitUART(9600, 8);
-	LCDInit();
-	//LCDDispString("Hello World!");
-	LCDDispInteger(a);
+	//LCDInit();
+	//Enable receive-byte interrupt
+	UCSRB |= (1 << RXCIE);
+	//SendString("Hullo");
+	SendChar(0x50);
+	SendChar(0x50);
+	//SendChar(0x50);
 	
+	//LCDDispString("Main");
+	WriteToDisplay("Main");
+	sei();
 	
-    while(1)
-    {
-        
-    }
-	return 0;
+	while(1)
+	{
+
+	}
 }
 
 ISR(USART_RXC_vect)
 {
-	//HandleIncoming(UDR);
+	//LCDDispChar(UDR);
+	HandleIncoming(UDR);
 }

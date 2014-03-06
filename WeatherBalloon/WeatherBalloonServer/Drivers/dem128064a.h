@@ -9,9 +9,9 @@ Date: 5.2.2014
 #ifndef GRAPHICdefine
 #define GRAPHICdefine
 
-#define DATA_OUT     PORTD
-#define DATA_IN      PIND
-#define DATA_DDR     DDRD
+#define DATA_OUT    PORTB //PORTD
+#define DATA_IN     PINB //PIND
+#define DATA_DDR    DDRB //DDRD
 
 #define CONTROL_PORT PORTA
 #define CONTROL_DDR  DDRA
