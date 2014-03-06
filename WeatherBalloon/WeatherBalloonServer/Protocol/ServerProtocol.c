@@ -102,7 +102,7 @@ int SendToDisplay(MeasurementStruct * sensorStruct)
 			WritePressure(sensorStruct->valueArray);
 			break;
 		default:
-			WriteToDisplay("????");
+			WriteToDisplay("1234");
 			NewLine();
 			break;			
 	}

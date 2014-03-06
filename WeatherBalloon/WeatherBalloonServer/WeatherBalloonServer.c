@@ -11,11 +11,13 @@
 #include "Drivers/uart.h"
 #include "Drivers/lcd162.h"
 #include "Drivers/dem128064a.h"
+#include "Wrappers/DisplaySensorData.h"
 
 
 int main(void)
 {
 	//WriteTemp("123");
+	
 	
 	char k = 'b';
 	InitUART(9600, 8);
