@@ -15,7 +15,7 @@
 #define	FULL_TRANSMIT_NUM	0x03
 #define RADIO_TIMEOUT_MS	5000
 
-int PerformFullTransmission(char id, int temp, int alt, int pres);
+int PerformFullTransmission(char id, long temp, long alt, long pres);
 int TemperatureSend(char temp[]);
 int DataReady(char id, char numToTransmit);
 int WaitForServerReady(int timeOutMs);

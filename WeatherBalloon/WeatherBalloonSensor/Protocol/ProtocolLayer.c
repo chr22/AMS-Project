@@ -7,8 +7,8 @@
 
 #include <math.h>
 #include "ProtocolLayer.h"
-#include "../Util/GlobalDefines.h"
-#include "../Drivers/uart.h"
+#include "GlobalDefines.h"
+#include "uart.h"
 
 int WaitForServerReady(int timeOutMs)
 {
@@ -50,22 +50,30 @@ int ConvertIntToCharArray(long measureVal, int transmissionLength, char * buf)
 	int i = 0;
 	for (i = 0; i < transmissionLength; ++i)
 	{
-		*(buf + i) = (measureVal >> (transmissionLength-1-i * 8)) & 0xFF; 
+		*(buf + i) = (measureVal >> ((transmissionLength-1-i) * 8)) & 0xFF; 
 	}
+	
+	/*	
+	*(buf + 0) = (measureVal >> (transmissionLength-1-0 * 8)) & 0xFF; 
+	*(buf + 1) = (measureVal >> (transmissionLength-1-1 * 8)) & 0xFF; 
+	*(buf + 2) = (measureVal >> (transmissionLength-1-2 * 8)) & 0xFF; 
+	*/
 	
 	return 1;
 }
 
-int TransmitMeasurement(char measureType, long measureVal)
+int TransmitMeasurement(char measureType, long measureVal, char id)
 {
 	int err = -1;
 	int i = 0;
 	//int retryCount = 0;
 	int transmissionLength = CalculateTransmissionLength(measureVal);
 	char measureInBytes[transmissionLength];
+	//char measureInBytes[4];
 	err = ConvertIntToCharArray(measureVal, transmissionLength, measureInBytes);	
 	
 	SendChar(measureType);
+	//SendChar(id);
 	SendChar((char)transmissionLength);
 	for(i = 0; i < transmissionLength; ++i)
 	{

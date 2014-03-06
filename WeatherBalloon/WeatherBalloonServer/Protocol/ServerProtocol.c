@@ -5,16 +5,14 @@
  *  Author: Nikolaj
  */ 
 #include <avr/interrupt.h>
-#include "../Protocol/ServerProtocol.h"
-#include "../Drivers/uart.h"
-#include "../Util/GlobalDefines.h"
-#include "../Drivers/lcd162.h"
+#include "ServerProtocol.h"
+#include "uart.h"
+#include "GlobalDefines.h"
+#include "lcd162.h"
 
 
 void HandleIncoming(char cmd)
 {
-	//SendChar(cmd);
-	
 	switch(cmd)
 	{
 		case RDY_CMD:
@@ -37,18 +35,24 @@ void HandleIncoming(char cmd)
 void HandleReadyCommand()
 {
 	char sensorID, numToRead;
+	char firstCommand = 0x00;
+	
 	int err = 0;
-	cli();
-	//SendString("HandleReady()");
+	//cli();
+	//SendChar(0x80);
 	sensorID = ReadChar();
 	numToRead = ReadChar();
 	
-	//LCDDispInteger((int)sensorID);
-	//LCDDispString(" ");
-	//LCDDispInteger((int)numToRead);
-	err = HandleTransmission(sensorID, (int)numToRead);
-		
+	/*
+	LCDDispInteger((int)sensorID);
+	LCDDispString(" ");
+	LCDDispInteger((int)numToRead);
+	*/
 	
+	//Send server ready
+	SendChar(sensorID);
+	
+	err = HandleTransmission(sensorID, (int)numToRead);
 	sei();
 }
 
@@ -58,53 +62,48 @@ int HandleTransmission(char sensorID, int numToRead)
 	int err = 0;
 	char cmd = 0x00;
 	
-	//Debugging chars
-	unsigned int tmp_temp = 0x00;
-	char tmp_id = 0x00;
-	char tmp_cmd = 0x00;
-	char tmp_arr[2];
-	char test  = 0x01;
-	
-	tmp_arr[0] = 0x01;
-	tmp_arr[1] = 0x10;
-	
 	MeasurementStruct tmpMeasureStruct;
-	MeasurementStruct sensorArray[numToRead];
-	
-	//SendChar(RDY_CMD);
-	SendChar(sensorID);
+	//MeasurementStruct sensorArray[numToRead];
+	LCDClear();
 	
 	while(i < numToRead)
 	{
 		cmd = ReadChar();
-		HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);
-		tmp_temp = (unsigned int)(tmpMeasureStruct.valueArray[0] << 8) + (tmpMeasureStruct.valueArray[1]);
-		//tmp_temp = (unsigned int)tmpMeasureStruct.arrayLength;
-		//tmp_temp = (unsigned int)test;
-		sensorArray[i] = tmpMeasureStruct;
 		++i;
+		HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);
+		err = SendToDisplay(&tmpMeasureStruct);
 	}
+	
 	SendAck(sensorID);
-	
-	//tmp_temp = 20;
-	tmp_cmd = cmd;
-	tmp_id	= sensorID;
-	
-	//tmp_temp = (unsigned int)((sensorArray[0].valueArray[0] << 8) + (sensorArray[0].valueArray[1]));
-	//tmp_temp = (unsigned int)((tmp_arr[0] << 8) + (tmp_arr[1]));
-	LCDClear();
-	LCDDispString("ID: ");
-	LCDDispInteger((int)tmp_id);
-	LCDDispString("  ");
-	LCDDispInteger((unsigned int)tmp_temp);
-	
-	
 	//LCDClear();
-	
-	
-	
+	//LCDDispString("Cmd: ");
+	//LCDDispInteger((int)cmd);
+
+			
+	return err;
+}
+
+int SendToDisplay(MeasurementStruct * sensorStruct)
+{
+	/*
+	switch(sensorStruct->cmd)
+	{
+		case TEMP_CMD:
+			//Call Temp
+		case ALT_CMD:
+			//Call Alt
+		case PRES_CMD:
+			//Call Pres
+		default:
+	}
+	*/
+	//Call Display functions here..	
+	LCDDispString("Len: ");
+	LCDDispInteger(sensorStruct->arrayLength);
+	LCDDispString(" Val: ");
+	LCDDispInteger(sensorStruct->sensorValue);
+	LCDGotoXY(0,1);
 	return 1;
-	
 }
 
 void SendAck(char sensorID)
@@ -118,10 +117,8 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 	int bytesInTransmission = 0;
 	int i = 0;
 	
-	bytesInTransmission = GetBytesFromCMD(cmd);
-	
-	//Debug
-	bytesInTransmission = 2;
+	//First byte after command is length field
+	bytesInTransmission = (int)ReadChar();
 	
 	(*returnStruct).cmd = cmd;
 	(*returnStruct).arrayLength = bytesInTransmission;
@@ -131,11 +128,22 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 		(*returnStruct).valueArray[i] = ReadChar();
 	}	
 	
-	//For debugging
-	//(*returnStruct).valueArray[0] = 0x01;
-	//(*returnStruct).valueArray[1] = 0x10;
+	(*returnStruct).sensorValue = CalculateIntFromBytes((*returnStruct).valueArray, bytesInTransmission);
 	
 	return 1;
+}
+
+int CalculateIntFromBytes(char * byteArray, int length)
+{
+	int i = 0;
+	int result = 0;
+	
+	for (i = 0; i < length; ++i)
+	{
+		result += ((int)(*(byteArray + i))) << (length-1-i)*8;
+	}
+	
+	return result;
 }
 
 int GetBytesFromCMD(char cmd)

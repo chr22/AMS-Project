@@ -9,11 +9,11 @@
 
 #include "ProtocolLayer.h"
 #include "RadioSource.h"
-#include "../Util/GlobalDefines.h"
-#include "../Drivers/uart.h"
+#include "GlobalDefines.h"
+#include "uart.h"
 #include <math.h>
 
-int PerformFullTransmission(char id, int temp, int alt, int pres)
+int PerformFullTransmission(char id, long temp, long alt, long pres)
 {
 	int retryCount = 0;
 	int err = 0;
@@ -27,10 +27,10 @@ int PerformFullTransmission(char id, int temp, int alt, int pres)
 	
 	
 	//SendString("Ready to transmit temperatures.\n");
-	TransmitMeasurement(TEMP_CMD, temp);
-	//TemperatureSend(temp);
-	//AltitudeSend(alt);
-	//PressureSend(pres);
+	TransmitMeasurement(TEMP_CMD, temp, id);
+	//TransmitMeasurement(ALT_CMD, alt, id);
+	//TransmitMeasurement(PRES_CMD, pres);
+
 	
 	err = -1;
 	//SendString("Wait for Ack. \n");

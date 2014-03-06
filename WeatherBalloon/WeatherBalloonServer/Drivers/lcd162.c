@@ -20,7 +20,7 @@
 -----------------------------------------------------------------------*/
 #include <avr/io.h>
 #define F_CPU 3686400
-#include <avr/delay.h>
+#include <util/delay.h>
 // Enabling us to use macro _NOP() to insert the NOP instruction
 #include <avr/cpufunc.h>
 #include "lcd162.h"

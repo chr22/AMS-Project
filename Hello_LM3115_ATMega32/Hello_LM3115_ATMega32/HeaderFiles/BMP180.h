@@ -13,7 +13,7 @@
 
 void BMP180_Init();
 unsigned char BMP180_GetDeviceId();
-unsigned long int BMP180_GetTemperature();
+short BMP180_GetTemperature();
 
 //unsigned char BMP180_RegRead(unsigned char[] RetVal, unsigned char reg, unsigned int NumOfBytes);
 //void BMP180_RegWrite(unsigned char reg, unsigned char val);

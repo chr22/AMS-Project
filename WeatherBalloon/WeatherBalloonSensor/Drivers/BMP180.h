@@ -13,7 +13,9 @@
 
 void BMP180_Init();
 unsigned char BMP180_GetDeviceId();
-unsigned long int BMP180_GetTemperature();
+double BMP180_GetTemperature();
+long BMP180_GetPressure();
+double BMP180_GetAltitude();
 
 //unsigned char BMP180_RegRead(unsigned char[] RetVal, unsigned char reg, unsigned int NumOfBytes);
 //void BMP180_RegWrite(unsigned char reg, unsigned char val);
