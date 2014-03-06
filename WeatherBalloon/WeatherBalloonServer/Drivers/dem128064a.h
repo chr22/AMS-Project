@@ -9,12 +9,12 @@ Date: 5.2.2014
 #ifndef GRAPHICdefine
 #define GRAPHICdefine
 
-#define DATA_OUT    PORTB //PORTD
-#define DATA_IN     PINB //PIND
-#define DATA_DDR    DDRB //DDRD
+#define DATA_OUT     PORTA
+#define DATA_IN      PINA
+#define DATA_DDR     DDRA
 
-#define CONTROL_PORT PORTA
-#define CONTROL_DDR  DDRA
+#define CONTROL_PORT PORTC
+#define CONTROL_DDR  DDRC
 
 // Initialized the display module
 void DisplayInit();
