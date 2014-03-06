@@ -5,11 +5,13 @@
  *  Author: Nikolaj
  */ 
 
-#define MEGA32_DEV True
+#undef MEGA32_DEV
+//#define MEGA32_DEV True
+
 
 #include "./Drivers/uart.h"
-#define F_CPU 3686400
-
+//#define F_CPU 3686400
+#define F_CPU 1600000
 
 #include "./Drivers/BMP180.h"
 
@@ -27,7 +29,13 @@ int main(void)
 	//SendChar(0x10);
 	//SendChar(0x10);
 	//SendChar(0x10);
-	err = PerformFullTransmission(0x20, 2012, 2014, 3276);
+	
+	while (1)
+	{
+		err = PerformFullTransmission(0x20, 2012, 2014, 3276);	
+		_delay_ms(5000);
+	}
+	
 	
 	if(!(err < 0))
 	{
