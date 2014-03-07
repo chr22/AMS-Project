@@ -263,4 +263,5 @@ void ClearScreenWrapper()
 {
 	ClearScreen();
 	SetPositionNum(0);
+	SetLineNum(0);
 }
