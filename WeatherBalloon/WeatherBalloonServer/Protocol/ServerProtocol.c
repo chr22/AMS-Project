@@ -10,6 +10,7 @@
 #include "../Util/GlobalDefines.h"
 
 #include "../Wrappers/DisplaySensorData.h"
+#include "../Wrappers/DisplayWrapper.h"
 
 
 void HandleIncoming(char cmd)
@@ -53,7 +54,7 @@ int HandleTransmission(char sensorID, int numToRead)
 	MeasurementStruct tmpMeasureStruct;
 	//MeasurementStruct sensorArray[numToRead];
 	
-	//todo: some screen clear
+	//ClearScreenSensorData();
 	
 	while(i < numToRead)
 	{

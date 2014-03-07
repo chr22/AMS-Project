@@ -99,9 +99,6 @@
     <Compile Include="Drivers\BMP180.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\GlobalDefines.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Drivers\I2C.c">
       <SubType>compile</SubType>
     </Compile>

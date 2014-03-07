@@ -11,7 +11,7 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
-#include "GlobalDefines.h"
+#include "../Util/GlobalDefines.h"
 #include "uart.h"
 
 // Constants
@@ -67,11 +67,11 @@ unsigned int TempUBRR;
   
   readyReg = 0;
   //Setup of timer0 for interrupts
-  TIMSK0 = (1<<TOIE0);
-  TCNT0	= 0x00;
-  TCCR0A = (1<<CS01) | (1<<CS00);
-  TCCR0B = (1<<CS01) | (1<<CS00);
-  sei();
+  //TIMSK0 = (1<<TOIE0);
+  //TCNT0	= 0x00;
+  //TCCR0A = (1<<CS01) | (1<<CS00);
+  //TCCR0B = (1<<CS01) | (1<<CS00);
+  //sei();
 }
 
 
@@ -179,11 +179,4 @@ int ServerResponse(char moduleId, int timeoutMS)
 {
 	
 	return 1;
-}
-
-
-ISR(TIMER1_OVF_vect)
-{
-	SendChar(0x20);
-	//++readyReg;
 }

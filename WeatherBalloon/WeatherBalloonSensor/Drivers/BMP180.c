@@ -18,7 +18,7 @@
   #define F_CPU 3686400
 #else
   //#include "uart.h"
-  //#define F_CPU 1600000
+  //#define F_CPU 16000000
 #endif
 
 #include <util/delay.h>

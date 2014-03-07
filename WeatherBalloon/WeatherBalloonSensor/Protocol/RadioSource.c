@@ -18,7 +18,7 @@ int PerformFullTransmission(char id, long temp, long alt, long pres)
 	int retryCount = 0;
 	int err = 0;
 	//DataReady(id, FULL_TRANSMIT_NUM);
-	DataReady(id, 1);
+	DataReady(id, 3);
 	err = WaitForServerReady(RADIO_TIMEOUT_MS);
 	if(err < 0)
 	{
@@ -27,9 +27,10 @@ int PerformFullTransmission(char id, long temp, long alt, long pres)
 	
 	
 	//SendString("Ready to transmit temperatures.\n");
+	
 	TransmitMeasurement(TEMP_CMD, temp, id);
-	//TransmitMeasurement(ALT_CMD, alt, id);
-	//TransmitMeasurement(PRES_CMD, pres);
+	TransmitMeasurement(ALT_CMD, alt, id);	
+	TransmitMeasurement(PRES_CMD, pres, id);
 
 	
 	err = -1;

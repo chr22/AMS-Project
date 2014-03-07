@@ -26,8 +26,8 @@ int main(void)
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 	//SendString("Hullo");
-	SendChar(0x50);
-	SendChar(0x50);
+	//SendChar(0x50);
+	//SendChar(0x50);
 	//SendChar(0x50);
 	
 	//LCDDispString("Main");
