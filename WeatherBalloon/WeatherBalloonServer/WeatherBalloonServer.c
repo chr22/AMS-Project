@@ -18,11 +18,11 @@
 int main(void)
 {
 	//WriteTemp("123");
-	
-	
+		
 	char k = 'b';
 	InitUART(9600, 8);
-	//LCDInit();
+
+	LCDInit();
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 	//SendString("Hullo");

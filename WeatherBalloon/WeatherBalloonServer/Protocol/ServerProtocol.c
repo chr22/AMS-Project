@@ -8,28 +8,15 @@
 #include "../Protocol/ServerProtocol.h"
 #include "../Drivers/uart.h"
 #include "../Util/GlobalDefines.h"
-#include "../Drivers/lcd162.h"
+
 #include "../Wrappers/DisplaySensorData.h"
 
 
 void HandleIncoming(char cmd)
 {
-	switch(cmd)
+	if(cmd == RDY_CMD)
 	{
-		case RDY_CMD:
-			HandleReadyCommand();
-			break;
-			
-		case TEMP_CMD:
-		case PRES_CMD:
-		case ID_CMD:
-		case ALT_CMD:
-			//HandleValueCommand(cmd);
-			//break;
-			
-		default:
-			break;
-			//Unknown command
+		HandleReadyCommand();
 	}
 }
 
@@ -65,7 +52,8 @@ int HandleTransmission(char sensorID, int numToRead)
 	
 	MeasurementStruct tmpMeasureStruct;
 	//MeasurementStruct sensorArray[numToRead];
-	LCDClear();
+	
+	//todo: some screen clear
 	
 	while(i < numToRead)
 	{
@@ -76,10 +64,6 @@ int HandleTransmission(char sensorID, int numToRead)
 	}
 	
 	SendAck(sensorID);
-	//LCDClear();
-	//LCDDispString("Cmd: ");
-	//LCDDispInteger((int)cmd);
-
 			
 	return err;
 }
@@ -91,15 +75,15 @@ int SendToDisplay(MeasurementStruct * sensorStruct)
 	{
 		case TEMP_CMD:
 			//Call Temp
-			WriteTemp(sensorStruct->valueArray);
+			WriteTempFloat(sensorStruct->sensorValue);
 			break;
 		case ALT_CMD:
 			//Call Alt
-			WriteAltitude(sensorStruct->valueArray);
+			WriteAltitudeFloat(sensorStruct->sensorValue);
 			break;
 		case PRES_CMD:
 			//Call Pres
-			WritePressure(sensorStruct->valueArray);
+			WritePressureFloat(sensorStruct->sensorValue);
 			break;
 		default:
 			WriteToDisplay("1234");

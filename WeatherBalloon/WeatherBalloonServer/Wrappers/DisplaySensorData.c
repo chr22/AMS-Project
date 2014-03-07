@@ -43,14 +43,14 @@ void WriteSensorData(char* tempStr, char* presStr, char* altStr)
 void WriteTempFloat(float temp)
 {
 	char arr[7];		
-	ConvertFloatToString(temp, arr);
+	ConvertFloatToString(temp/(float)10.00, arr);
 	WriteTemp(arr);	
 }
 
 void WritePressureFloat(float pres)
 {
 	char arr[7];
-	ConvertFloatToString(pres, arr);
+	ConvertFloatToString(pres/(float)100.00, arr);
 	WritePressure(arr);
 }
 
