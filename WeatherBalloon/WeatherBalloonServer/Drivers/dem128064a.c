@@ -346,7 +346,7 @@ void SetNextChar(const char *nextChar, int position, int line)
 	}	
 	if (line > 7)
 	{
-		line = 7;
+		line = 0;
 	}
 	else if (line < 0)
 	{
