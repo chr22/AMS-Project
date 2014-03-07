@@ -31,13 +31,7 @@ void HandleReadyCommand()
 	//SendChar(0x80);
 	sensorID = ReadChar();
 	numToRead = ReadChar();
-	
-	/*
-	LCDDispInteger((int)sensorID);
-	LCDDispString(" ");
-	LCDDispInteger((int)numToRead);
-	*/
-	
+		
 	//Send server ready
 	SendChar(sensorID);
 	

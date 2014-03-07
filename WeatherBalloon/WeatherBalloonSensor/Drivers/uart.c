@@ -147,36 +147,26 @@ char array[7];
 
 /**************************************************/
 
-//Refactor!
-//Make ReadCharWTimeout -ONLY- read a Char. 
-//Handle everything else in "protocol layer"
-
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
-	char readVal = 0x00;
 	readyReg = 0;
+	sei();
 	// Wait for new character received or Timeout overflow
-	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 3))
+	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 2))
 	{ }	
 	
 	//While loop was broken by overflow timer, so we got no response from server.
-	if(readyReg >= 3)
+	if(readyReg >= 2)
 	{
-		//SendString("ReadCharWTimeout(): Broken by overflow. \n");
 		return TIMEOUT_ERR;
 	}
-	else
-	{
-		//SendString("ReadCharWTimeout(): Broken by sent char. \n");
-	}
-	
+	cli();
 	*retVal = UDR1;
 	return 1;
 }
 
-//Reads
-int ServerResponse(char moduleId, int timeoutMS)
+ISR(TIMER1_OVF_vect)
 {
-	
-	return 1;
+	++readyReg;
 }
+

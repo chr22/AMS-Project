@@ -16,7 +16,7 @@
 //#include "./Drivers/BMP180.h"
 #include <avr/interrupt.h>
 #include <util/delay.h>
-
+#include "Protocol/RadioSource.h"
 
 int main(void)
 {
@@ -26,21 +26,12 @@ int main(void)
 	
 	InitUART(9600, 8);
 		
-	//SendString("New Hello.");
-	
  	while (1)
  	{
-		err = PerformFullTransmission(0x20, 11, 22, 33);	
-		//err = PerformFullTransmission(0x20, 2012, 2014, 3276);	
-		//err = PerformFullTransmission(0x20, 2012, 2014, 3276);	
+		err = PerformFullTransmission(0x20, 33, 22, 11);	
  		_delay_ms(3000);
  	}
 	
 	return 1;
 }
 
-ISR(TIMER1_OVF_vect)
-{
-	
-	
-}
