@@ -130,3 +130,8 @@ void ConvertFloatToString(float temp, char* retArray)
 		//return arr;
 	}	
 }
+
+void ClearScreenSensorData()
+{
+	ClearScreenWrapper();
+}
