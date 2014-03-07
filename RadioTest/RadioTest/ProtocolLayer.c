@@ -7,8 +7,8 @@
 
 #include <math.h>
 #include "ProtocolLayer.h"
-#include "../Util/GlobalDefines.h"
-#include "../Drivers/uart.h"
+#include "GlobalDefines.h"
+#include "uart.h"
 
 int WaitForServerReady(int timeOutMs)
 {

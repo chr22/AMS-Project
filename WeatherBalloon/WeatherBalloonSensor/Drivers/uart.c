@@ -184,6 +184,6 @@ int ServerResponse(char moduleId, int timeoutMS)
 
 ISR(TIMER1_OVF_vect)
 {
-	//SendChar(0x20);
-	++readyReg;
+	SendChar(0x20);
+	//++readyReg;
 }

@@ -7,7 +7,8 @@
 #include "../Drivers/I2C.h"
 #include "../Drivers/uart.h"
 #include <avr/io.h>
-#define F_CPU 3686400
+//#define F_CPU 3686400
+#define F_CPU 16000000
 #include <util/delay.h>
 #include <avr/interrupt.h>
 

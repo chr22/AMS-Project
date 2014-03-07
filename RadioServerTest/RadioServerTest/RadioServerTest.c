@@ -1,28 +1,23 @@
 /*
- * WeatherBalloonServer.c
+ * RadioServerTest.c
  *
- * Created: 04-03-2014 11:20:39
+ * Created: 05-03-2014 20:31:13
  *  Author: Nikolaj
  */ 
 
-#include <math.h>
+
 #include <avr/io.h>
-
 #include <avr/interrupt.h>
-#include "Drivers/uart.h"
-#include "Drivers/lcd162.h"
-#include "Drivers/dem128064a.h"
-#include "Wrappers/DisplaySensorData.h"
-
+#include "lcd162.h"
+#include "ServerProtocol.h"
+#include "uart.h"
+#include "GlobalDefines.h"
 
 int main(void)
 {
-	//WriteTemp("123");
-	
-	
 	char k = 'b';
 	InitUART(9600, 8);
-	//LCDInit();
+	LCDInit();
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 	//SendString("Hullo");
@@ -30,14 +25,13 @@ int main(void)
 	SendChar(0x50);
 	//SendChar(0x50);
 	
-	//LCDDispString("Main");
-	WriteToDisplay("Main");
+	LCDDispString("Main");
 	sei();
 	
-	while(1)
-	{
+    while(1)
+    {
 
-	}
+    }
 }
 
 ISR(USART_RXC_vect)

@@ -23,7 +23,7 @@ int main(void)
 	UCSRB |= (1 << RXCIE); 
 	
 	LCDDispString("Hello world!");
-	LCDClear();
+	//LCDClear();
 	//SendString("Program begun.");
 	sei();
 	
@@ -35,5 +35,7 @@ int main(void)
 
 ISR(USART_RXC_vect)
 {
+	LCDClear();
+	LCDDispString("Interrupt");
 	HandleIncoming(UDR);
 }

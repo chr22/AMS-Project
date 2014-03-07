@@ -55,8 +55,7 @@ unsigned int TempUBRR;
     UBRRL = TempUBRR;
   }  
   
-  //Enable receive-byte interrupt
-  UCSRB |= (1 << RXCIE); 
+  
 }
 
 

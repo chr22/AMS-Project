@@ -5,11 +5,10 @@
  *  Author: Nikolaj
  */ 
 #include <avr/interrupt.h>
-#include "../Protocol/ServerProtocol.h"
-#include "../Drivers/uart.h"
-#include "../Util/GlobalDefines.h"
-#include "../Drivers/lcd162.h"
-#include "../Wrappers/DisplaySensorData.h"
+#include "ServerProtocol.h"
+#include "uart.h"
+#include "GlobalDefines.h"
+#include "lcd162.h"
 
 
 void HandleIncoming(char cmd)
@@ -86,34 +85,24 @@ int HandleTransmission(char sensorID, int numToRead)
 
 int SendToDisplay(MeasurementStruct * sensorStruct)
 {
-	
+	/*
 	switch(sensorStruct->cmd)
 	{
 		case TEMP_CMD:
 			//Call Temp
-			WriteTemp(sensorStruct->valueArray);
-			break;
 		case ALT_CMD:
 			//Call Alt
-			WriteAltitude(sensorStruct->valueArray);
-			break;
 		case PRES_CMD:
 			//Call Pres
-			WritePressure(sensorStruct->valueArray);
-			break;
 		default:
-			WriteToDisplay("1234");
-			NewLine();
-			break;			
 	}
-	
+	*/
 	//Call Display functions here..	
-	
-	//LCDDispString("Len: ");
-	//LCDDispInteger(sensorStruct->arrayLength);
-	//LCDDispString(" Val: ");
-	//LCDDispInteger(sensorStruct->sensorValue);
-	//LCDGotoXY(0,1);
+	LCDDispString("Len: ");
+	LCDDispInteger(sensorStruct->arrayLength);
+	LCDDispString(" Val: ");
+	LCDDispInteger(sensorStruct->sensorValue);
+	LCDGotoXY(0,1);
 	return 1;
 }
 

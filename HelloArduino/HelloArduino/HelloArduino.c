@@ -48,10 +48,10 @@ int main()
 	testAlt[2] = 't';
 	testAlt[3] = 'i';
 	
-	
+	SendString("Hello World new");
 	while(1)
 	{
-		err = PerformFullTransmission(testId, testTmp, testAlt, testPres);
+		//err = PerformFullTransmission(testId, testTmp, testAlt, testPres);
 		if(err < 0)
 		{
 			//SendString("Failed full transmission. \n");
@@ -62,6 +62,7 @@ int main()
 		}
 		//_delay_ms(5000);
 	}
+	return 0;
 }
 
 ISR(TIMER0_OVF_vect)

@@ -126,6 +126,9 @@
     <Compile Include="Protocol\RadioSource.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Util\GlobalDefines.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="WeatherBalloonSensor.c">
       <SubType>compile</SubType>
     </Compile>
@@ -136,4 +139,5 @@
     <Folder Include="Protocol" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+>>>>>>> origin/RadioBranch
 </Project>
