@@ -258,3 +258,8 @@ void SetPosition(int pos)
 {
 	SetPositionNum(pos);
 }
+
+void ClearScreenWrapper() 
+{
+	ClearScreen();
+}

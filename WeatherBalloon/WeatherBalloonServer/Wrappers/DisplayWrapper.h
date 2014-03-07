@@ -14,6 +14,7 @@ void WriteToDisplay(char* dispStr);
 void NewLine();
 void SetLine(int line);
 void SetPosition(int pos);
+void ClearScreenWrapper();
 
 
 #endif /* DISPLAYWRAPPER_H_ */
