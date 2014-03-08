@@ -4,10 +4,10 @@
  * Created: 25-02-2014 09:22:46
  *  Author: Casper
  */ 
-#include "../HeaderFiles/I2C.h"
-#include "../HeaderFiles/uart.h"
+#include "../Drivers/I2C.h"
+#include "../Util/GlobalDefines.h"
+
 #include <avr/io.h>
-#define F_CPU 3686400
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
@@ -20,7 +20,7 @@ void i2c_init()
 	// We choose 2-wire clock ~ 50 kHz
 	// The TWBR must be at least 10 in master mode (Mega32 data book)
 	// SCL frequency = 3.6864 MHz / (16 + 2*TWBR*1), when prescaler = 1
-	TWBR = 12;	// About 40 kHz for Atmgea32u4, 90 kHz for Atmega32
+	TWBR = 152;	//Atmega32u4 = 40 kHz, Atmega32 = 11.5 kHz
 }
 
 void i2c_start()

@@ -28,7 +28,7 @@
 #define SOURCE_ID	0x20
 
 #undef ATMEGA32_DEV
-//#define ATMEGA32_DEV True
+#define ATMEGA32_DEV True
 
 #ifdef ATMEGA32_DEV
 	#define F_CPU 3686400

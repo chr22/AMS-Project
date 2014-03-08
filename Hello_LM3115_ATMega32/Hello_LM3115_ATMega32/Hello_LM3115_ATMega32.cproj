@@ -37,6 +37,21 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.stk500</avrtool>
+    <com_atmel_avrdbg_tool_stk500>
+      <ToolOptions>
+        <InterfaceProperties>
+          <JtagEnableExtResetOnStartSession>false</JtagEnableExtResetOnStartSession>
+          <IspClock>160700</IspClock>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.stk500</ToolType>
+      <ToolNumber>
+      </ToolNumber>
+      <ToolName>STK500</ToolName>
+    </com_atmel_avrdbg_tool_stk500>
+    <avrtoolinterface>ISP</avrtoolinterface>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -93,31 +108,34 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DriverFiles\I2C.c">
+    <Compile Include="Drivers\BMP180.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DriverFiles\BMP180.c">
+    <Compile Include="Drivers\BMP180.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DriverFiles\uart.c">
+    <Compile Include="Drivers\I2C.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\I2C.h">
+    <Compile Include="Drivers\I2C.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\BMP180.h">
+    <Compile Include="Drivers\uart.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="HeaderFiles\uart.h">
+    <Compile Include="Drivers\uart.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Hello_LM3115_ATMega32.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Util\GlobalDefines.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HeaderFiles" />
-    <Folder Include="DriverFiles" />
+    <Folder Include="Drivers" />
+    <Folder Include="Util" />
     <Folder Include="SourceFiles" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

@@ -9,11 +9,16 @@
 #define PARAM_MH     -7357        /*calibration parameter */
 #define PARAM_MI      3791        /*calibration parameter */
 
-#include "I2C.h"
+//#include "I2C.h"
 
 void BMP180_Init();
 unsigned char BMP180_GetDeviceId();
-short BMP180_GetTemperature();
+double BMP180_GetTemperature();
+long BMP180_GetPressure();
+long BMP180_GetDeltaPressure();
+double BMP180_GetAltitude();
+double BMP180_GetDeltaAltitude();
+
 
 //unsigned char BMP180_RegRead(unsigned char[] RetVal, unsigned char reg, unsigned int NumOfBytes);
 //void BMP180_RegWrite(unsigned char reg, unsigned char val);

@@ -8,17 +8,16 @@
 *                                                 *
 * Henning Hargaard, 1/11 2011                     *
 ***************************************************/
-#include <avr/io.h>
 #include <stdlib.h>
-#include <avr/interrupt.h>
-#include "../Util/GlobalDefines.h"
 #include "uart.h"
 
-// Constants
-//#define XTAL 3686400  
-#define XTAL 16000000
+#include <avr/io.h>
+#define F_CPU 3686400
+#include <util/delay.h>
 
-volatile int readyReg;  
+// Constants
+#define XTAL 3686400  
+//#define XTAL 16000000  
 
 /*************************************************************************
 USART initialization.
@@ -40,38 +39,25 @@ unsigned int TempUBRR;
   if ((BaudRate >= 110) && (BaudRate <= 115200) && (DataBit >=5) && (DataBit <= 8))
   { 
     // "Normal" clock, no multiprocessor mode (= default)
-    UCSR1A = 0b00100000;
+    UCSRA = 0b00100000;
     // No interrupts enabled
     // Receiver enabled
     // Transmitter enabled
     // No 9 bit operation
-    UCSR1B = 0b00011000;	
+    UCSRB = 0b00011000;	
     // Asynchronous operation, 1 stop bit, no parity
     // Bit7 always has to be 1
     // Bit 2 and bit 1 controls the number of databits
-    UCSR1C = 0b10000000 | (DataBit-5)<<1;
+    UCSRC = 0b10000000 | (DataBit-5)<<1;
     // Set Baud Rate according to the parameter BaudRate:
     // Select Baud Rate (first store "UBRRH--UBRRL" in local 16-bit variable,
     //                   then write the two 8-bit registers separately):
     TempUBRR = XTAL/(16*BaudRate) - 1;
     // Write upper part of UBRR
-    UBRR1H = TempUBRR >> 8;
+    UBRRH = TempUBRR >> 8;
     // Write lower part of UBRR
-    UBRR1L = TempUBRR;
+    UBRRL = TempUBRR;
   }  
-  
-  TIMSK1 = 0b00000001;
-  TCCR1B = 0b00000101;
-  TCNT1H = 0x00;
-  TCNT1L = 0x00;
-  
-  readyReg = 0;
-  //Setup of timer0 for interrupts
-  //TIMSK0 = (1<<TOIE0);
-  //TCNT0	= 0x00;
-  //TCCR0A = (1<<CS01) | (1<<CS00);
-  //TCCR0B = (1<<CS01) | (1<<CS00);
-  //sei();
 }
 
 
@@ -81,7 +67,7 @@ unsigned int TempUBRR;
 *************************************************************************/
 unsigned char CharReady()
 {
-   return UCSR1A & (1<<7);
+   return UCSRA & (1<<7);
 }
 
 /*************************************************************************
@@ -91,10 +77,10 @@ Then this character is returned.
 char ReadChar()
 {
   // Wait for new character received
-  while ( (UCSR1A & (1<<7)) == 0 )
+  while ( (UCSRA & (1<<7)) == 0 )
   {}                        
   // Then return it
-  return UDR1;
+  return UDR;
 }
 
 /*************************************************************************
@@ -106,10 +92,10 @@ Parameter :
 void SendChar(char Ch)
 {
   // Wait for transmitter register empty (ready for new character)
-  while ( (UCSR1A & (1<<5)) == 0 )
+  while ( (UCSRA & (1<<5)) == 0 )
   {}
   // Then send the character
-  UDR1 = Ch;
+  UDR = Ch;
 }
 
 /*************************************************************************
@@ -146,27 +132,3 @@ char array[7];
 }
 
 /**************************************************/
-
-int ReadCharWTimeout(char * retVal, int timeOutMs)
-{
-	readyReg = 0;
-	sei();
-	// Wait for new character received or Timeout overflow
-	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 3))
-	{ }	
-	
-	//While loop was broken by overflow timer, so we got no response from server.
-	if(readyReg >= 3)
-	{
-		return TIMEOUT_ERR;
-	}
-	cli();
-	*retVal = UDR1;
-	return 1;
-}
-
-ISR(TIMER1_OVF_vect)
-{
-	++readyReg;
-}
-
