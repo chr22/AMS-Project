@@ -106,6 +106,10 @@ void MatchCharacters(char character)
 	const char O[] = {
 		0b00111110, 0b01000001, 0b01000001, 0b01000001, 0b01000001, 0b01000001, 0b00111110, 0b00000000
 	};
+
+	const char C[] = {
+		0b00111110, 0b01000001, 0b01000001, 0b01000001, 0b01000001, 0b01000001, 0b00100010, 0b00000000
+	};	
 	
 	const char R[] = {
 		0b01111111, 0b00001001, 0b00001001, 0b00001001, 0b00011001, 0b00101001, 0b01000110, 0b00000000
@@ -196,6 +200,10 @@ void MatchCharacters(char character)
 	case 'O':
 	case 'o':
 		SetNextCharAuto(O);
+		break;
+	case 'C':
+	case 'c':
+		SetNextCharAuto(C);
 		break;
 	case 'S':
 	case 's':

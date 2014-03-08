@@ -7,13 +7,15 @@
 
 #include "DisplayWrapper.h"
 #include "DisplaySensorData.h"
+#include "../Util/GlobalDefines.h"
+#include "stdlib.h"
 
 
 void WriteTemp(char* tempStr)
 {
 	WriteToDisplay("TEMP: ");
 	WriteToDisplay(tempStr);
-	WriteToDisplay("*");
+	WriteToDisplay("*C");
 	NewLine();
 }
 
@@ -43,20 +45,23 @@ void WriteSensorData(char* tempStr, char* presStr, char* altStr)
 void WriteTempFloat(float temp)
 {
 	char arr[7];		
-	ConvertFloatToString(temp/(float)10.00, arr);
+	ConvertValuesToCorrectUnit(&temp, TEMP_CMD);
+	ConvertFloatToString(temp, arr);
 	WriteTemp(arr);	
 }
 
 void WritePressureFloat(float pres)
 {
 	char arr[7];
-	ConvertFloatToString(pres/(float)100.00, arr);
+	ConvertValuesToCorrectUnit(&pres, PRES_CMD);
+	ConvertFloatToString(pres, arr);
 	WritePressure(arr);
 }
 
 void WriteAltitudeFloat(float alt)
 {
 	char arr[7];
+	ConvertValuesToCorrectUnit(&alt, ALT_CMD);
 	ConvertFloatToString(alt, arr);
 	WriteAltitude(arr);
 }
@@ -91,7 +96,7 @@ void ConvertFloatToString(float temp, char* retArray)
 			*retArray = ' ';
 			retArray++;
 		}	
-		if (hundreds != 0)
+		if (hundreds != 0 || thousands != 0)
 		{
 			itoa(hundreds, retArray++, 10);	
 			itoa(tens, retArray++, 10);
@@ -125,6 +130,15 @@ void ConvertFloatToString(float temp, char* retArray)
 			
 			itoa(e, retArray++, 10);										
 		}
+		else 
+		{
+			*retArray = '.';
+			retArray++;
+			*retArray = '0';
+			retArray++;
+			*retArray = '0';
+			retArray++;
+		}
 		
 		//WriteTemp(arr);		
 		//return arr;
@@ -134,4 +148,20 @@ void ConvertFloatToString(float temp, char* retArray)
 void ClearScreenSensorData()
 {
 	ClearScreenWrapper();
+}
+
+void ConvertValuesToCorrectUnit(float *val, int type) 
+{
+	if (type == TEMP_CMD)
+	{
+		*val /= 10.0;
+	}
+	else if(type == ALT_CMD)
+	{
+		*val /= 1.0;
+	}
+	else if(type == PRES_CMD)
+	{
+		*val /= 100.0;
+	}
 }
