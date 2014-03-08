@@ -35,6 +35,14 @@ void WriteAltitude(char* altStr)
 	NewLine();
 }
 
+void WriteDelAltitude(char* delAlt)
+{
+	WriteToDisplay("dALT:  ");
+	WriteToDisplay(delAlt);
+	WriteToDisplay("m");
+	NewLine();
+}
+
 void WriteSensorData(char* tempStr, char* presStr, char* altStr)
 {
 	WriteTemp(tempStr);
@@ -73,6 +81,14 @@ void WriteSensorDataFloat(float temp, float pres, float alt)
 	WritePressureFloat(pres);
 	NewLine();
 	WriteAltitudeFloat(alt);
+}
+
+void WriteDelAltitudeFloat(float delAlt) 
+{
+	char arr[7];
+	ConvertValuesToCorrectUnit(&delAlt, DELALT_CMD);
+	ConvertFloatToString(delAlt, arr);
+	WriteAltitude(arr);
 }
 
 void ConvertFloatToString(float temp, char* retArray)
@@ -163,5 +179,9 @@ void ConvertValuesToCorrectUnit(float *val, int type)
 	else if(type == PRES_CMD)
 	{
 		*val /= 100.0;
+	}
+	else if(type == DELALT_CMD)
+	{
+		*val /= 1.0;
 	}
 }

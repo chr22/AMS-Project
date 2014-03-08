@@ -78,53 +78,52 @@ int HandleTransmission(char sensorID, int numToRead)
 		{			
 			return HANDLE_TRANMISSION_ERR;
 		}
-		
-		++i;
-		err = HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);		
+				
+		err = HandleValueCommand(cmd, sensorID, &tmpMeasureStruct, i);
 		if (err < 0)
 		{
 			return HANDLE_TRANMISSION_ERR;
-		}		
+		}
+		++i;		
 	}
 	
 	SendAck(sensorID);
-	
-	if (numToRead >= 3)
-	{
-		tmpMeasureStruct.cmd = THREEVALUES_CMD;
-	}	
-	
-	err = SendToDisplay(&tmpMeasureStruct);
+		
+	err = SendToDisplay(&tmpMeasureStruct, numToRead);
 			
 	return err;
 }
 
-int SendToDisplay(MeasurementStruct * sensorStruct)
+int SendToDisplay(MeasurementStruct * sensorStruct, int numberOfValues)
 {
-	
-	switch(sensorStruct->cmd)
-	{
-		case TEMP_CMD:
-			SetLineNum(TEMP_LINE);
-			WriteTempFloat(sensorStruct->tempValue);
-			break;
-		case ALT_CMD:
-			SetLineNum(ALT_LINE);
-			WriteAltitudeFloat(sensorStruct->altiValue);
-			break;
-		case PRES_CMD:
-			SetLineNum(PRES_LINE);
-			WritePressureFloat(sensorStruct->presValue);
-			break;
-		case THREEVALUES_CMD:
-			ClearScreenSensorData();
-			WriteSensorDataFloat(sensorStruct->tempValue, sensorStruct->presValue, sensorStruct->altiValue);
-			break;
-		default:
-			WriteToDisplay("1234");
-			NewLine();
-			break;			
-	}	
+	int i = 0;
+
+	for (i = 0; i < numberOfValues; i++)
+	{		
+		switch(sensorStruct->sensorValues[i].cmd)
+		{
+			case TEMP_CMD:
+				SetLineNum(TEMP_LINE);
+				WriteTempFloat(sensorStruct->sensorValues[i].sensorValue);
+				break;
+			case ALT_CMD:
+				SetLineNum(ALT_LINE);
+				WriteAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
+				break;
+			case PRES_CMD:
+				SetLineNum(PRES_LINE);
+				WritePressureFloat(sensorStruct->sensorValues[i].sensorValue);
+				break;
+			case DELALT_CMD:
+				SetLineNum(DELTAALT_LINE);
+				WriteDelAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
+				break;			
+			default:
+				WriteToDisplay("1234");
+				NewLine();
+				break;
+		}
+	}		
 	
 	return 1;
 }
@@ -135,7 +134,7 @@ void SendAck(char sensorID)
 	SendChar(sensorID);
 }
 
-int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruct )
+int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct, int arrayPos)
 {
 	int bytesInTransmission = 0;
 	char tmpBytesInTransmission = 0;
@@ -151,7 +150,7 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 	}
 	bytesInTransmission = (int)tmpBytesInTransmission;
 	
-	(*returnStruct).cmd = cmd;
+	//(*returnStruct).cmd = cmd;
 	//(*returnStruct).arrayLength = bytesInTransmission;
 	
 	char sensorValue[bytesInTransmission];
@@ -169,23 +168,12 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 	
 	tmpSensorvalue = CalculateIntFromBytes(sensorValue, bytesInTransmission);
 	
-	if (cmd == TEMP_CMD)
+	if (i <= MAX_NUM_OF_SENSORVALUES)
 	{
-		returnStruct->tempValue = tmpSensorvalue;
-	}
-	else if (cmd == PRES_CMD)
-	{
-		returnStruct->presValue = tmpSensorvalue;
-	}
-	else if (cmd == ALT_CMD)
-	{
-		returnStruct->altiValue = tmpSensorvalue;
-	}
-	else if (cmd == DELALT_CMD)
-	{
-		returnStruct->delAltValue = tmpSensorvalue;
-	}
-	
+		returnStruct->sensorValues[i].cmd = cmd;
+		returnStruct->sensorValues[i].sensorValue = tmpSensorvalue;	
+	}	
+		
 	return 1;
 }
 
