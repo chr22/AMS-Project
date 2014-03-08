@@ -15,7 +15,6 @@
 #define TIMEOUT_ERR				-3
 #define UNEXPECTED_CMD_ERR		-4
 #define HANDLE_TRANMISSION_ERR	-5
-#define TIMEOUT_ERR				-6
 
 //Commands
 #define TEMP_CMD 	0x11

@@ -25,10 +25,31 @@ int main(void)
 
 	DeviceId = BMP180_GetDeviceId();
 		
+	struct DataValue_Params DataParams[4];
+	
+	struct DataValue_Params TempParam;
+	struct DataValue_Params PresParam;
+	struct DataValue_Params AltiParam;
+	struct DataValue_Params DelAltParam;
+	
+	TempParam.DataCommand = TEMP_CMD;
+	PresParam.DataCommand = PRES_CMD;
+	AltiParam.DataCommand = ALT_CMD;
+	DelAltParam.DataCommand = DELALT_CMD;
+	
 	while (1)
 	{
-	
-		PerformFullTransmission(DeviceId, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure(), BMP180_GetDeltaAltitude());
+		TempParam.DataValue = BMP180_GetTemperature();
+		PresParam.DataValue = BMP180_GetPressure();
+		AltiParam.DataValue = BMP180_GetAltitude();
+		DelAltParam.DataValue = BMP180_GetDeltaAltitude();
+		
+		DataParams[0] = TempParam;
+		DataParams[1] = PresParam;
+		DataParams[2] = AltiParam;
+		DataParams[3] = DelAltParam;
+		
+		PerformFullTransmission(DeviceId, DataParams);
 		_delay_ms(5000);
 	}
 	
