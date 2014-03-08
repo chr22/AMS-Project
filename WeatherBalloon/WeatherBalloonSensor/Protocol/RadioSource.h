@@ -18,7 +18,6 @@
 int PerformFullTransmission(char id, long temp, long alt, long pres, long DeltaAlt);
 int TemperatureSend(char temp[]);
 int DataReady(char id, char numToTransmit);
-int WaitForServerReady(int timeOutMs);
 //int WaitForAck(int timeOutMs);
 
 
@@ -26,6 +25,5 @@ int AltitudeSend (char alt[]);
 int PressureSend(char pres[]);
 int StationIDSend(char id);
 int StatusSend(char status[]);
-
 
 #endif /* RADIOSOURCE_H_ */

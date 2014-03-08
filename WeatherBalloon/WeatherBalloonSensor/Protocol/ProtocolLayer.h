@@ -11,11 +11,11 @@
 
 
 //Waits for the ServerReadyToReceive command
-int WaitForServerReady(int timeOutMs);
+int WaitForServerReady(int timeOutMs, unsigned char id);
 
 //Transmits measurement type and value (And length?)
 int TransmitMeasurement(char measureType, long measureVal, char id);
 
-int WaitForAck(int timeOutMs);
+int WaitForAck(int timeOutMs, unsigned char id);
 
 #endif /* PROTOCOLLAYER_H_ */

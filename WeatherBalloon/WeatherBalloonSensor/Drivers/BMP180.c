@@ -7,6 +7,7 @@
 #include "../Util/GlobalDefines.h"
 
 #define SealevelPressure 101325
+#define BASE_PRESSURE 102800
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
 
@@ -160,7 +161,7 @@ long BMP180_GetPressure()
 
 long BMP180_GetDeltaPressure()
 {
-	return BMP180_GetPressure() - BasePressure;
+	return labs(BMP180_GetPressure() - BasePressure);
 }
 
 long BMP180_GetAltitude()
@@ -171,7 +172,7 @@ long BMP180_GetAltitude()
 	
 	double PressureDouble = (double)Pressure;
 		//101325
-	double PressureDiff = (PressureDouble/102600);
+	double PressureDiff = (PressureDouble/BASE_PRESSURE);
 	double exp = 1/5.255;
 	double power = pow(PressureDiff, exp);
 	double x = (1-power);
@@ -184,7 +185,7 @@ long BMP180_GetAltitude()
 
 long BMP180_GetDeltaAltitude()
 {
-	return BMP180_GetAltitude() - BaseAltitude;
+	return labs(BMP180_GetAltitude() - BaseAltitude);
 }
 
 unsigned char BMP180_GetDeviceId()

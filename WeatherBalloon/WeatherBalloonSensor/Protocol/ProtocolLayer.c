@@ -10,7 +10,7 @@
 #include "../Util/GlobalDefines.h"
 #include "../Drivers/uart.h"
 
-int WaitForServerReady(int timeOutMs)
+int WaitForServerReady(int timeOutMs, unsigned char id)
 {
 	int err = -1;
 	char * retVal = 0x00;
@@ -28,7 +28,7 @@ int WaitForServerReady(int timeOutMs)
 		return err;
 	}	
 	
-	if(*retVal != SOURCE_ID)
+	if(*retVal != id)
 	{
 		//SendString("Wrong ID error. \n");
 		return WRONG_ID_ERR;
@@ -105,7 +105,7 @@ int TransmitMeasurement(char measureType, long measureVal, char id)
 	*/
 }
 
-int WaitForAck(int timeOutMs)
+int WaitForAck( int timeOutMs, unsigned char id )
 {
 	char * retVal = 0x00;
 	int err = 0;
@@ -128,7 +128,7 @@ int WaitForAck(int timeOutMs)
 	{
 		return err;
 	}
-	if(*retVal != SOURCE_ID)
+	if(*retVal != id)
 	{
 		//SendString("Wrong ID string (WaitForAck). \n");
 		return WRONG_ID_ERR;
