@@ -10,6 +10,8 @@
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
 
+#include "uart.h"
+
 #include <util/delay.h>
 #include <math.h>
 #include <stdlib.h>
@@ -36,15 +38,22 @@ void BMP180_Init()
 {
 	i2c_init();
 	
+	SendString("After i2c init");
 	_delay_ms(10);
 	
 	BMP180_GetCalibrationParams();
 	
+	SendString("After calibration");
+	
 	_delay_ms(10);
 		
 	BaseTemperature = BMP180_GetTemperature();
+	SendString("after temp");
 	BasePressure = BMP180_GetPressure();
+	SendString("after pressure");
 	BaseAltitude = BMP180_GetAltitude();
+	
+	SendString("After base values");
 }
 
 void BMP180_GetCalibrationParams() 
@@ -128,7 +137,7 @@ void BMP180_GetCalibrationParams()
 	//#endif
 }
 
-long BMP180_GetTemperature()
+double BMP180_GetTemperature()
 {
 	BMP180_RegWrite(0xF4, 0x2E);		//Starts temperature meassurement (p. 21 datasheet)
 	_delay_ms(10);						//Wait for device to sample temp
@@ -163,7 +172,7 @@ long BMP180_GetDeltaPressure()
 	return BMP180_GetPressure() - BasePressure;
 }
 
-long BMP180_GetAltitude()
+double BMP180_GetAltitude()
 {
 	//SendString("\r\nReady altitude\r\n");
 	
@@ -182,7 +191,7 @@ long BMP180_GetAltitude()
 	return Altitude;
 }
 
-long BMP180_GetDeltaAltitude()
+double BMP180_GetDeltaAltitude()
 {
 	return BMP180_GetAltitude() - BaseAltitude;
 }

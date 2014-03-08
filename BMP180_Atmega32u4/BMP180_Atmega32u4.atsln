@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "BMP180_Atmega32u4", "BMP180_Atmega32u4\BMP180_Atmega32u4.cproj", "{BAAA67C2-4648-4AEB-8CAE-51B675709763}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAAA67C2-4648-4AEB-8CAE-51B675709763}.Debug|AVR.ActiveCfg = Debug|AVR
+		{BAAA67C2-4648-4AEB-8CAE-51B675709763}.Debug|AVR.Build.0 = Debug|AVR
+		{BAAA67C2-4648-4AEB-8CAE-51B675709763}.Release|AVR.ActiveCfg = Release|AVR
+		{BAAA67C2-4648-4AEB-8CAE-51B675709763}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

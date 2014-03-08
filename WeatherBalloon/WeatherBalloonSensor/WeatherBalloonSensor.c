@@ -1,19 +1,15 @@
 /*
- * WeatherBalloonSensor.c
- *
- * Created: 04-03-2014 11:21:49
- *  Author: Nikolaj
- */ 
+* WeatherBalloonSensor.c
+*
+* Created: 04-03-2014 11:21:49
+*  Author: Nikolaj
+*/
 
-//#undef MEGA32_DEV
-//#define MEGA32_DEV True
-
+#include "./Util/GlobalDefines.h"
 #include "./Drivers/uart.h"
-//#define F_CPU 3686400
 
-#define F_CPU 16000000
 
-//#include "./Drivers/BMP180.h"
+#include "./Drivers/BMP180.h"
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "Protocol/RadioSource.h"
@@ -25,12 +21,19 @@ int main(void)
 	int err = 0;
 	
 	InitUART(9600, 8);
+	
+	SendString("Before init");
+	_delay_ms(50);
+	
+	BMP180_Init();
+	
+	SendString("After BMP init");
 		
- 	while (1)
- 	{
-		err = PerformFullTransmission(0x20, 33, 22, 11);	
- 		_delay_ms(3000);
- 	}
+	while (1)
+	{
+		err = PerformFullTransmission(0x20, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure());
+		_delay_ms(5000);
+	}
 	
 	return 1;
 }
