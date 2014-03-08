@@ -9,22 +9,26 @@
 #ifndef SERVERPROTOCOL_H_
 #define SERVERPROTOCOL_H_
 
+#define RADIO_TIMEOUT_MS 3000
+
 typedef struct
 {
 	char cmd;
+	int numberOfValues;
 	//char valueArray[4];
 	long arrayLength;
 	long tempValue;
 	long presValue;
-	int altiValue;
+	long altiValue;
+	long delAltValue;
 } MeasurementStruct;
 
-void HandleIncoming(char cmd);
+int HandleIncoming(char cmd);
 int GetCommand();
 
 int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct);
 int HandleTransmission(char sensorID, int numToRead);
-void HandleReadyCommand();
+int HandleReadyCommand();
 int GetBytesFromCMD(char cmd);
 void SendAck(char sensorId);
 long CalculateIntFromBytes(char * byteArray, int length);

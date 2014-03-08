@@ -11,9 +11,13 @@
 #include <avr/io.h>
 #include <stdlib.h>
 #include "uart.h"
+#include "avr/interrupt.h"
+#include "../Util/GlobalDefines.h"
 
 // Constants
 #define XTAL 3686400  
+
+volatile int readyReg;
 
 /*************************************************************************
 USART initialization.
@@ -53,6 +57,11 @@ unsigned int TempUBRR;
     UBRRH = TempUBRR >> 8;
     // Write lower part of UBRR
     UBRRL = TempUBRR;
+	
+	TIMSK = 0b00000100;
+	TCCR1B = 0b00000011;
+	TCNT1H = 0x00;
+	TCNT1L = 0x00;
   }  
   
   //Enable receive-byte interrupt
@@ -128,6 +137,41 @@ char array[7];
   itoa(Number, array, 10);
   // - then send the string
   SendString(array);
+}
+
+int ReadCharWTimeout(char * retVal, int timeOutMs)
+{
+	readyReg = 0;
+	int err = 1;
+	
+	sei();
+	//disable RX complete interrupt interrupt
+	UCSRB &= 0b01111111;
+	
+	// Wait for new character received or Timeout overflow
+	while(((UCSRA & (1<<7)) == 0) && (readyReg < 8))
+	{ }
+	
+	//While loop was broken by overflow timer, so we got no response from server.
+	if(readyReg >= 8)
+	{
+		err = TIMEOUT_ERR;
+	}
+	else
+	{
+		*retVal = UDR;
+	}
+	
+	cli();
+	//enable RX complete interrupt interrupt
+	UCSRB |= (1 << RXCIE);	
+
+	return err;
+}
+
+ISR(TIMER1_OVF_vect)
+{
+	++readyReg;
 }
 
 /**************************************************/

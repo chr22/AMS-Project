@@ -37,7 +37,8 @@ int main(void)
 	WriteToDisplay("Main");
 	NewLine();
 	sei();
-		
+	
+	
 	//MeasurementStruct tmpMeasureStruct;
 	//
 	//tmpMeasureStruct.cmd = TEMP_CMD;
@@ -53,6 +54,12 @@ int main(void)
 
 ISR(USART_RXC_vect)
 {
-	//LCDDispChar(UDR);
-	HandleIncoming(UDR);
+	int err = 0;
+	
+	err = HandleIncoming(UDR);
+	
+	if(err < 0)
+	{
+		
+	}
 }

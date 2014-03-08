@@ -147,6 +147,10 @@ void MatchCharacters(char character)
 		0b00000000, 0b00000111, 0b00000101, 0b00000111, 0b00000000, 0b00000000, 0b00000000, 0b00000000
 	};
 	
+	const char delta[] = {
+		0b01100000, 0b01011000, 0b01000110, 0b01000001, 0b01000111, 0b01011100, 0b01110000, 0b00000000
+	};
+	
 	switch (character)
 	{
 	case '1':
@@ -240,6 +244,9 @@ void MatchCharacters(char character)
 		break;
 	case '.':
 		SetNextCharAuto(point);
+		break;
+	case 'd':
+		SetNextCharAuto(delta);
 		break;
 	case '\n':
 		NextLine();

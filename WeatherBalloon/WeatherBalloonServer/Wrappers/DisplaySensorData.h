@@ -9,6 +9,15 @@
 #ifndef DISPLAYSENSORDATA_H_
 #define DISPLAYSENSORDATA_H_
 
+//Line numbers
+#define TEMP_LINE	0
+#define PRES_LINE	2
+#define ALT_LINE	4
+#define DELTAALT_LINE	6
+
+//cmd if three values is received
+#define THREEVALUES_CMD 0x08
+
 void WriteTemp(char* tempStr);
 void WriteTempFloat(float temp);
 void WritePressure(char* presStr);

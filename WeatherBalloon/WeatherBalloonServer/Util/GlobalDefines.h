@@ -10,27 +10,23 @@
 #define GLOBALDEFINES_H_
 
 //Error codes
-#define SERVER_N_READY_ERR	-1
-#define WRONG_ID_ERR		-2
-#define TIMEOUT_ERR			-3
-#define UNEXPECTED_CMD_ERR	-4
+#define SERVER_N_READY_ERR		-1
+#define WRONG_ID_ERR			-2
+#define TIMEOUT_ERR				-3
+#define UNEXPECTED_CMD_ERR		-4
+#define HANDLE_TRANMISSION_ERR	-5
+#define TIMEOUT_ERR				-6
 
 //Commands
-#define TEMP_CMD 	0x01
-#define ALT_CMD		0x02
-#define PRES_CMD	0x03
-#define THREEVALUES_CMD 0x08
+#define TEMP_CMD 	0x11
+#define ALT_CMD		0x12
+#define DELALT_CMD	0x22
+#define PRES_CMD	0x13
+#define DELPRES_CMD	0x23
+
 #define	ID_CMD		0x04
 #define	STAT_CMD	0x05
 #define ACK_CMD		0x06
 #define RDY_CMD		0x07
-
-//Line numbers
-#define TEMP_LINE	0
-#define PRES_LINE	2
-#define ALT_LINE	4
-
-//Utility values
-#define SOURCE_ID	0x20
 
 #endif /* GLOBALDEFINES_H_ */
