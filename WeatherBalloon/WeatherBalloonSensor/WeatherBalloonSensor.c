@@ -14,12 +14,12 @@
 #include <util/delay.h>
 #include "Protocol/RadioSource.h"
 
-const unsigned char DeviceId;
+	unsigned char DeviceId;
 
 int main(void)
 {		
 	InitUART(9600, 8);
-	_delay_ms(50);
+	_delay_ms(20);
 	
 	BMP180_Init();
 
