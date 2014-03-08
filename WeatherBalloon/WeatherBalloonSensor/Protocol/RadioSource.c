@@ -44,11 +44,13 @@ int PerformFullTransmission(char id, long temp, long alt, long pres)
 		TransmitMeasurement(PRES_CMD, pres, id);
 				
 		err = WaitForAck(RADIO_TIMEOUT_MS);
-		if(!err)
+		
+		if(err < 0)
 		{
 			++retryCount;
 		}
 	}
+	
 	if (retryCount >= 3)
 	{
 		return -1;

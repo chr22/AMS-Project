@@ -19,7 +19,7 @@ int PerformFullTransmission(char id, long temp, long alt, long pres);
 int TemperatureSend(char temp[]);
 int DataReady(char id, char numToTransmit);
 int WaitForServerReady(int timeOutMs);
-int WaitForAck(int timeOutMs);
+//int WaitForAck(int timeOutMs);
 
 
 int AltitudeSend (char alt[]);

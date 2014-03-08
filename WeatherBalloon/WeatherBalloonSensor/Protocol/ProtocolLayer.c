@@ -134,6 +134,6 @@ int WaitForAck(int timeOutMs)
 		return WRONG_ID_ERR;
 	}
 	
-	return 1;
+	return err;
 }
 
