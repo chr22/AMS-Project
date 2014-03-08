@@ -4,39 +4,29 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{845474d2-3fd1-4333-ac28-e53d55988922}</ProjectGuid>
+    <ProjectGuid>{7b6f375b-fde3-4c86-af7a-2e9004a4b844}</ProjectGuid>
     <avrdevice>ATmega32U4</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
-    <OutputType>Executable</OutputType>
+    <OutputType>StaticLibrary</OutputType>
     <Language>C</Language>
-    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
-    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputFileName>lib$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.a</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>WeatherBalloonSensor</AssemblyName>
-    <Name>WeatherBalloonSensor</Name>
-    <RootNamespace>WeatherBalloonSensor</RootNamespace>
+    <AvrGccProjectExtensions>
+    </AvrGccProjectExtensions>
+    <AssemblyName>GlobalLib</AssemblyName>
+    <Name>GlobalLib</Name>
+    <RootNamespace>GlobalLib</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
     <CacheFlash>true</CacheFlash>
     <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <RamSnippetAddress />
     <UncachedRange />
-    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <OverrideVtorValue />
     <BootSegment>2</BootSegment>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
-    <AsfFrameworkConfig>
-      <framework-data xmlns="">
-        <options />
-        <configurations />
-        <files />
-        <documentation help="" />
-        <offline-documentation help="" />
-        <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.11.0" />
-        </dependencies>
-      </framework-data>
-    </AsfFrameworkConfig>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -59,14 +49,8 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
-  <avrgcc.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>C:\Users\Nikolaj\Documents\GitHub\AMS-Project\WeatherBalloon\GlobalLib\Debug</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.LibrarySearchPaths>
 </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
@@ -92,60 +76,16 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
-  <avrgcc.linker.libraries.LibrarySearchPaths>
-    <ListValues>
-      <Value>C:\Users\Nikolaj\Documents\GitHub\AMS-Project\WeatherBalloon\GlobalLib\Debug</Value>
-    </ListValues>
-  </avrgcc.linker.libraries.LibrarySearchPaths>
   <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
 </AvrGcc>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Drivers\BMP180.c">
+    <Compile Include="GlobalDefines.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\BMP180.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\I2C.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\I2C.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\uart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\uart.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Protocol\ProtocolLayer.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Protocol\ProtocolLayer.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Protocol\RadioSource.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Protocol\RadioSource.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Util\GlobalDefines.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="WeatherBalloonSensor.c">
-      <SubType>compile</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Drivers" />
-    <Folder Include="Util" />
-    <Folder Include="Protocol" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
