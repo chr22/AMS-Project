@@ -426,7 +426,7 @@ void SetLineNum(int line)
 {
 	if (_line > 7)
 	{
-		_line = 7;
+		_line = 0;
 	}
 	else if (_line < 0)
 	{

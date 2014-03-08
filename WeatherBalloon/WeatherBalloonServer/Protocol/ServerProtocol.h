@@ -12,9 +12,11 @@
 typedef struct
 {
 	char cmd;
-	char valueArray[4];
-	int arrayLength;
-	int sensorValue;
+	//char valueArray[4];
+	long arrayLength;
+	long tempValue;
+	long presValue;
+	int altiValue;
 } MeasurementStruct;
 
 void HandleIncoming(char cmd);
@@ -25,7 +27,7 @@ int HandleTransmission(char sensorID, int numToRead);
 void HandleReadyCommand();
 int GetBytesFromCMD(char cmd);
 void SendAck(char sensorId);
-int CalculateIntFromBytes(char * byteArray, int length);
+long CalculateIntFromBytes(char * byteArray, int length);
 int SendToDisplay(MeasurementStruct *  sensorStruct);
 
 #endif /* SERVERPROTOCOL_H_ */

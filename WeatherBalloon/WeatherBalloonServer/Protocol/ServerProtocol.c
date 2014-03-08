@@ -24,7 +24,7 @@ void HandleIncoming(char cmd)
 void HandleReadyCommand()
 {
 	char sensorID, numToRead;
-	char firstCommand = 0x00;
+	//char firstCommand = 0x00;
 	
 	int err = 0;
 	//cli();
@@ -36,6 +36,12 @@ void HandleReadyCommand()
 	SendChar(sensorID);
 	
 	err = HandleTransmission(sensorID, (int)numToRead);
+	
+	if (err)
+	{
+		//do stuff
+	}
+	
 	sei();
 }
 
@@ -54,11 +60,17 @@ int HandleTransmission(char sensorID, int numToRead)
 	{
 		cmd = ReadChar();
 		++i;
-		HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);
-		err = SendToDisplay(&tmpMeasureStruct);
+		HandleValueCommand(cmd, sensorID, &tmpMeasureStruct);		
 	}
 	
 	SendAck(sensorID);
+	
+	if (numToRead >= 3)
+	{
+		tmpMeasureStruct.cmd = THREEVALUES_CMD;
+	}	
+	
+	err = SendToDisplay(&tmpMeasureStruct);
 			
 	return err;
 }
@@ -69,30 +81,27 @@ int SendToDisplay(MeasurementStruct * sensorStruct)
 	switch(sensorStruct->cmd)
 	{
 		case TEMP_CMD:
-			//Call Temp
-			WriteTempFloat(sensorStruct->sensorValue);
+			SetLineNum(TEMP_LINE);
+			WriteTempFloat(sensorStruct->tempValue);
 			break;
 		case ALT_CMD:
-			//Call Alt
-			WriteAltitudeFloat(sensorStruct->sensorValue);
+			SetLineNum(ALT_LINE);
+			WriteAltitudeFloat(sensorStruct->altiValue);
 			break;
 		case PRES_CMD:
-			//Call Pres
-			WritePressureFloat(sensorStruct->sensorValue);
+			SetLineNum(PRES_LINE);
+			WritePressureFloat(sensorStruct->presValue);
+			break;
+		case THREEVALUES_CMD:
+			ClearScreenSensorData();
+			WriteSensorDataFloat(sensorStruct->tempValue, sensorStruct->presValue, sensorStruct->altiValue);
 			break;
 		default:
 			WriteToDisplay("1234");
 			NewLine();
 			break;			
-	}
+	}	
 	
-	//Call Display functions here..	
-	
-	//LCDDispString("Len: ");
-	//LCDDispInteger(sensorStruct->arrayLength);
-	//LCDDispString(" Val: ");
-	//LCDDispInteger(sensorStruct->sensorValue);
-	//LCDGotoXY(0,1);
 	return 1;
 }
 
@@ -111,26 +120,41 @@ int HandleValueCommand( char cmd, char sensorID, MeasurementStruct * returnStruc
 	bytesInTransmission = (int)ReadChar();
 	
 	(*returnStruct).cmd = cmd;
-	(*returnStruct).arrayLength = bytesInTransmission;
+	//(*returnStruct).arrayLength = bytesInTransmission;
+	
+	char sensorValue[bytesInTransmission];
 	
 	for (i = 0; i < bytesInTransmission; ++i )
 	{
-		(*returnStruct).valueArray[i] = ReadChar();
+		sensorValue[i] = ReadChar();
 	}	
 	
-	(*returnStruct).sensorValue = CalculateIntFromBytes((*returnStruct).valueArray, bytesInTransmission);
+	long tmpSensorvalue = CalculateIntFromBytes(sensorValue, bytesInTransmission);
+	
+	if (cmd == TEMP_CMD)
+	{
+		returnStruct->tempValue = tmpSensorvalue;
+	}
+	else if (cmd == PRES_CMD)
+	{
+		returnStruct->presValue = tmpSensorvalue;
+	}
+	else if (cmd == ALT_CMD)
+	{
+		returnStruct->altiValue = tmpSensorvalue;
+	}
 	
 	return 1;
 }
 
-int CalculateIntFromBytes(char * byteArray, int length)
+long CalculateIntFromBytes(char * byteArray, int length)
 {
 	int i = 0;
-	int result = 0;
+	long result = 0;
 	
 	for (i = 0; i < length; ++i)
 	{
-		result += ((int)(*(byteArray + i))) << (length-1-i)*8;
+		result += ((long)(*(byteArray + i))) << (length-1-i)*8;
 	}
 	
 	return result;

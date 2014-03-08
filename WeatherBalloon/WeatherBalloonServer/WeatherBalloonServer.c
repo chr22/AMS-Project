@@ -13,16 +13,19 @@
 #include "Drivers/lcd162.h"
 #include "Drivers/dem128064a.h"
 #include "Wrappers/DisplaySensorData.h"
+#include "Wrappers/DisplayWrapper.h"
+#include "Protocol/ServerProtocol.h"
+#include "Util/GlobalDefines.h"
 
 
 int main(void)
 {
 	//WriteTemp("123");
 		
-	char k = 'b';
+	//char k = 'b';
 	InitUART(9600, 8);
 
-	LCDInit();
+	//LCDInit();
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 	//SendString("Hullo");
@@ -32,7 +35,15 @@ int main(void)
 	
 	//LCDDispString("Main");
 	WriteToDisplay("Main");
+	NewLine();
 	sei();
+		
+	//MeasurementStruct tmpMeasureStruct;
+	//
+	//tmpMeasureStruct.cmd = TEMP_CMD;
+	//tmpMeasureStruct.tempValue = 124531;
+		//
+	//SendToDisplay(&tmpMeasureStruct);
 	
 	while(1)
 	{

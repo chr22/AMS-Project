@@ -19,5 +19,6 @@ void WriteSensorData(char* tempStr, char* presStr, char* altStr);
 void WriteSensorDataFloat(float temp, float pres, float alt);
 void ConvertFloatToString(float temp, char* retArray);
 void ClearScreenSensorData();
+void ConvertValuesToCorrectUnit(float *val, int type);
 
 #endif /* DISPLAYSENSORDATA_H_ */
