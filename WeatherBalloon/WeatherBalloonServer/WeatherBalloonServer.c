@@ -4,7 +4,6 @@
  * Created: 04-03-2014 11:20:39
  *  Author: Nikolaj
  */ 
-
 #include <math.h>
 #include <avr/io.h>
 
@@ -15,7 +14,9 @@
 #include "Wrappers/DisplaySensorData.h"
 #include "Wrappers/DisplayWrapper.h"
 #include "Protocol/ServerProtocol.h"
-#include "Util/GlobalDefines.h"
+
+#include "../WeatherBalloonCommon/GlobalDefines.h"
+#include "DefinesServer.h"
 
 
 int main(void)

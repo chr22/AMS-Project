@@ -9,7 +9,8 @@
 
 #include "ProtocolLayer.h"
 #include "RadioSource.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesSensor.h"
 #include "../Drivers/uart.h"
 #include <math.h>
 

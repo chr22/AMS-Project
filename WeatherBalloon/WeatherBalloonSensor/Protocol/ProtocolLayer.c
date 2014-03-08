@@ -7,7 +7,8 @@
 
 #include <math.h>
 #include "ProtocolLayer.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesSensor.h"
 #include "../Drivers/uart.h"
 
 int WaitForServerReady(int timeOutMs, unsigned char id)

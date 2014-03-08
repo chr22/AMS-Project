@@ -130,6 +130,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DefinesServer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Drivers\dem128064a.c">
       <SubType>compile</SubType>
     </Compile>

@@ -5,7 +5,8 @@
  *  Author: Casper
  */ 
 #include "../Drivers/I2C.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesSensor.h"
 
 #include <avr/io.h>
 #include <util/delay.h>

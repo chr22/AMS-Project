@@ -105,6 +105,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DefinesSensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Drivers\BMP180.c">
       <SubType>compile</SubType>
     </Compile>

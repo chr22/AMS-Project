@@ -22,6 +22,8 @@
 #define WRONG_ID_ERR		-2
 #define TIMEOUT_ERR			-3
 #define UNEXPECTED_CMD_ERR	-4
+#define HANDLE_TRANMISSION_ERR -5
+
 
 //Commands
 #define TEMP_CMD 	0x11
@@ -36,15 +38,5 @@
 
 //Utility values
 //#define SOURCE_ID	0x20
-
-#undef ATMEGA32_DEV
-//#define ATMEGA32_DEV True
-
-#ifdef ATMEGA32_DEV
-	#define F_CPU 3686400
-#else
-	#define F_CPU 16000000
-#endif
-
 
 #endif /* GLOBALDEFINES_H_ */

@@ -7,7 +7,8 @@
 
 #include "DisplayWrapper.h"
 #include "DisplaySensorData.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesServer.h"
 #include "stdlib.h"
 
 

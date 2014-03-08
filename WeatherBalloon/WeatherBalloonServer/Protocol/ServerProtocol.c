@@ -7,7 +7,8 @@
 #include <avr/interrupt.h>
 #include "../Protocol/ServerProtocol.h"
 #include "../Drivers/uart.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesServer.h"
 
 #include "../Wrappers/DisplaySensorData.h"
 #include "../Wrappers/DisplayWrapper.h"

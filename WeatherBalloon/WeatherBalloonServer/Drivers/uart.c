@@ -12,7 +12,8 @@
 #include <stdlib.h>
 #include "uart.h"
 #include "avr/interrupt.h"
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesServer.h"
 
 // Constants
 #define XTAL 3686400  

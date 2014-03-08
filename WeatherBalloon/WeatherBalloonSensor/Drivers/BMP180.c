@@ -4,7 +4,8 @@
  * Created: 25-02-2014 09:38:28
  *  Author: Casper
  */ 
-#include "../Util/GlobalDefines.h"
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesSensor.h"
 
 #define SealevelPressure 101325
 #define BASE_PRESSURE 102800
