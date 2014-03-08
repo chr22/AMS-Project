@@ -14,16 +14,20 @@
 #include <util/delay.h>
 #include "Protocol/RadioSource.h"
 
+const unsigned char DeviceId;
+
 int main(void)
 {		
 	InitUART(9600, 8);
 	_delay_ms(50);
 	
 	BMP180_Init();
+
+	DeviceId = BMP180_GetDeviceId();
 		
 	while (1)
 	{
-		PerformFullTransmission(0x20, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure(), BMP180_GetDeltaAltitude());
+		PerformFullTransmission(DeviceId, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure(), BMP180_GetDeltaAltitude());
 		_delay_ms(5000);
 	}
 	

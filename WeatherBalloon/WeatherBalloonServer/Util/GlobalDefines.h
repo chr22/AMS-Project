@@ -31,6 +31,6 @@
 #define ALT_LINE	4
 
 //Utility values
-#define SOURCE_ID	0x20
+//#define SOURCE_ID	0x20
 
 #endif /* GLOBALDEFINES_H_ */
