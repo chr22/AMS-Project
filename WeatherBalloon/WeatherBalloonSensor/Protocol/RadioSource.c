@@ -13,7 +13,7 @@
 #include "../Drivers/uart.h"
 #include <math.h>
 
-int PerformFullTransmission(char id, long temp, long alt, long pres)
+int PerformFullTransmission( char id, long temp, long alt, long pres, long DeltaAlt )
 {
 	int retryCount = 0;
 	int err = 0;
@@ -41,8 +41,9 @@ int PerformFullTransmission(char id, long temp, long alt, long pres)
 	{
 		TransmitMeasurement(TEMP_CMD, temp, id);
 		TransmitMeasurement(ALT_CMD, alt, id);
+		TransmitMeasurement(DELALT_CMD, DeltaAlt, id);
 		TransmitMeasurement(PRES_CMD, pres, id);
-				
+						
 		err = WaitForAck(RADIO_TIMEOUT_MS);
 		
 		if(err < 0)

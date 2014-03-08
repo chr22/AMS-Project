@@ -23,7 +23,7 @@ int main(void)
 		
 	while (1)
 	{
-		PerformFullTransmission(0x20, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure());
+		PerformFullTransmission(0x20, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure(), BMP180_GetDeltaAltitude());
 		_delay_ms(5000);
 	}
 	
