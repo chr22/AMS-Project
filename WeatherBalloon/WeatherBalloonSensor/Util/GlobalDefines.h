@@ -27,7 +27,7 @@
 #define RDY_CMD		0x07
 
 //Utility values
-#define SOURCE_ID	0x20
+//#define SOURCE_ID	0x20
 
 #undef ATMEGA32_DEV
 //#define ATMEGA32_DEV True

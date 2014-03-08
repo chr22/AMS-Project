@@ -14,7 +14,7 @@
 #include <util/delay.h>
 #include "Protocol/RadioSource.h"
 
-	unsigned char DeviceId;
+unsigned char DeviceId;
 
 int main(void)
 {		
@@ -27,6 +27,7 @@ int main(void)
 		
 	while (1)
 	{
+	
 		PerformFullTransmission(DeviceId, BMP180_GetTemperature(), BMP180_GetAltitude(), BMP180_GetPressure(), BMP180_GetDeltaAltitude());
 		_delay_ms(5000);
 	}

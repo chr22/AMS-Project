@@ -22,8 +22,8 @@ int PerformFullTransmission( char id, long temp, long alt, long pres, long Delta
 	err = -1;
 	while(err < 0 && retryCount < 3)
 	{
-		DataReady(id, 3);
-		err = WaitForServerReady(RADIO_TIMEOUT_MS);
+		DataReady(id, 4);
+		err = WaitForServerReady(RADIO_TIMEOUT_MS, id);
 		if(!err)
 		{
 			++retryCount;
@@ -44,7 +44,7 @@ int PerformFullTransmission( char id, long temp, long alt, long pres, long Delta
 		TransmitMeasurement(DELALT_CMD, DeltaAlt, id);
 		TransmitMeasurement(PRES_CMD, pres, id);
 						
-		err = WaitForAck(RADIO_TIMEOUT_MS);
+		err = WaitForAck(RADIO_TIMEOUT_MS, id);
 		
 		if(err < 0)
 		{
