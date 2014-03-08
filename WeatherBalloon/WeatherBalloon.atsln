@@ -5,7 +5,7 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WeatherBalloonServer", "Wea
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WeatherBalloonSensor", "WeatherBalloonSensor\WeatherBalloonSensor.cproj", "{845474D2-3FD1-4333-AC28-E53D55988922}"
 EndProject
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "GlobalLib", "GlobalLib\GlobalLib.cproj", "{7B6F375B-FDE3-4C86-AF7A-2E9004A4B844}"
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WeatherBalloonCommon", "WeatherBalloonCommon\WeatherBalloonCommon.cproj", "{24A5F37D-E7CC-4A05-8685-426641C4DA90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,10 @@ Global
 		{845474D2-3FD1-4333-AC28-E53D55988922}.Debug|AVR.Build.0 = Debug|AVR
 		{845474D2-3FD1-4333-AC28-E53D55988922}.Release|AVR.ActiveCfg = Release|AVR
 		{845474D2-3FD1-4333-AC28-E53D55988922}.Release|AVR.Build.0 = Release|AVR
-		{7B6F375B-FDE3-4C86-AF7A-2E9004A4B844}.Debug|AVR.ActiveCfg = Debug|AVR
-		{7B6F375B-FDE3-4C86-AF7A-2E9004A4B844}.Debug|AVR.Build.0 = Debug|AVR
-		{7B6F375B-FDE3-4C86-AF7A-2E9004A4B844}.Release|AVR.ActiveCfg = Release|AVR
-		{7B6F375B-FDE3-4C86-AF7A-2E9004A4B844}.Release|AVR.Build.0 = Release|AVR
+		{24A5F37D-E7CC-4A05-8685-426641C4DA90}.Debug|AVR.ActiveCfg = Debug|AVR
+		{24A5F37D-E7CC-4A05-8685-426641C4DA90}.Debug|AVR.Build.0 = Debug|AVR
+		{24A5F37D-E7CC-4A05-8685-426641C4DA90}.Release|AVR.ActiveCfg = Release|AVR
+		{24A5F37D-E7CC-4A05-8685-426641C4DA90}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -59,12 +59,12 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
   <avrgcc.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>C:\Users\Nikolaj\Documents\GitHub\AMS-Project\WeatherBalloon\GlobalLib\Debug</Value>
+      <Value>C:\Git\AMS-Project\WeatherBalloon\WeatherBalloonCommon\Debug</Value>
     </ListValues>
   </avrgcc.linker.libraries.LibrarySearchPaths>
 </AvrGcc>
@@ -92,12 +92,12 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
   <avrgcc.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>C:\Users\Nikolaj\Documents\GitHub\AMS-Project\WeatherBalloon\GlobalLib\Debug</Value>
+      <Value>C:\Git\AMS-Project\WeatherBalloon\WeatherBalloonCommon\Debug</Value>
     </ListValues>
   </avrgcc.linker.libraries.LibrarySearchPaths>
   <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
@@ -135,17 +135,20 @@
     <Compile Include="Protocol\RadioSource.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Util\GlobalDefines.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="WeatherBalloonSensor.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drivers" />
-    <Folder Include="Util" />
     <Folder Include="Protocol" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherBalloonCommon\WeatherBalloonCommon.cproj">
+      <Name>WeatherBalloonCommon</Name>
+      <Project>{24a5f37d-e7cc-4a05-8685-426641c4da90}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

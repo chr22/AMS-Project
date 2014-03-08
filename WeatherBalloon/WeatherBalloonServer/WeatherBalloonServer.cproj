@@ -87,7 +87,6 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
   <avrgcc.linker.libraries.LibrarySearchPaths>
@@ -119,7 +118,6 @@
   <avrgcc.linker.libraries.Libraries>
     <ListValues>
       <Value>libm</Value>
-      <Value>libGlobalLib.a</Value>
     </ListValues>
   </avrgcc.linker.libraries.Libraries>
   <avrgcc.linker.libraries.LibrarySearchPaths>
@@ -156,9 +154,6 @@
     <Compile Include="Protocol\ServerProtocol.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Util\GlobalDefines.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="WeatherBalloonServer.c">
       <SubType>compile</SubType>
     </Compile>
@@ -177,9 +172,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drivers" />
-    <Folder Include="Util" />
     <Folder Include="Wrappers" />
     <Folder Include="Protocol" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WeatherBalloonCommon\WeatherBalloonCommon.cproj">
+      <Name>WeatherBalloonCommon</Name>
+      <Project>{24a5f37d-e7cc-4a05-8685-426641c4da90}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

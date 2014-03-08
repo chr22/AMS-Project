@@ -49,7 +49,7 @@ int main(void)
 		DataParams[2] = AltiParam;
 		DataParams[3] = DelAltParam;
 		
-		PerformFullTransmission(DeviceId, DataParams);
+		PerformFullTransmission(DeviceId, DataParams, sizeof(DataParams));
 		_delay_ms(5000);
 	}
 	

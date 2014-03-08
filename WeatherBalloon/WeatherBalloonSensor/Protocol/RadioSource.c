@@ -13,7 +13,7 @@
 #include "../Drivers/uart.h"
 #include <math.h>
 
-int PerformFullTransmission( char id, struct DataValue_Params* data_params, int params_count)
+int PerformFullTransmission( char id, struct DataValue_Params* data_params, int params_count )
 {
 	int retryCount = 0;
 	int err = 0;
@@ -39,10 +39,10 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 	err = -1;
 	while(err < 0 && retryCount < 3)
 	{
-		TransmitMeasurement(TEMP_CMD, DataValue_Params, id);
-		TransmitMeasurement(ALT_CMD, data_params, id);
-		TransmitMeasurement(DELALT_CMD, DeltaAlt, id);
-		TransmitMeasurement(PRES_CMD, pres, id);
+		for(int i = 0; i < params_count; ++i)
+		{
+			TransmitMeasurement(data_params[i].DataCommand, data_params[i].DataValue, id);
+		}
 						
 		err = WaitForAck(RADIO_TIMEOUT_MS, id);
 		
