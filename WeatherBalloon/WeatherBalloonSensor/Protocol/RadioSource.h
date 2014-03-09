@@ -22,7 +22,7 @@ struct DataValue_Params {
 
 
 int PerformFullTransmission( char id, struct DataValue_Params* data_params, int params_count );
-int DataReady(char id, char numToTransmit);
+int DataReady(char id, int numToTransmit);
 //int WaitForAck(int timeOutMs);
 
 int TemperatureSend(char temp[]);

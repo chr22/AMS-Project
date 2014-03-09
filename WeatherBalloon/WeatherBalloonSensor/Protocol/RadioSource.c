@@ -18,12 +18,13 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 {
 	int retryCount = 0;
 	int err = 0;
+	int i = 0;
 	
 	//Transmit SensorReady and wait for server to echo the SensorID back 
 	err = -1;
 	while(err < 0 && retryCount < 3)
 	{
-		DataReady(id, 4);
+		DataReady(id, params_count);
 		err = WaitForServerReady(RADIO_TIMEOUT_MS, id);
 		if(!err)
 		{
@@ -40,7 +41,7 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 	err = -1;
 	while(err < 0 && retryCount < 3)
 	{
-		for(int i = 0; i < params_count; ++i)
+		for(i = 0; i < params_count; ++i)
 		{
 			TransmitMeasurement(data_params[i].DataCommand, data_params[i].DataValue, id);
 		}
@@ -61,7 +62,7 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 	return 1; 
 }
 
-int DataReady(char id, char numToTransmit)
+int DataReady( char id, int numToTransmit )
 {
 	//Transmit ReadyCommand
 	SendChar(RDY_CMD);
@@ -70,7 +71,7 @@ int DataReady(char id, char numToTransmit)
 	SendChar(id);
 	
 	//Transmit number to transmit
-	SendChar(numToTransmit);
+	SendChar((char)numToTransmit);
 	//SendInteger(numToTransmit);
 	return 1;
 }
