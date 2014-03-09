@@ -169,10 +169,10 @@ int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct
 	
 	tmpSensorvalue = CalculateIntFromBytes(sensorValue, bytesInTransmission);
 	
-	if (i <= MAX_NUM_OF_SENSORVALUES)
+	if (arrayPos <= MAX_NUM_OF_SENSORVALUES)
 	{
-		returnStruct->sensorValues[i].cmd = cmd;
-		returnStruct->sensorValues[i].sensorValue = tmpSensorvalue;	
+		returnStruct->sensorValues[arrayPos].cmd = cmd;
+		returnStruct->sensorValues[arrayPos].sensorValue = tmpSensorvalue;	
 	}	
 		
 	return 1;

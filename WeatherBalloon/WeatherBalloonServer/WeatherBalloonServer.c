@@ -39,13 +39,21 @@ int main(void)
 	NewLine();
 	sei();
 	
-	
 	//MeasurementStruct tmpMeasureStruct;
 	//
-	//tmpMeasureStruct.cmd = TEMP_CMD;
-	//tmpMeasureStruct.tempValue = 124531;
-		//
-	//SendToDisplay(&tmpMeasureStruct);
+	//tmpMeasureStruct.sensorValues[0].cmd = TEMP_CMD;
+	//tmpMeasureStruct.sensorValues[0].sensorValue = 1234;
+	//
+	//tmpMeasureStruct.sensorValues[1].cmd = DELALT_CMD;
+	//tmpMeasureStruct.sensorValues[1].sensorValue = 7834;
+	//
+	//tmpMeasureStruct.sensorValues[2].cmd = PRES_CMD;
+	//tmpMeasureStruct.sensorValues[2].sensorValue = 1846;
+	//
+	//tmpMeasureStruct.sensorValues[3].cmd = ALT_CMD;
+	//tmpMeasureStruct.sensorValues[3].sensorValue = 4321;
+	
+	//SendToDisplay(&tmpMeasureStruct, 4);
 	
 	while(1)
 	{
@@ -61,6 +69,6 @@ ISR(USART_RXC_vect)
 	
 	if(err < 0)
 	{
-		
+		WriteToDisplay("timeout");
 	}
 }
