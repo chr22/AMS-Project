@@ -162,7 +162,7 @@ int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct
 		
 		if (err < 0)
 		{
-			SendString("under 0");
+			//SendString("under 0");
 			return HANDLE_TRANMISSION_ERR;
 		}
 	}

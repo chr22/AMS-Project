@@ -159,6 +159,23 @@ void ConvertFloatToString(float temp, char* retArray)
 		
 		//WriteTemp(arr);		
 		//return arr;
+	}
+	else
+	{
+		*retArray = ' ';
+		retArray++;
+		*retArray = ' ';
+		retArray++;
+		*retArray = ' ';
+		retArray++;
+		*retArray = '0';
+		retArray++;
+		*retArray = '.';
+		retArray++;
+		*retArray = '0';
+		retArray++;
+		*retArray = '0';
+		retArray++;
 	}	
 }
 
