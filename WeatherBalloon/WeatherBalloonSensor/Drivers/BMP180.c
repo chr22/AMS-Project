@@ -44,6 +44,11 @@ void BMP180_Init()
 	
 	_delay_ms(10);
 		
+	//Dummy reads to fill calibration params
+	BMP180_GetTemperature();
+	BMP180_GetPressure();
+	BMP180_GetAltitude();
+		
 	BaseTemperature = BMP180_GetTemperature();
 	BasePressure = BMP180_GetPressure();
 	BaseAltitude = BMP180_GetAltitude();
@@ -186,7 +191,8 @@ long BMP180_GetAltitude()
 
 long BMP180_GetDeltaAltitude()
 {
-	return labs(BMP180_GetAltitude() - BaseAltitude);
+	long temp = BMP180_GetAltitude();
+	return labs(temp - BaseAltitude);
 }
 
 unsigned char BMP180_GetDeviceId()

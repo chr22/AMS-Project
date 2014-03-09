@@ -17,21 +17,22 @@
 
 unsigned char DeviceId;
 
+#define NumberOfDataValue_Params 4
+
 int main(void)
 {		
 	InitUART(9600, 8);
-	_delay_ms(20);
 	
 	BMP180_Init();
 
 	DeviceId = BMP180_GetDeviceId();
 		
-	struct DataValue_Params DataParams[4];
-	
 	struct DataValue_Params TempParam;
 	struct DataValue_Params PresParam;
 	struct DataValue_Params AltiParam;
 	struct DataValue_Params DelAltParam;
+	
+	struct DataValue_Params DataParams[NumberOfDataValue_Params];
 	
 	TempParam.DataCommand = TEMP_CMD;
 	PresParam.DataCommand = PRES_CMD;
@@ -50,7 +51,7 @@ int main(void)
 		DataParams[2] = AltiParam;
 		DataParams[3] = DelAltParam;
 		
-		PerformFullTransmission(DeviceId, DataParams, sizeof(DataParams));
+		PerformFullTransmission(DeviceId, DataParams, NumberOfDataValue_Params);
 		_delay_ms(5000);
 	}
 	
