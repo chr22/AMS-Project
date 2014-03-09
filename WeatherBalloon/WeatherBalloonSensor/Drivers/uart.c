@@ -160,8 +160,8 @@ int ReadCharWTimeout(char * retVal, int timeOutMs)
 	//While loop was broken by overflow timer, so we got no response from server.
 	if(readyReg >= 3)
 	{
-		SendChar(0xFF);
-		SendChar(0xFF);
+		//SendChar(0xFF);
+		//SendChar(0xFF);
 		err = TIMEOUT_ERR;
 	}
 	else
