@@ -192,7 +192,9 @@ long BMP180_GetAltitude()
 long BMP180_GetDeltaAltitude()
 {
 	long temp = BMP180_GetAltitude();
-	return labs(temp - BaseAltitude);
+	long res = labs(temp - BaseAltitude);
+	
+	return res;
 }
 
 unsigned char BMP180_GetDeviceId()

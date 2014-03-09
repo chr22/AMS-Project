@@ -41,7 +41,7 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 	err = -1;
 	while(err < 0 && retryCount < 3)
 	{
-		for(i = 0; i < params_count; ++i)
+		for(i = 0; i < params_count; i++)
 		{
 			TransmitMeasurement(data_params[i].DataCommand, data_params[i].DataValue, id);
 		}

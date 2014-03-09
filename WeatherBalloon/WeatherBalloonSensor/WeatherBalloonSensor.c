@@ -51,8 +51,9 @@ int main(void)
 		DataParams[2] = AltiParam;
 		DataParams[3] = DelAltParam;
 		
+		//(sizeof(DataParams)/sizeof(DataParams[0]))
 		PerformFullTransmission(DeviceId, DataParams, NumberOfDataValue_Params);
-		_delay_ms(5000);
+		_delay_ms(2000);
 	}
 	
 	return 1;
