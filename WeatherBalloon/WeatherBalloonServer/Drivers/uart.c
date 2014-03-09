@@ -145,10 +145,10 @@ int ReadCharWTimeout(char * retVal, int timeOutMs)
 	readyReg = 0;
 	int err = 1;
 	
-	sei();
 	//disable RX complete interrupt interrupt
-	UCSRB &= 0b01111111;
-	
+	UCSRB &= 0b01111111;	
+	sei();
+		
 	// Wait for new character received or Timeout overflow
 	while(((UCSRA & (1<<7)) == 0) && (readyReg < 8))
 	{ }

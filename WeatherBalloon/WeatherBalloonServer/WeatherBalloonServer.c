@@ -20,40 +20,15 @@
 
 
 int main(void)
-{
-	//WriteTemp("123");
-		
-	//char k = 'b';
+{	
 	InitUART(9600, 8);
 
-	//LCDInit();
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
-	//SendString("Hullo");
-	//SendChar(0x50);
-	//SendChar(0x50);
-	//SendChar(0x50);
+		
+	ClearScreenSensorData();
 	
-	//LCDDispString("Main");
-	WriteToDisplay("Main");
-	NewLine();
 	sei();
-	
-	//MeasurementStruct tmpMeasureStruct;
-	//
-	//tmpMeasureStruct.sensorValues[0].cmd = TEMP_CMD;
-	//tmpMeasureStruct.sensorValues[0].sensorValue = 1234;
-	//
-	//tmpMeasureStruct.sensorValues[1].cmd = DELALT_CMD;
-	//tmpMeasureStruct.sensorValues[1].sensorValue = 7834;
-	//
-	//tmpMeasureStruct.sensorValues[2].cmd = PRES_CMD;
-	//tmpMeasureStruct.sensorValues[2].sensorValue = 1846;
-	//
-	//tmpMeasureStruct.sensorValues[3].cmd = ALT_CMD;
-	//tmpMeasureStruct.sensorValues[3].sensorValue = 4321;
-	
-	//SendToDisplay(&tmpMeasureStruct, 4);
 	
 	while(1)
 	{
@@ -69,6 +44,6 @@ ISR(USART_RXC_vect)
 	
 	if(err < 0)
 	{
-		WriteToDisplay("timeout");
+		
 	}
 }
