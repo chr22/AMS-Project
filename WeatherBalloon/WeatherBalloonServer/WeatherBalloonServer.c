@@ -9,7 +9,6 @@
 
 #include <avr/interrupt.h>
 #include "Drivers/uart.h"
-#include "Drivers/lcd162.h"
 #include "Drivers/dem128064a.h"
 #include "Wrappers/DisplaySensorData.h"
 #include "Wrappers/DisplayWrapper.h"
@@ -30,10 +29,7 @@ int main(void)
 	
 	sei();
 	
-	while(1)
-	{
-
-	}
+	while(1){}
 }
 
 ISR(USART_RXC_vect)
@@ -43,7 +39,5 @@ ISR(USART_RXC_vect)
 	err = HandleIncoming(UDR);
 	
 	if(err < 0)
-	{
-		
-	}
+	{}
 }

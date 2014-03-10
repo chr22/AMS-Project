@@ -139,12 +139,6 @@
     <Compile Include="Drivers\dem128064a.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\lcd162.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Drivers\lcd162.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="Drivers\uart.c">
       <SubType>compile</SubType>
     </Compile>

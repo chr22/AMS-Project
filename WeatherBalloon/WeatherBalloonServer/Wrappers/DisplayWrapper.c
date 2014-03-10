@@ -26,11 +26,6 @@ void WriteToDisplay(char* dispStr)
 		MatchCharacters(*dispStr);		
 		dispStr++;
 	}
-	
-	//if (*--dispStr != '\n')
-	//{
-		//MatchCharacters(' ');
-	//}	
 }
 
 void MatchCharacters(char character)
