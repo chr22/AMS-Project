@@ -23,7 +23,7 @@ int main(void)
 {		
 	InitUART(9600, 8);
 	
-	BMP180_Init();
+	BMP180_Init(102600);
 
 	DeviceId = BMP180_GetDeviceId();
 		

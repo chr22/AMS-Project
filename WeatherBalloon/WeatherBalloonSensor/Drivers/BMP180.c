@@ -7,8 +7,6 @@
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 #include "../DefinesSensor.h"
 
-#define SealevelPressure 101325
-#define BASE_PRESSURE 102800
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
 
@@ -33,9 +31,11 @@ long BaseTemperature;
 long BasePressure;
 long BaseAltitude;
 
+long SealevelPressure = 101325;
 
-void BMP180_Init()
+void BMP180_Init(long BaseLevelPressure)
 {
+	SealevelPressure = BaseLevelPressure;
 	i2c_init();
 	
 	_delay_ms(10);
@@ -178,7 +178,7 @@ long BMP180_GetAltitude()
 	
 	double PressureDouble = (double)Pressure;
 		//101325
-	double PressureDiff = (PressureDouble/BASE_PRESSURE);
+	double PressureDiff = (PressureDouble/SealevelPressure);
 	double exp = 1/5.255;
 	double power = pow(PressureDiff, exp);
 	double x = (1-power);

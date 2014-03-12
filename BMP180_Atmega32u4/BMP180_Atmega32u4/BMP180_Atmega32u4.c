@@ -17,7 +17,7 @@ int main(void)
 	
 	SendString("Hej UART \r\n");
 	
-	BMP180_Init();
+	BMP180_Init(102600);
 	
 	while(1)
 	{	

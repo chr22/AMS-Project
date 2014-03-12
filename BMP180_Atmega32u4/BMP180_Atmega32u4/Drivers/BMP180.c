@@ -6,7 +6,6 @@
  */ 
 #include "../Util/GlobalDefines.h"
 
-#define SealevelPressure 101325
 #define SensorReadAddress 0xEF
 #define SensorWriteAddress 0xEE
 
@@ -33,9 +32,12 @@ long BaseTemperature;
 long BasePressure;
 long BaseAltitude;
 
+long SealevelPressure = 101325;
 
-void BMP180_Init()
+
+void BMP180_Init(long BaseLevelPressure)
 {
+	SealevelPressure = BaseLevelPressure;
 	i2c_init();
 	
 	SendString("After i2c init");
@@ -180,7 +182,7 @@ double BMP180_GetAltitude()
 	
 	double PressureDouble = (double)Pressure;
 		//101325
-	double PressureDiff = (PressureDouble/102600);
+	double PressureDiff = (PressureDouble/SealevelPressure);
 	double exp = 1/5.255;
 	double power = pow(PressureDiff, exp);
 	double x = (1-power);

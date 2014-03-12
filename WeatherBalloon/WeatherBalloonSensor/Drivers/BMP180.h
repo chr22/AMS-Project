@@ -10,8 +10,7 @@
 #define PARAM_MI      3791        /*calibration parameter */
 
 //#include "I2C.h"
-
-void BMP180_Init();
+void BMP180_Init(long BaseLevelPressure);
 unsigned char BMP180_GetDeviceId();
 long BMP180_GetTemperature();
 long BMP180_GetPressure();
