@@ -8,10 +8,8 @@
 #include "../Protocol/ServerProtocol.h"
 #include "../Drivers/uart.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
-#include "../DefinesServer.h"
 
 #include "../Wrappers/DisplaySensorData.h"
-#include "../Wrappers/DisplayWrapper.h"
 
 void InitServer()
 {
@@ -113,24 +111,22 @@ int SendToDisplay(MeasurementStruct * sensorStruct, int numberOfValues)
 		switch(sensorStruct->sensorValues[i].cmd)
 		{
 			case TEMP_CMD:
-				DEM128064A_SetLineNum(TEMP_LINE);
+				SetLine(TEMP_LINE);
 				WriteTempFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case ALT_CMD:
-				DEM128064A_SetLineNum(ALT_LINE);
+				SetLine(ALT_LINE);
 				WriteAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case PRES_CMD:
-				DEM128064A_SetLineNum(PRES_LINE);
+				SetLine(PRES_LINE);
 				WritePressureFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case DELALT_CMD:
-				DEM128064A_SetLineNum(DELTAALT_LINE);
+				SetLine(DELTAALT_LINE);
 				WriteDelAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;			
 			default:
-				DisplayWrapper_WriteToDisplay("1234");
-				DisplayWrapper_NewLine();
 				break;
 		}
 	}		

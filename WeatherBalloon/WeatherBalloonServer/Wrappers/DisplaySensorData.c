@@ -8,7 +8,6 @@
 #include "DisplayWrapper.h"
 #include "DisplaySensorData.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
-#include "../DefinesServer.h"
 #include "stdlib.h"
 
 
@@ -199,4 +198,14 @@ void ConvertValuesToCorrectUnit(float *val, int type)
 	{
 		*val /= 1.0;
 	}
+}
+
+void SetLine(int line)
+{
+	DisplayWrapper_SetLine(line);
+}
+
+void SetPosition(int pos)
+{
+	DisplayWrapper_SetPosition(pos);	
 }

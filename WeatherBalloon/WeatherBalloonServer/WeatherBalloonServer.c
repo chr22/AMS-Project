@@ -8,15 +8,7 @@
 #include <avr/io.h>
 
 #include <avr/interrupt.h>
-#include "Drivers/uart.h"
-#include "Drivers/dem128064a.h"
-#include "Wrappers/DisplaySensorData.h"
-#include "Wrappers/DisplayWrapper.h"
 #include "Protocol/ServerProtocol.h"
-
-#include "../WeatherBalloonCommon/GlobalDefines.h"
-#include "DefinesServer.h"
-
 
 int main(void)
 {
