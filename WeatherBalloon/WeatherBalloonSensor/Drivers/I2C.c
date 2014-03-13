@@ -12,7 +12,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-void i2c_init()
+void I2C_Init()
 {
 	sei();
 	// TWI prescaler = 1 (same as default)
@@ -24,7 +24,7 @@ void i2c_init()
 	TWBR = 152;	//Atmega32u4 = 40 kHz, Atmega32 = 11.5 kHz
 }
 
-void i2c_start()
+void I2C_Start()
 {
 	TWCR = (1<<TWINT) | (1<<TWSTA) | (1<<TWEN);
 	while ((TWCR & (1<<TWINT)) == 0)
@@ -34,7 +34,7 @@ void i2c_start()
 	//SendString("Done i2c start");
 }
 
-void i2c_write(unsigned char data)
+void I2C_Write( unsigned char data )
 {
 	
 	TWDR = data;
@@ -44,7 +44,7 @@ void i2c_write(unsigned char data)
 	//SendString("Done writing");
 }
 
-unsigned char i2c_read (unsigned char isLast)
+unsigned char I2C_Read( unsigned char isLast )
 {
 	if (isLast == 0) //If we want to read more than 1 byte
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWEA);
@@ -59,14 +59,14 @@ unsigned char i2c_read (unsigned char isLast)
 	return TWDR;
 }
 
-void i2c_stop()
+void I2C_Stop()
 {
 	TWCR = (1<<TWINT) | (1<<TWEN) | (1<<TWSTO);
 }
 
-void i2c_RepeatedStart()
+void I2C_RepeatedStart()
 {
-	i2c_stop();
+	I2C_Stop();
 	_delay_ms(3);							//Restart
-	i2c_start();
+	I2C_Start();
 }

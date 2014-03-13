@@ -7,9 +7,9 @@
 
 
 
-void i2c_init();
-void i2c_start();
-void i2c_write(unsigned char data);
-unsigned char i2c_read (unsigned char isLast);
-void i2c_stop();	
-void i2c_RepeatedStart();
+void I2C_Init();
+void I2C_Start();
+void I2C_Write(unsigned char data);
+unsigned char I2C_Read (unsigned char isLast);
+void I2C_Stop();	
+void I2C_RepeatedStart();

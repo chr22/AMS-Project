@@ -23,6 +23,8 @@ void BMP180_RegWrite(unsigned char reg, unsigned char val);
 short BMP180_CalculateTrueTemperature(unsigned long ut);
 long BMP180_CalculateTruePressure(unsigned long up);
 void BMP180_GetCalibrationParams();
+void BMP180_GetBaseValues();
+double BMP180_CalculateAltitude(double Pressure);
 
 /* Global variables */
 struct bmp180_calibration_params cal_param;
@@ -36,7 +38,7 @@ long SealevelPressure = 101325;
 void BMP180_Init(long BaseLevelPressure)
 {
 	SealevelPressure = BaseLevelPressure;
-	i2c_init();
+	I2C_Init();
 	
 	_delay_ms(10);
 	
@@ -44,11 +46,17 @@ void BMP180_Init(long BaseLevelPressure)
 	
 	_delay_ms(10);
 		
+	BMP180_GetBaseValues();
+	
+}
+
+void BMP180_GetBaseValues()
+{
 	//Dummy reads to fill calibration params
 	BMP180_GetTemperature();
 	BMP180_GetPressure();
 	BMP180_GetAltitude();
-		
+	
 	BaseTemperature = BMP180_GetTemperature();
 	BasePressure = BMP180_GetPressure();
 	BaseAltitude = BMP180_GetAltitude();
@@ -170,21 +178,16 @@ long BMP180_GetDeltaPressure()
 	return labs(BMP180_GetPressure() - BasePressure);
 }
 
-long BMP180_GetAltitude()
+double BMP180_CalculateAltitude(double Pressure) 
 {
-	//SendString("\r\nReady altitude\r\n");
-	
+	return 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
+}
+
+long BMP180_GetAltitude()
+{	
 	long Pressure = BMP180_GetPressure();
-	
-	double PressureDouble = (double)Pressure;
-		//101325
-	double PressureDiff = (PressureDouble/SealevelPressure);
-	double exp = 1/5.255;
-	double power = pow(PressureDiff, exp);
-	double x = (1-power);
-		
-	//long Altitude = 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
-	double Altitude = 44330 * x;
+			
+	long Altitude = BMP180_CalculateAltitude((double)Pressure);
 	
 	return Altitude;
 }
@@ -208,32 +211,32 @@ unsigned char BMP180_GetDeviceId()
 //Private
 void BMP180_RegWrite(unsigned char reg, unsigned char val)
 {
-	i2c_start();
-	i2c_write(SensorWriteAddress);
-	i2c_write(reg);
-	i2c_write(val);
-	i2c_stop();
+	I2C_Start();
+	I2C_Write(SensorWriteAddress);
+	I2C_Write(reg);
+	I2C_Write(val);
+	I2C_Stop();
 }
 
 //Private
 void BMP180_RegRead(unsigned char* RetVal, unsigned char reg, unsigned int NumOfBytes )
 {
-	i2c_start();						//S
-	i2c_write(SensorWriteAddress);		//module address write
-	i2c_write(reg);						//Register address
-	i2c_RepeatedStart();
+	I2C_Start();						//S
+	I2C_Write(SensorWriteAddress);		//module address write
+	I2C_Write(reg);						//Register address
+	I2C_RepeatedStart();
 
-	i2c_write(SensorReadAddress);		//Module address read
+	I2C_Write(SensorReadAddress);		//Module address read
 	
 	//Receive:	
 	for(int i = 0; i < (NumOfBytes-1); ++i)
 	{
-		*RetVal = i2c_read(0);
+		*RetVal = I2C_Read(0);
 		++RetVal;
 	}
-	*RetVal = i2c_read(1);
+	*RetVal = I2C_Read(1);
 	
-	i2c_stop();
+	I2C_Stop();
 }
 
 
