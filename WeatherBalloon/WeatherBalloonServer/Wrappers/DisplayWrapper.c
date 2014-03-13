@@ -271,6 +271,13 @@ void SetPosition(int pos)
 
 void ClearScreenWrapper() 
 {
+	if (!isDispInit)
+	{
+		DisplayInit();
+		DisplayOn();	
+		isDispInit = 1;
+	}
+	
 	ClearScreen();
 	SetPositionNum(0);
 	SetLineNum(0);

@@ -23,7 +23,6 @@ typedef struct
 	SensorStruct sensorValues[MAX_NUM_OF_SENSORVALUES];
 } MeasurementStruct;
 
-
 int HandleIncoming(char cmd);
 int GetCommand();
 
