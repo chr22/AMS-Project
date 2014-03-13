@@ -52,14 +52,14 @@ unsigned int TempUBRR;
   readyReg = 0;
 }
 
-
+//Blocks until char has been received or timeout(s) has occured
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
 	readyReg = 0;
 	int err = 1;
 	sei();
 	
-	// Wait for new character received or Timeout overflow
+	// Wait for new character received or (2) timer1 overflows
 	while(((UCSR1A & (1<<7)) == 0) && (readyReg < 2))
 	{ }	
 	
@@ -90,7 +90,7 @@ Parameter :
 *************************************************************************/
 void SendChar(char Ch)
 {
-  // Wait for transmitter register empty (ready for new character)
+  // Wait for transmitter register empty
   while ( (UCSR1A & (1<<5)) == 0 )
   {}
   // Then send the character

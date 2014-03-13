@@ -4,13 +4,14 @@
 #include "../DefinesSensor.h"
 #include "../Drivers/UART.h"
 
+//Wait for server to send ServerReady command. (Echo of sent ID)
 int WaitForServerReady(int timeOutMs, unsigned char id)
 {
 	int err = -1;
 	char * retVal = 0x00;
 	int retryCount = 0;
 	
-	//SendString("Waiting for server ready signal. \n");
+	//Retry 3 times
 	while((err < 0) && (retryCount < 3))
 	{
 		err = ReadCharWTimeout(retVal, timeOutMs);
@@ -24,13 +25,13 @@ int WaitForServerReady(int timeOutMs, unsigned char id)
 	
 	if(*retVal != id)
 	{
-		//SendString("Wrong ID error. \n");
 		return WRONG_ID_ERR;
 	}
 
 	return 1;
 }
 
+//Calculate number of bytes needed to send transmission
 int CalculateTransmissionLength(long measureVal ) 
 {
 	int bitVal = log(measureVal)/log(2) + 1;
@@ -38,7 +39,7 @@ int CalculateTransmissionLength(long measureVal )
 	return byteNum;
 }
 
-
+//Converts long to hex values and add to byte array
 int ConvertIntToCharArray(long measureVal, int transmissionLength, char * buf)
 {
 	int i = 0;
@@ -60,15 +61,17 @@ int TransmitMeasurement(char measureType, long measureVal, char id)
 {
 	int err = -1;
 	int i = 0;
-	//int retryCount = 0;
 	int transmissionLength = CalculateTransmissionLength(measureVal);
 	char measureInBytes[transmissionLength];
-	//char measureInBytes[4];
 	err = ConvertIntToCharArray(measureVal, transmissionLength, measureInBytes);	
 	
+	//Send Type command
 	SendChar(measureType);
-	//SendChar(id);
+	
+	//Send length field
 	SendChar((char)transmissionLength);
+	
+	//Foreach value in byteArray, send that byte
 	for(i = 0; i < transmissionLength; ++i)
 	{
 		SendChar(measureInBytes[i]);	
@@ -79,32 +82,16 @@ int TransmitMeasurement(char measureType, long measureVal, char id)
 		return err;
 	}
 	
-	//SendChar(measureType);
-	//SendChar(transmissionLength);
-	
-	//free(measure);
 	return 1;
-	/*
-	while(err < 0 && retryCount < 3)
-	{
-		err = WaitForAck(5000);
-		++retryCount;
-	}
-	if (err < 0)
-	{
-		return err;
-	}
-		
-	return 1;	
-	*/
 }
 
+//Wait for received Acknowledge command from sensor, following a transmission of data
 int WaitForAck( int timeOutMs, unsigned char id )
 {
 	char * retVal = 0x00;
 	int err = 0;
 	
-	//SendString("Send ACK (0x06): \n");
+	//Wait for ACK command byte
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if (err < 0)
 	{
@@ -112,11 +99,10 @@ int WaitForAck( int timeOutMs, unsigned char id )
 	}
 	if(*retVal != ACK_CMD)
 	{
-		//SendString("Wrong CMD string (WaitForAck). \n");
 		return UNEXPECTED_CMD_ERR;
 	}
 	
-	//SendString("Send ID (0x20): \n");
+	//Wait for ID byte
 	err = ReadCharWTimeout(retVal, timeOutMs);
 	if(err < 0)
 	{
@@ -124,7 +110,6 @@ int WaitForAck( int timeOutMs, unsigned char id )
 	}
 	if(*retVal != id)
 	{
-		//SendString("Wrong ID string (WaitForAck). \n");
 		return WRONG_ID_ERR;
 	}
 	
@@ -141,6 +126,5 @@ int DataReady( char id, int numToTransmit )
 	
 	//Transmit number to transmit
 	SendChar((char)numToTransmit);
-	//SendInteger(numToTransmit);
 	return 1;
 }

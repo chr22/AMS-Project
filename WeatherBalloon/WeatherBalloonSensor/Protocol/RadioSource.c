@@ -27,7 +27,7 @@ int PerformFullTransmission( char id, struct DataValue_Params* data_params, int 
 		return SERVER_N_READY_ERR;
 	}
 	
-	//Transmit Data and wait for 
+	//Transmit Data and wait for acknowledgement (or timeout and retry)
 	retryCount = 0;
 	err = -1;
 	while(err < 0 && retryCount < 3)

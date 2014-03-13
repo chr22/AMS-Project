@@ -12,19 +12,6 @@
 
 volatile int readyReg;
 
-/*************************************************************************
-USART initialization.
-    Asynchronous mode.
-	RX and TX enabled.
-	No interrupts enabled.
-	Number of Stop Bits = 1.
-	No Parity.
-	Baud rate = Parameter.
-	Data bits = Parameter.
-Parameters:
-	BaudRate: Wanted Baud Rate.
-	Databits: Wanted number of Data Bits.
-*************************************************************************/
 void InitUART(unsigned long BaudRate, unsigned char DataBit)
 {
 unsigned int TempUBRR;
@@ -51,38 +38,21 @@ unsigned int TempUBRR;
     // Write lower part of UBRR
     UBRRL = TempUBRR;
 	
+	//Setup timer for timeout (used in ReadCharWTimeout())
+	//Timer1 overflow interrupt enable
 	TIMSK = 0b00000100;
+	
+	//Clock prescaler 64
 	TCCR1B = 0b00000011;
+	
+	//Initialize count register to 0
 	TCNT1H = 0x00;
 	TCNT1L = 0x00;
   }  
   
-  //Enable receive-byte interrupt
-  //UCSRB |= (1 << RXCIE); 
 }
 
 
-/*************************************************************************
-  Returns 0 (FALSE), if the UART has NOT received a new character.
-  Returns value <> 0 (TRUE), if the UART HAS received a new character.
-*************************************************************************/
-unsigned char CharReady()
-{
-   return UCSRA & (1<<7);
-}
-
-/*************************************************************************
-Awaits new character received.
-Then this character is returned.
-*************************************************************************/
-char ReadChar()
-{
-  // Wait for new character received
-  while ( (UCSRA & (1<<7)) == 0 )
-  {}                        
-  // Then return it
-  return UDR;
-}
 
 /*************************************************************************
 Awaits transmitter-register ready.
@@ -99,39 +69,7 @@ void SendChar(char Ch)
   UDR = Ch;
 }
 
-/*************************************************************************
-Sends 0-terminated string.
-Parameter:
-   String: Pointer to the string. 
-*************************************************************************/
-void SendString(char* String)
-{
-  // Repeat untill zero-termination
-  while (*String != 0)
-  {
-    // Send the character pointed to by "String"
-    SendChar(*String);
-    // Advance the pointer one step
-    String++;
-  }
-}
-
-/*************************************************************************
-Converts the integer "Number" to an ASCII string - and then sends this
-string using the USART.
-Makes use of the C standard library <stdlib.h>.
-Parameter:
-      Number: The integer to be converted and send. 
-*************************************************************************/
-void SendInteger(int Number)
-{
-char array[7];
-  // Convert the integer to an ASCII string (array), radix = 10 
-  itoa(Number, array, 10);
-  // - then send the string
-  SendString(array);
-}
-
+//Blocks until char has been received or timeout(s) has occured
 int ReadCharWTimeout(char * retVal, int timeOutMs)
 {
 	readyReg = 0;
@@ -167,4 +105,3 @@ ISR(TIMER1_OVF_vect)
 	++readyReg;
 }
 
-/**************************************************/
