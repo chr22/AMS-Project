@@ -1,15 +1,7 @@
-/*
- * LM3115A2.h
- *
- * Created: 25-02-2014 09:34:37
- *  Author: Casper
- */ 
-
 #define PARAM_MG      3038        /*calibration parameter */
 #define PARAM_MH     -7357        /*calibration parameter */
 #define PARAM_MI      3791        /*calibration parameter */
 
-//#include "I2C.h"
 void BMP180_Init(long BaseLevelPressure);
 unsigned char BMP180_GetDeviceId();
 long BMP180_GetTemperature();
@@ -17,11 +9,6 @@ long BMP180_GetPressure();
 long BMP180_GetDeltaPressure();
 long BMP180_GetAltitude();
 long BMP180_GetDeltaAltitude();
-
-
-//unsigned char BMP180_RegRead(unsigned char[] RetVal, unsigned char reg, unsigned int NumOfBytes);
-//void BMP180_RegWrite(unsigned char reg, unsigned char val);
-
 
 /* this structure holds all device specific calibration parameters */
 struct bmp180_calibration_params{
