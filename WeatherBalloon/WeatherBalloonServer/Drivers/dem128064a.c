@@ -1,14 +1,3 @@
-/*
-  Display Driver for Graphic Display Module DEM128064A.
-   
-  IMPORTANT: The functions DisplayRead() and WaitBusy()
-             are not working. The BUSY bit always reads as 1.
-             However, it is not necessary to wait for the busy flag.
-  
-  Author: Henning Hargaard
-  Date: 5.2.2014
-*/  
-
 #include <avr/io.h> 
 #include <avr/cpufunc.h>
 #define F_CPU 3686400
@@ -207,7 +196,7 @@ unsigned char i, j;
 // PUBLIC FUNCTIONS ////////////////////////////////////////////////////////////
 
 // Initializes (resets) the display
-void DisplayInit()
+void DEM128064A_DisplayInit()
 {
   // Data port is input
   DATA_DDR = 0;
@@ -235,21 +224,21 @@ void DisplayInit()
 }
 
 // Turns the display (both left and right side) ON
-void DisplayOn()
+void DEM128064A_DisplayOn()
 {
   DisplayWrite(LEFT, 0b00111111, CONTROL);
   DisplayWrite(RIGHT, 0b00111111, CONTROL);
 }
 
 // Turns the display (both left and right side) OFF
-void DisplayOff()
+void DEM128064A_DisplayOff()
 {
   DisplayWrite(LEFT, 0b00111110, CONTROL);
   DisplayWrite(RIGHT, 0b00111110, CONTROL);
 }
 
 // Clears all pixels at the whole screen (left and right)
-void ClearScreen()
+void DEM128064A_ClearScreen()
 {
   ClearHalfScreen(LEFT);
   ClearHalfScreen(RIGHT);
@@ -257,7 +246,7 @@ void ClearScreen()
 
 // Displays a graphical image (whole screen)
 // The parameter is a pointer to the bit array defining the image
-void DisplayPic(const char *picArray)
+void DEM128064A_DisplayPic( const char *picArray )
 {
 unsigned char i, j;
 
@@ -284,7 +273,7 @@ unsigned char i, j;
 }
 
 //displays whats in the array
-void DisplayCharArray(const char *disArray, int length) 
+void DEM128064A_DisplayCharArray( const char *disArray, int length )
 {
 	int i = 0, j = 0;	
 	int lines = 0;
@@ -334,7 +323,7 @@ void DisplayCharArray(const char *disArray, int length)
 	}			
 }
 
-void SetNextChar(const char *nextChar, int position, int line) 
+void DEM128064A_SetNextChar( const char *nextChar, int position, int line )
 {
 	if (position >= 128)
 	{
@@ -374,7 +363,7 @@ void SetNextChar(const char *nextChar, int position, int line)
 	}
 }
 
-void SetNextCharAuto(const char *nextChar) 
+void DEM128064A_SetNextCharAuto( const char *nextChar )
 {
 	//reset cursor at line end
 	if (_position > 120)
@@ -422,7 +411,7 @@ void SetNextCharAuto(const char *nextChar)
 	_position += 8;
 }
 
-void SetLineNum(int line)
+void DEM128064A_SetLineNum( int line )
 {
 	if (_line > 7)
 	{
@@ -439,7 +428,7 @@ void SetLineNum(int line)
 	
 }
 
-void SetPositionNum(int pos)
+void DEM128064A_SetPositionNum( int pos )
 {
 	if (_position > 120)
 	{
@@ -455,7 +444,7 @@ void SetPositionNum(int pos)
 	}
 }
 
-void SetCharPosition(int pos)
+void DEM128064A_SetCharPosition( int pos )
 {
 	if (pos > 15)
 	{
@@ -479,9 +468,9 @@ void SetCharPosition(int pos)
 	}
 }
 
-void NextLine()
+void DEM128064A_NewLine()
 {
-	SetLineNum(++_line);
+	DEM128064A_SetLineNum(++_line);
 	_half = LEFT;
 	_position = 0;
 }
@@ -490,7 +479,7 @@ void NextLine()
 // Notice: x = Horizontal (0-127), y = Vertical (0-63)
 // This corresponds to the "logical" x and y terms
 // in contrast to the display internal definitions
-void SetPixel(unsigned char x, unsigned char y)
+void DEM128064A_SetPixel( unsigned char x, unsigned char y )
 {
 unsigned char bit_no;
 unsigned char tmp;
@@ -530,10 +519,10 @@ unsigned char tmp;
 // Draws one horizontal line
 // "StartX, StartY" is the (logical) start position of the line
 // "Length" is the line length in pixels
-void Draw_Horizontal_Line(unsigned char StartX, unsigned char StartY, unsigned char Length)
+void DEM128064A_Draw_Horizontal_Line( unsigned char StartX, unsigned char StartY, unsigned char Length )
 {
 unsigned char x;
 
   for (x=StartX; x<(StartX+Length); x++)
-    SetPixel(x,StartY);
+    DEM128064A_SetPixel(x,StartY);
 }

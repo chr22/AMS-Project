@@ -11,13 +11,13 @@ void MatchCharacters(char character);
 
 int isDispInit = 0;
 
-void WriteToDisplay(char* dispStr)
+void DisplayWrapper_WriteToDisplay( char* dispStr )
 {
 	if (!isDispInit)
 	{
-		DisplayInit();
-		DisplayOn();
-		ClearScreen();
+		DEM128064A_DisplayInit();
+		DEM128064A_DisplayOn();
+		DEM128064A_ClearScreen();
 		isDispInit = 1;
 	}
 	
@@ -149,136 +149,136 @@ void MatchCharacters(char character)
 	switch (character)
 	{
 	case '1':
-		SetNextCharAuto(one);
+		DEM128064A_SetNextCharAuto(one);
 		break;
 	case '2':
-		SetNextCharAuto(two);
+		DEM128064A_SetNextCharAuto(two);
 		break;
 	case '3':
-		SetNextCharAuto(three);
+		DEM128064A_SetNextCharAuto(three);
 		break;
 	case '4':
-		SetNextCharAuto(four);
+		DEM128064A_SetNextCharAuto(four);
 		break;
 	case '5':
-		SetNextCharAuto(five);
+		DEM128064A_SetNextCharAuto(five);
 		break;
 	case '6':
-		SetNextCharAuto(six);
+		DEM128064A_SetNextCharAuto(six);
 		break;
 	case '7':
-		SetNextCharAuto(seven);
+		DEM128064A_SetNextCharAuto(seven);
 		break;
 	case '8':
-		SetNextCharAuto(eight);
+		DEM128064A_SetNextCharAuto(eight);
 		break;
 	case '9':
-		SetNextCharAuto(nine);
+		DEM128064A_SetNextCharAuto(nine);
 		break;
 	case '0':
-		SetNextCharAuto(zero);
+		DEM128064A_SetNextCharAuto(zero);
 		break;	
 	case 'T':
 	case 't':
-		SetNextCharAuto(T);
+		DEM128064A_SetNextCharAuto(T);
 		break;
 	case 'E':
 	case 'e':
-		SetNextCharAuto(E);
+		DEM128064A_SetNextCharAuto(E);
 		break;
 	case 'M':
-		SetNextCharAuto(M);
+		DEM128064A_SetNextCharAuto(M);
 		break;
 	case 'm':
-		SetNextCharAuto(m);
+		DEM128064A_SetNextCharAuto(m);
 		break;
 	case 'P':
 	case 'p':
-		SetNextCharAuto(P);
+		DEM128064A_SetNextCharAuto(P);
 		break;
 	case 'O':
 	case 'o':
-		SetNextCharAuto(O);
+		DEM128064A_SetNextCharAuto(O);
 		break;
 	case 'C':
 	case 'c':
-		SetNextCharAuto(C);
+		DEM128064A_SetNextCharAuto(C);
 		break;
 	case 'S':
 	case 's':
-		SetNextCharAuto(S);
+		DEM128064A_SetNextCharAuto(S);
 		break;
 	case 'A':	
-		SetNextCharAuto(A);
+		DEM128064A_SetNextCharAuto(A);
 		break;
 	case 'a':
-		SetNextCharAuto(a);
+		DEM128064A_SetNextCharAuto(a);
 		break;
 	case 'h':
-		SetNextCharAuto(h);
+		DEM128064A_SetNextCharAuto(h);
 		break;
 	case 'L':
 	case 'l':
-		SetNextCharAuto(L);
+		DEM128064A_SetNextCharAuto(L);
 		break;
 	case 'R':
 	case 'r':
-		SetNextCharAuto(R);
+		DEM128064A_SetNextCharAuto(R);
 		break;
 	case ' ':
-		SetNextCharAuto(space);
+		DEM128064A_SetNextCharAuto(space);
 		break;
 	case ':':
-		SetNextCharAuto(colon);
+		DEM128064A_SetNextCharAuto(colon);
 		break;
 	case '?':
-		SetNextCharAuto(question);
+		DEM128064A_SetNextCharAuto(question);
 		break;
 	case '*':
-		SetNextCharAuto(degree);
+		DEM128064A_SetNextCharAuto(degree);
 		break;
 	case '.':
-		SetNextCharAuto(point);
+		DEM128064A_SetNextCharAuto(point);
 		break;
 	case 'd':
-		SetNextCharAuto(delta);
+		DEM128064A_SetNextCharAuto(delta);
 		break;
 	case '\n':
-		NextLine();
+		DEM128064A_NewLine();
 		break;
 	case '\r':
-		SetPosition(0);
+		DisplayWrapper_SetPosition(0);
 		break;
 	default:
-		SetNextCharAuto(question);
+		DEM128064A_SetNextCharAuto(question);
 	}	
 }
 
-void NewLine()
+void DisplayWrapper_NewLine()
 {
-	NextLine();
+	DEM128064A_NewLine();
 }
 
-void SetLine(int line)
+void DisplayWrapper_SetLine( int line )
 {
-	SetLineNum(line);
+	DEM128064A_SetLineNum(line);
 }
 
-void SetPosition(int pos)
+void DisplayWrapper_SetPosition( int pos )
 {
-	SetPositionNum(pos);
+	DEM128064A_SetPositionNum(pos);
 }
 
-void ClearScreenWrapper() 
+void DisplayWrapper_ClearScreen()
 {
 	if (!isDispInit)
 	{
-		DisplayInit();
-		DisplayOn();	
+		DEM128064A_DisplayInit();
+		DEM128064A_DisplayOn();	
 		isDispInit = 1;
 	}
 	
-	ClearScreen();
-	SetPositionNum(0);
-	SetLineNum(0);
+	DEM128064A_ClearScreen();
+	DEM128064A_SetPositionNum(0);
+	DEM128064A_SetLineNum(0);
 }

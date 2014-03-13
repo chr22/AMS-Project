@@ -5,16 +5,16 @@
  *  Author: Christian Svejstrup
  */ 
 
-#include "../Drivers/dem128064a.h"
+#include "../Drivers/DEM128064A.h"
 
 #ifndef DISPLAYWRAPPER_H_
 #define DISPLAYWRAPPER_H_
 
-void WriteToDisplay(char* dispStr);
-void NewLine();
-void SetLine(int line);
-void SetPosition(int pos);
-void ClearScreenWrapper();
+void DisplayWrapper_WriteToDisplay(char* dispStr);
+void DisplayWrapper_NewLine();
+void DisplayWrapper_SetLine(int line);
+void DisplayWrapper_SetPosition(int pos);
+void DisplayWrapper_ClearScreen();
 
 
 #endif /* DISPLAYWRAPPER_H_ */

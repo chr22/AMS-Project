@@ -19,13 +19,13 @@
 
 
 int main(void)
-{	
+{
 	InitUART(9600, 8);
 
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 		
-	ClearScreenSensorData();
+	ClearScreen();
 	
 	sei();
 	

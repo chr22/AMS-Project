@@ -14,34 +14,34 @@
 
 void WriteTemp(char* tempStr)
 {
-	WriteToDisplay("TEMP: ");
-	WriteToDisplay(tempStr);
-	WriteToDisplay("*C");
-	NewLine();
+	DisplayWrapper_WriteToDisplay("TEMP: ");
+	DisplayWrapper_WriteToDisplay(tempStr);
+	DisplayWrapper_WriteToDisplay("*C");
+	DisplayWrapper_NewLine();
 }
 
 void WritePressure(char* presStr)
 {
-	WriteToDisplay("PRES: ");
-	WriteToDisplay(presStr);
-	WriteToDisplay("hPa");
-	NewLine();
+	DisplayWrapper_WriteToDisplay("PRES: ");
+	DisplayWrapper_WriteToDisplay(presStr);
+	DisplayWrapper_WriteToDisplay("hPa");
+	DisplayWrapper_NewLine();
 }
 
 void WriteAltitude(char* altStr)
 {
-	WriteToDisplay("ALT:  ");
-	WriteToDisplay(altStr);
-	WriteToDisplay("m");
-	NewLine();
+	DisplayWrapper_WriteToDisplay("ALT:  ");
+	DisplayWrapper_WriteToDisplay(altStr);
+	DisplayWrapper_WriteToDisplay("m");
+	DisplayWrapper_NewLine();
 }
 
 void WriteDelAltitude(char* delAlt)
 {
-	WriteToDisplay("dALT: ");
-	WriteToDisplay(delAlt);
-	WriteToDisplay("m");
-	NewLine();
+	DisplayWrapper_WriteToDisplay("dALT: ");
+	DisplayWrapper_WriteToDisplay(delAlt);
+	DisplayWrapper_WriteToDisplay("m");
+	DisplayWrapper_NewLine();
 }
 
 void WriteSensorData(char* tempStr, char* presStr, char* altStr)
@@ -86,9 +86,9 @@ void WriteDelAltitudeFloat(float delAlt)
 void WriteSensorDataFloat(float temp, float pres, float alt)
 {
 	WriteTempFloat(temp);
-	NewLine();
+	DisplayWrapper_NewLine();
 	WritePressureFloat(pres);
-	NewLine();
+	DisplayWrapper_NewLine();
 	WriteAltitudeFloat(alt);
 }
 
@@ -176,9 +176,9 @@ void ConvertFloatToString(float temp, char* retArray)
 	}	
 }
 
-void ClearScreenSensorData()
+void ClearScreen()
 {
-	ClearScreenWrapper();
+	DisplayWrapper_ClearScreen();
 }
 
 void ConvertValuesToCorrectUnit(float *val, int type) 

@@ -104,24 +104,24 @@ int SendToDisplay(MeasurementStruct * sensorStruct, int numberOfValues)
 		switch(sensorStruct->sensorValues[i].cmd)
 		{
 			case TEMP_CMD:
-				SetLineNum(TEMP_LINE);
+				DEM128064A_SetLineNum(TEMP_LINE);
 				WriteTempFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case ALT_CMD:
-				SetLineNum(ALT_LINE);
+				DEM128064A_SetLineNum(ALT_LINE);
 				WriteAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case PRES_CMD:
-				SetLineNum(PRES_LINE);
+				DEM128064A_SetLineNum(PRES_LINE);
 				WritePressureFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;
 			case DELALT_CMD:
-				SetLineNum(DELTAALT_LINE);
+				DEM128064A_SetLineNum(DELTAALT_LINE);
 				WriteDelAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;			
 			default:
-				WriteToDisplay("1234");
-				NewLine();
+				DisplayWrapper_WriteToDisplay("1234");
+				DisplayWrapper_NewLine();
 				break;
 		}
 	}		
