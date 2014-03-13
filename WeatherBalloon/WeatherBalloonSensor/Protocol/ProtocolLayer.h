@@ -1,11 +1,3 @@
-/*
- * ProtocolLayer.h
- *
- * Created: 28-02-2014 10:36:56
- *  Author: Nikolaj
- */ 
-
-
 #ifndef PROTOCOLLAYER_H_
 #define PROTOCOLLAYER_H_
 

@@ -1,10 +1,3 @@
-/*
- * ProtocolLayer.c
- *
- * Created: 28-02-2014 10:36:40
- *  Author: Nikolaj
- */ 
-
 #include <math.h>
 #include "ProtocolLayer.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"

@@ -1,7 +1,10 @@
+#include "../../WeatherBalloonCommon/GlobalDefines.h"
+#include "../DefinesServer.h"
+
 #include <avr/io.h> 
 #include <avr/cpufunc.h>
-#define F_CPU 3686400
 #include <util/delay.h>
+
 #include "DEM128064A.h"
 
 // Control port pin definitions:

@@ -1,12 +1,6 @@
-/*
- * ServerProtocol.c
- *
- * Created: 02-03-2014 17:48:09
- *  Author: Nikolaj
- */ 
 #include <avr/interrupt.h>
 #include "../Protocol/ServerProtocol.h"
-#include "../Drivers/uart.h"
+#include "../Drivers/UART.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 
 #include "../Wrappers/DisplaySensorData.h"

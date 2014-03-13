@@ -134,16 +134,16 @@
     <Compile Include="DefinesServer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\dem128064a.c">
+    <Compile Include="Drivers\DEM128064A.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\dem128064a.h">
+    <Compile Include="Drivers\DEM128064A.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\uart.c">
+    <Compile Include="Drivers\UART.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Drivers\uart.h">
+    <Compile Include="Drivers\UART.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Protocol\ServerProtocol.c">

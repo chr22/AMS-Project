@@ -1,11 +1,3 @@
-/*
- * DisplaySensorData.h
- *
- * Created: 04-03-2014 10:29:44
- *  Author: Christian
- */ 
-
-
 #ifndef DISPLAYSENSORDATA_H_
 #define DISPLAYSENSORDATA_H_
 

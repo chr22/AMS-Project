@@ -1,11 +1,3 @@
-/*
- * ServerProtocol.h
- *
- * Created: 02-03-2014 17:48:25
- *  Author: Nikolaj
- */ 
-
-
 #ifndef SERVERPROTOCOL_H_
 #define SERVERPROTOCOL_H_
 

@@ -1,10 +1,3 @@
-/*
- * DisplaySensorData.c
- *
- * Created: 04-03-2014 10:30:11
- *  Author: Christian
- */ 
-
 #include "DisplayWrapper.h"
 #include "DisplaySensorData.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"

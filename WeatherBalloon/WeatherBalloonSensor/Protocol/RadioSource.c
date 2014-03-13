@@ -1,12 +1,3 @@
-/*
- * RadioSource.c
- *
- * Created: 25-02-2014 10:15:39
- *  Author: Nikolaj
-	Desciption:
-		Implementation of layer between UART and Business logic
- */ 
-
 #include "ProtocolLayer.h"
 #include "RadioSource.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"

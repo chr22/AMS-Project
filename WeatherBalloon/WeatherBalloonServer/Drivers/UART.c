@@ -1,19 +1,11 @@
-/**************************************************
-* "uart.c":                                       *
-* Implementation file for the Mega32 UART driver. *
-*  STK500 setup:                                  *
-*  Header "RS232 spare" connected to RXD/TXD:     *
-*  RXD = PORTD, bit0                              *
-*  TXD = PORTD, bit1                              *
-*                                                 *
-* Henning Hargaard, 1/11 2011                     *
-***************************************************/
-#include <avr/io.h>
-#include <stdlib.h>
-#include "uart.h"
-#include "avr/interrupt.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 #include "../DefinesServer.h"
+
+#include <avr/io.h>
+#include <stdlib.h>
+#include <avr/interrupt.h>
+
+#include "UART.h"
 
 // Constants
 #define XTAL 3686400  

@@ -1,11 +1,3 @@
-/*
- * DefinesServr.h
- *
- * Created: 09-03-2014 00:54:32
- *  Author: Casper
- */ 
-
-
 #ifndef DEFINESSERVER_H_
 #define DEFINESSERVER_H_
 

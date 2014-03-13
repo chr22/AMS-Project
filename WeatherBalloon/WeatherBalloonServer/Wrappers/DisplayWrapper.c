@@ -1,10 +1,3 @@
-/*
- * DisplayWrapper.c
- *
- * Created: 03-03-2014 17:04:07
- *  Author: Christian Svejstrup
- */ 
-
 #include "DisplayWrapper.h"
 
 void MatchCharacters(char character);
