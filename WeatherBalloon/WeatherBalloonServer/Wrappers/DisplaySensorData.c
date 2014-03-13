@@ -132,12 +132,12 @@ void ConvertFloatToString(float temp, char* retArray)
 			*retArray = '.';
 			retArray++;			
 			
-			int d = (floatTemp % 100) / 10;												
-			itoa(d, retArray++, 10);							
+			int tenth = (floatTemp % 100) / 10;												
+			itoa(tenth, retArray++, 10);							
 						
-			int e = (floatTemp % 100) % 10;						
+			int hundredth = (floatTemp % 100) % 10;						
 			
-			itoa(e, retArray++, 10);										
+			itoa(hundredth, retArray++, 10);										
 		}
 		else 
 		{

@@ -1,8 +1,8 @@
 #include <avr/interrupt.h>
+
 #include "../Protocol/ServerProtocol.h"
 #include "../Drivers/UART.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
-
 #include "../Wrappers/DisplaySensorData.h"
 
 void InitServer()
@@ -13,7 +13,6 @@ void InitServer()
 	//Enable receive-byte interrupt
 	UCSRB |= (1 << RXCIE);
 }
-
 
 int HandleIncoming(char cmd)
 {
@@ -35,13 +34,13 @@ int HandleReadyCommand()
 	err = ReadCharWTimeout(&sensorID, RADIO_TIMEOUT_MS);
 	if (err < 0)
 	{
-		return HANDLE_TRANMISSION_ERR;
+		return err;
 	}
 	
 	err = ReadCharWTimeout(&numToRead, RADIO_TIMEOUT_MS);
 	if (err < 0)
 	{
-		return HANDLE_TRANMISSION_ERR;
+		return err;
 	}
 		
 	//Send server ready
@@ -51,7 +50,7 @@ int HandleReadyCommand()
 	
 	if (err < 0)
 	{
-		return HANDLE_TRANMISSION_ERR;
+		return err;
 	}
 	
 	sei();
@@ -73,13 +72,13 @@ int HandleTransmission(char sensorID, int numToRead)
 		
 		if (err < 0)
 		{			
-			return HANDLE_TRANMISSION_ERR;
+			return err;
 		}
 				
 		err = HandleValueCommand(cmd, sensorID, &measureStruct, i);
 		if (err < 0)
 		{
-			return HANDLE_TRANMISSION_ERR;
+			return err;
 		}
 		++i;		
 	}
@@ -87,8 +86,12 @@ int HandleTransmission(char sensorID, int numToRead)
 	SendAck(sensorID);
 		
 	err = SendToDisplay(&measureStruct, numToRead);
+	if (err < 0)
+	{
+		return err;
+	}
 			
-	return err;
+	return 1;
 }
 
 int SendToDisplay(MeasurementStruct * sensorStruct, int numberOfValues)
@@ -116,6 +119,7 @@ int SendToDisplay(MeasurementStruct * sensorStruct, int numberOfValues)
 				WriteDelAltitudeFloat(sensorStruct->sensorValues[i].sensorValue);
 				break;			
 			default:
+				// unknown command
 				break;
 		}
 	}		
@@ -141,19 +145,19 @@ int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct
 	err = ReadCharWTimeout(&tmpBytesInTransmission, RADIO_TIMEOUT_MS);
 	if (err < 0)
 	{
-		return HANDLE_TRANMISSION_ERR;
+		return err;
 	}
+	
 	bytesInTransmission = (int)tmpBytesInTransmission;
 		
 	char sensorValue[bytesInTransmission];
 	
 	for (i = 0; i < bytesInTransmission; ++i)
 	{
-		err = ReadCharWTimeout(&sensorValue[i], RADIO_TIMEOUT_MS);
-		
+		err = ReadCharWTimeout(&sensorValue[i], RADIO_TIMEOUT_MS);		
 		if (err < 0)
 		{			
-			return HANDLE_TRANMISSION_ERR;
+			return err;
 		}
 	}
 	
@@ -186,15 +190,15 @@ int GetBytesFromCMD(char cmd)
 	switch(cmd)
 	{
 		case TEMP_CMD:
-		return 2;
-		break;
+			return 2;
+			break;
 		
 		case ALT_CMD:
 		case PRES_CMD:
-		return 4;
-		break;
+			return 4;
+			break;
 		
 		default:
-		return 0;
+			return 0;
 	}
 }
