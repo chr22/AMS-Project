@@ -19,7 +19,7 @@ void DisplayWrapper_Ctor()
 	isDispInit = 1;
 }
 
-void DisplayWrapper_WriteToDisplay( char* dispStr )
+void DisplayWrapper_WriteToDisplay(char* dispStr)
 {
 	if (!isDispInit)
 	{
