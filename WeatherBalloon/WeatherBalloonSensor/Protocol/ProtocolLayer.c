@@ -9,7 +9,7 @@
 #include "ProtocolLayer.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 #include "../DefinesSensor.h"
-#include "../Drivers/uart.h"
+#include "../Drivers/UART.h"
 
 int WaitForServerReady(int timeOutMs, unsigned char id)
 {

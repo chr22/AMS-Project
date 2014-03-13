@@ -244,34 +244,6 @@ void DEM128064A_ClearScreen()
   ClearHalfScreen(RIGHT);
 }
 
-// Displays a graphical image (whole screen)
-// The parameter is a pointer to the bit array defining the image
-void DEM128064A_DisplayPic( const char *picArray )
-{
-unsigned char i, j;
-
-  for (i=0; i<8; i++)
-  {
-    for (j= 0; j<128; j++)
-    {
-      if (j == 0)
-      {
-        SetPage(LEFT,i);
-        SetY(LEFT,0);
-      }
-      else if (j == 64)
-      {
-        SetPage(RIGHT,i);
-        SetY(RIGHT,0);
-      }
-      if (j < 64)
-        DisplayWrite(LEFT, *picArray++, DATA);
-      else   
-        DisplayWrite(RIGHT,*picArray++, DATA);
-    }    
-  }
-}
-
 //displays whats in the array
 void DEM128064A_DisplayCharArray( const char *disArray, int length )
 {
@@ -475,54 +447,3 @@ void DEM128064A_NewLine()
 	_position = 0;
 }
 
-// Sets one pixel at x,y
-// Notice: x = Horizontal (0-127), y = Vertical (0-63)
-// This corresponds to the "logical" x and y terms
-// in contrast to the display internal definitions
-void DEM128064A_SetPixel( unsigned char x, unsigned char y )
-{
-unsigned char bit_no;
-unsigned char tmp;
-
-  if (( x < 128) && (y < 64))
-  {
-    bit_no = 7-(y%8);
-    // Left half 
-    if (x < 64)
-    {
-      //SetY(LEFT, x);
-      SetPage(LEFT, 7-(y/8));
-      SetY(LEFT, x);
-      // Dummy read
-      DisplayRead(LEFT, DATA);
-      // - followed by actual read
-      tmp = DisplayRead(LEFT, DATA);      
-      SetY(LEFT, x);
-      DisplayWrite(LEFT, ((1<<bit_no) | tmp), DATA);
-    }  
-    else
-    // Right half
-    {
-      //SetY(RIGHT, x-64);
-      SetPage(RIGHT, 7-(y/8));   
-      SetY(RIGHT, x-64);
-      // Dummy read
-      DisplayRead(RIGHT, DATA);
-      // - followed by actual read      
-      tmp = DisplayRead(RIGHT, DATA);      
-      SetY(RIGHT, x-64);
-      DisplayWrite(RIGHT, ((1<<bit_no) | tmp), DATA);
-    }
-  }  
-}
-
-// Draws one horizontal line
-// "StartX, StartY" is the (logical) start position of the line
-// "Length" is the line length in pixels
-void DEM128064A_Draw_Horizontal_Line( unsigned char StartX, unsigned char StartY, unsigned char Length )
-{
-unsigned char x;
-
-  for (x=StartX; x<(StartX+Length); x++)
-    DEM128064A_SetPixel(x,StartY);
-}

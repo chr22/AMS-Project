@@ -11,7 +11,7 @@
 #include "RadioSource.h"
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 #include "../DefinesSensor.h"
-#include "../Drivers/uart.h"
+#include "../Drivers/UART.h"
 #include <math.h>
 
 int PerformFullTransmission( char id, struct DataValue_Params* data_params, int params_count )

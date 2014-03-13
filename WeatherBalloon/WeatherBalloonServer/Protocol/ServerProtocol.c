@@ -38,7 +38,6 @@ int HandleReadyCommand()
 		
 	int err = 0;
 	
-	//SendChar(0x80);
 	err = ReadCharWTimeout(&sensorID, RADIO_TIMEOUT_MS);
 	if (err < 0)
 	{
@@ -72,7 +71,7 @@ int HandleTransmission(char sensorID, int numToRead)
 	int err = 0;
 	char cmd;
 	
-	MeasurementStruct tmpMeasureStruct;
+	MeasurementStruct measureStruct;
 		
 	while(i < numToRead)
 	{
@@ -83,7 +82,7 @@ int HandleTransmission(char sensorID, int numToRead)
 			return HANDLE_TRANMISSION_ERR;
 		}
 				
-		err = HandleValueCommand(cmd, sensorID, &tmpMeasureStruct, i);
+		err = HandleValueCommand(cmd, sensorID, &measureStruct, i);
 		if (err < 0)
 		{
 			return HANDLE_TRANMISSION_ERR;
@@ -93,7 +92,7 @@ int HandleTransmission(char sensorID, int numToRead)
 	
 	SendAck(sensorID);
 		
-	err = SendToDisplay(&tmpMeasureStruct, numToRead);
+	err = SendToDisplay(&measureStruct, numToRead);
 			
 	return err;
 }
@@ -154,13 +153,12 @@ int HandleValueCommand(char cmd, char sensorID, MeasurementStruct * returnStruct
 		
 	char sensorValue[bytesInTransmission];
 	
-	for (i = 0; i < bytesInTransmission; ++i )
+	for (i = 0; i < bytesInTransmission; ++i)
 	{
 		err = ReadCharWTimeout(&sensorValue[i], RADIO_TIMEOUT_MS);
 		
 		if (err < 0)
-		{
-			//SendString("under 0");
+		{			
 			return HANDLE_TRANMISSION_ERR;
 		}
 	}
