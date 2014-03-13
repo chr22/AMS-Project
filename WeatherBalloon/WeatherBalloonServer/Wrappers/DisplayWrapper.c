@@ -11,14 +11,19 @@ void MatchCharacters(char character);
 
 int isDispInit = 0;
 
+void DisplayWrapper_Ctor()
+{
+	DEM128064A_DisplayInit();
+	DEM128064A_DisplayOn();
+	DEM128064A_ClearScreen();
+	isDispInit = 1;
+}
+
 void DisplayWrapper_WriteToDisplay( char* dispStr )
 {
 	if (!isDispInit)
 	{
-		DEM128064A_DisplayInit();
-		DEM128064A_DisplayOn();
-		DEM128064A_ClearScreen();
-		isDispInit = 1;
+		DisplayWrapper_Ctor();
 	}
 	
 	while(*dispStr != '\0')
@@ -273,9 +278,7 @@ void DisplayWrapper_ClearScreen()
 {
 	if (!isDispInit)
 	{
-		DEM128064A_DisplayInit();
-		DEM128064A_DisplayOn();	
-		isDispInit = 1;
+		DisplayWrapper_Ctor();
 	}
 	
 	DEM128064A_ClearScreen();
