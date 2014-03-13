@@ -31,7 +31,7 @@ long BaseTemperature;
 long BasePressure;
 long BaseAltitude;
 
-long SealevelPressure = 101325;
+long SealevelPressure = 101360;
 
 void BMP180_Init(long BaseLevelPressure)
 {

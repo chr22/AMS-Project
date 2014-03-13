@@ -18,12 +18,13 @@
 unsigned char DeviceId;
 
 #define NumberOfDataValue_Params 4
+#define WATER_LEVEL_PRESSURE 102750
 
 int main(void)
 {		
 	InitUART(9600, 8);
 	
-	BMP180_Init(102600);
+	BMP180_Init(WATER_LEVEL_PRESSURE);
 
 	DeviceId = BMP180_GetDeviceId();
 		
