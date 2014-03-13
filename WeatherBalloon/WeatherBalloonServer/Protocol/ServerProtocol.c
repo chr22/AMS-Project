@@ -13,6 +13,15 @@
 #include "../Wrappers/DisplaySensorData.h"
 #include "../Wrappers/DisplayWrapper.h"
 
+void InitServer()
+{
+	//Initialize UART
+	InitUART(9600, 8);
+	
+	//Enable receive-byte interrupt
+	UCSRB |= (1 << RXCIE);
+}
+
 
 int HandleIncoming(char cmd)
 {
