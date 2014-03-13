@@ -3,7 +3,7 @@
 #include <avr/interrupt.h>
 #include "../../WeatherBalloonCommon/GlobalDefines.h"
 #include "../DefinesSensor.h"
-#include "uart.h"
+#include "UART.h"
 
 #define XTAL 16000000
 
