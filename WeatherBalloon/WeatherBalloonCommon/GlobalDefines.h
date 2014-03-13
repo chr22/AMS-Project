@@ -1,19 +1,3 @@
-/*
- * GlobalDefines.h
- *
- * Created: 09-03-2014 00:15:43
- *  Author: Nikolaj
- */ 
-
-
-/*
- * GlobalDefines.h
- *
- * Created: 25-02-2014 11:27:36
- *  Author: Nikolaj
- */ 
-
-
 #ifndef GLOBALDEFINES_H_
 #define GLOBALDEFINES_H_
 
@@ -35,8 +19,5 @@
 #define	STAT_CMD	0x05
 #define ACK_CMD		0x06
 #define RDY_CMD		0x07
-
-//Utility values
-//#define SOURCE_ID	0x20
 
 #endif /* GLOBALDEFINES_H_ */

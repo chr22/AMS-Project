@@ -1,16 +1,10 @@
-/*
- * DefinesServer.h
- *
- * Created: 09-03-2014 00:53:13
- *  Author: Casper
- */ 
-
-
 #ifndef DEFINESSENSOR_H_
 #define DEFINESSENSOR_H_
 
 #undef ATMEGA32_DEV
 //#define ATMEGA32_DEV True
+
+#define RoutineFrequenzy 10000
 
 #ifdef ATMEGA32_DEV
 #define F_CPU 3686400
