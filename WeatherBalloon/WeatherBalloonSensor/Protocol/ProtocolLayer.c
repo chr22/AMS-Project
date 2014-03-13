@@ -138,3 +138,16 @@ int WaitForAck( int timeOutMs, unsigned char id )
 	return err;
 }
 
+int DataReady( char id, int numToTransmit )
+{
+	//Transmit ReadyCommand
+	SendChar(RDY_CMD);
+	
+	//Transmit id
+	SendChar(id);
+	
+	//Transmit number to transmit
+	SendChar((char)numToTransmit);
+	//SendInteger(numToTransmit);
+	return 1;
+}

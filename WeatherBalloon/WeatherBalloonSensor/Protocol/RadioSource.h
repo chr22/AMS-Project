@@ -23,14 +23,5 @@ struct DataValue_Params {
 
 int PerformFullTransmission( char id, struct DataValue_Params* data_params, int params_count );
 int DataReady(char id, int numToTransmit);
-//int WaitForAck(int timeOutMs);
-
-int TemperatureSend(char temp[]);
-int AltitudeSend (char alt[]);
-int PressureSend(char pres[]);
-int StationIDSend(char id);
-int StatusSend(char status[]);
-
-
 
 #endif /* RADIOSOURCE_H_ */
