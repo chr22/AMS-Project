@@ -23,8 +23,8 @@ short BMP180_CalculateTrueTemperature(unsigned long ut);
 long BMP180_CalculateTruePressure(unsigned long up);
 double BMP180_CalculateAltitude(double Pressure);
 //Start data sampling methods:
-void BMP180_StartTemperatureMessurement();
-void BMP180_StartPressureMessurement();
+void BMP180_StartTemperatureMeasurement();
+void BMP180_StartPressureMeasurement();
 
 
 
@@ -114,7 +114,7 @@ void BMP180_GetCalibrationParams()
 }
 
 /* Temperature stuff: */
-void BMP180_StartTemperatureMessurement() 
+void BMP180_StartTemperatureMeasurement()
 {
 	BMP180_RegWrite(0xF4, 0x2E);		//Starts temperature meassurement (p. 21 datasheet)
 	_delay_ms(5);						//Wait for device to sample temp
@@ -122,7 +122,7 @@ void BMP180_StartTemperatureMessurement()
 
 long BMP180_GetTemperature()
 {
-	BMP180_StartTemperatureMessurement();
+	BMP180_StartTemperatureMeasurement();
 		
 	unsigned char b[2];
 	BMP180_RegRead(b, 0xF6, 2);
@@ -150,7 +150,7 @@ short BMP180_CalculateTrueTemperature(unsigned long ut)
 }
 
 /* Pressure stuff: */
-void BMP180_StartPressureMessurement() 
+void BMP180_StartPressureMeasurement()
 {
 	BMP180_RegWrite(0xF4, (0x34));
 	_delay_ms(10);
@@ -158,7 +158,7 @@ void BMP180_StartPressureMessurement()
 
 long BMP180_GetPressure()
 {
-	BMP180_StartPressureMessurement();
+	BMP180_StartPressureMeasurement();
 		
 	unsigned char b[2] = {' ', ' '};
 	BMP180_RegRead(b, 0xF6, 2);
@@ -216,11 +216,6 @@ long BMP180_CalculateTruePressure(unsigned long up)
 
 
 /* Altitude stuff: */
-double BMP180_CalculateAltitude(double Pressure) 
-{
-	return 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
-}
-
 long BMP180_GetAltitude()
 {	
 	long Pressure = BMP180_GetPressure();
@@ -228,6 +223,11 @@ long BMP180_GetAltitude()
 	long Altitude = BMP180_CalculateAltitude((double)Pressure);
 	
 	return Altitude;
+}
+
+double BMP180_CalculateAltitude(double Pressure)
+{
+	return 44330 * (1-(pow((Pressure/SealevelPressure), (1/5.255))));
 }
 
 long BMP180_GetDeltaAltitude()
